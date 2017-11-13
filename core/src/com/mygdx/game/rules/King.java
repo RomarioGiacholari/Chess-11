@@ -1,3 +1,5 @@
+package com.mygdx.game.rules;
+
 public class King extends Piece{
 	/**
 	 * A field to hold if the King piece has moved or not

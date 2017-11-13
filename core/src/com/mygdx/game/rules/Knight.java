@@ -1,3 +1,6 @@
+package com.mygdx.game.rules;
+
+
 public class Knight extends Piece {
 
 	public Knight(int row, int col, boolean player) {

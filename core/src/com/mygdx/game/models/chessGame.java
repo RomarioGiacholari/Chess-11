@@ -1,6 +1,7 @@
 package com.mygdx.game.models;
 
 import com.mygdx.game.models.*;
+import com.mygdx.game.rules.*;
 
 public class chessGame {
 	

@@ -1,3 +1,6 @@
+package com.mygdx.game.rules;
+
+
 public class Queen extends Piece {
 	/**
 	 * A field to hold if the piece has moved or not from its starting place.
