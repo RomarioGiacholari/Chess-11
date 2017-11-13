@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import controller.GameController;
+import com.mygdx.game.controller.*;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;

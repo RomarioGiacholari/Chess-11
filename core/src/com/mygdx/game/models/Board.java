@@ -3,7 +3,7 @@ public class Game {
 	private boolean turn;
 	Board board = new Board();
 	
-	public Game () {
+	public Board () {
 		turn = true;
 		board.setUp();
 	}
