@@ -1,10 +1,12 @@
+package com.mygdx.game.controller;
+
 import com.mygdx.game.models.*;
 
 public class GameController{
 
-    public GameController(Game game){
+    public GameController(chessGame game){
 
-         game = new Game();
+         game = new chessGame();
 
     }
 

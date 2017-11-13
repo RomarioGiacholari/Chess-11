@@ -1,3 +1,6 @@
+package com.mygdx.game.rules;
+
+
 public class Position {
 
 	private int xPosition;

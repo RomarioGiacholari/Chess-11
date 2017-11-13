@@ -3,6 +3,13 @@ package com.mygdx.game.models;
 import com.mygdx.game.models.*;
 import com.mygdx.game.rules.*;
 
+
+
+/**
+ * A class to represent the board of a game of chess
+ * @author Student
+ *
+ */
 public class Board {
 	/**
 	 * A 2d array to hold all the Piece objects in their positions on the chess board

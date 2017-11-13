@@ -1,3 +1,5 @@
+package com.mygdx.game.rules;
+
 public class Bishop extends Piece{
 
 	protected boolean moved = false;
