@@ -3,13 +3,10 @@ import models.Board;
 
 public class GameControler{
 
-    public GameControler(Board board, Game game){
+    public GameControler(Game game){
 
-        Board board = new Board();
         Game game = new Game();
 
-
     }
-
 
 }
