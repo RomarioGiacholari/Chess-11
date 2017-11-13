@@ -1,3 +1,8 @@
+package com.mygdx.game.models;
+
+import com.mygdx.game.models.*;
+import com.mygdx.game.rules.*;
+
 public class Board {
 	/**
 	 * A 2d array to hold all the Piece objects in their positions on the chess board

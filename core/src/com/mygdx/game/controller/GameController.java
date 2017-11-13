@@ -1,11 +1,10 @@
-import models.Game;
-import models.Board;
+import com.mygdx.game.models.*;
 
-public class GameControler{
+public class GameController{
 
-    public GameControler(Game game){
+    public GameController(Game game){
 
-        Game game = new Game();
+         game = new Game();
 
     }
 
