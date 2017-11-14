@@ -61,6 +61,19 @@ public class Board {
 		board [6][6] = new Pawn(6,6,false);
 		board [6][7] = new Pawn(6,7,false);
 	}
+	
+	public Piece getSquare (int row, int col) {
+		return board[row][col];
+	}
+	
+	public Piece [][] getBoard(){
+		return board;
+	}
+	public void checkRight(Position start,Position end) {
+		Position pointer = start;
+		while(pointer)
+	}
+	
 	/**
 	 * A method to move a piece to a new location. It takes a piece object and a new location and, 
 	 * if the pieces move function returns true, will move the piece to its new location
@@ -69,6 +82,8 @@ public class Board {
 	 * @param col the y coordinate of the new location
 	 */
 	public void move( Piece piece, int row, int col) {
+		
+		
 			/*if (piece.move(row, col)) {
 				if(piece instanceof Pawn) {
 					movePawn(new Position(row,col),(Pawn) piece);
@@ -481,13 +496,6 @@ public class Board {
 	 * @param col the y coordinate of the piece to be returned
 	 * @return the piece requested
 	 */
-	public Piece getSquare (int row, int col) {
-		return board[row][col];
-	}
-	
-	public Piece [][] getBoard(){
-		return board;
-	}
 	
 	/*public boolean moveKing(Position endPos, King king) {
 		while(king.getPos().getX() != endPos.getX() || king.getPos().getY() != endPos.getY()) {

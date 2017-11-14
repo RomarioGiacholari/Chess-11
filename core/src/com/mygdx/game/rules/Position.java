@@ -18,4 +18,14 @@ public class Position {
 	public int getY() {
 		return yPosition;
 	}
+	
+	public boolean equals(Position testPos) {
+		if (this.getX() == testPos.getX() && this.geyY() ==testPos.getY()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
 }
