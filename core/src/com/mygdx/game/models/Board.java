@@ -62,16 +62,75 @@ public class Board {
 		board [6][7] = new Pawn(6,7,false);
 	}
 	
-	public Piece getSquare (int row, int col) {
-		return board[row][col];
+	public Piece getSquare (Position position) {
+		return board[position.getX()][position.getY()];
 	}
 	
 	public Piece [][] getBoard(){
 		return board;
 	}
-	public void checkRight(Position start,Position end) {
-		Position pointer = start;
-		while(pointer)
+	public boolean checkRight(Piece piece,Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX(),pointer.getY()+1);
+			if (getSquare(pointer) != null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkLeft(Piece piece, Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX(),pointer.getY()-1);
+			if (getSquare(pointer) != null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkUp(Piece piece, Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX()+1,pointer.getY());
+			if (getSquare(pointer) != null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkDown(Piece piece,Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX()-1,pointer.getY());
+			if (getSquare(pointer) != null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	
 	/**

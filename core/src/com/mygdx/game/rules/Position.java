@@ -20,7 +20,7 @@ public class Position {
 	}
 	
 	public boolean equals(Position testPos) {
-		if (this.getX() == testPos.getX() && this.geyY() ==testPos.getY()) {
+		if (this.getX() == testPos.getX() && this.getY() ==testPos.getY()) {
 			return true;
 		}
 		else {
