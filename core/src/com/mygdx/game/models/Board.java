@@ -74,7 +74,7 @@ public class Board {
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX(),pointer.getY()+1);
 			if (getSquare(pointer) != null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
 					return true;
 				}
 				else {
@@ -90,7 +90,7 @@ public class Board {
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX(),pointer.getY()-1);
 			if (getSquare(pointer) != null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
 					return true;
 				}
 				else {
@@ -106,7 +106,7 @@ public class Board {
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX()+1,pointer.getY());
 			if (getSquare(pointer) != null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
 					return true;
 				}
 				else {
@@ -122,7 +122,7 @@ public class Board {
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX()-1,pointer.getY());
 			if (getSquare(pointer) != null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
 					return true;
 				}
 				else {
@@ -138,7 +138,7 @@ public class Board {
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX()+1,pointer.getY()+1);
 			if(getSquare(pointer)!= null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
 					return true;
 			}
 				else {
@@ -154,7 +154,7 @@ public class Board {
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX()+1,pointer.getY()-1);
 			if(getSquare(pointer)!= null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
 					return true;
 			}
 				else {
@@ -170,7 +170,7 @@ public class Board {
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX()-1,pointer.getY()-1);
 			if(getSquare(pointer)!= null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
 					return true;
 			}
 				else {
@@ -186,7 +186,7 @@ public class Board {
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX()-1,pointer.getY()+1);
 			if(getSquare(pointer)!= null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
 					return true;
 			}
 				else {
@@ -205,6 +205,40 @@ public class Board {
 	 * @param col the y coordinate of the new location
 	 */
 	public void move( Piece piece, int row, int col) {
+		Position end = new Position(row,col);
+		
+		if (piece instanceof Knight) {
+			if (getSquare(end) != null) {
+				if (getSquare(end).getTeam() != piece.getTeam()) {
+					board[end.getX()][end.getY()] = piece;
+					board[piece.getPos().getX()][piece.getPos().getY()] = null;
+					piece.setPos(end);
+				}
+			}
+			else {
+				board[end.getX()][end.getY()] = piece;
+				board[piece.getPos().getX()][piece.getPos().getY()] = null;
+				piece.setPos(end);
+			}
+		}
+		else {
+			if(end.getX() == piece.getPos().getX()) {
+				if(end.getY()>piece.getPos().getY()) {
+					if(checkRight(piece,end)) {
+						board[end.getX()][end.getY()] = piece;
+						board[piece.getPos().getX()][piece.getPos().getY()] = null;
+						piece.setPos(end);
+					}
+				}
+				else {
+					if(checkLeft(piece,end)) {
+						board[end.getX()][end.getY()] = piece;
+						board[piece.getPos().getX()][piece.getPos().getY()] = null;
+						piece.setPos(end);
+					}
+				}
+			}
+		}
 		
 		
 			/*if (piece.move(row, col)) {
