@@ -133,6 +133,70 @@ public class Board {
 		return true;
 	}
 	
+	public boolean checkupRight(Piece piece, Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX()+1,pointer.getY()+1);
+			if(getSquare(pointer)!= null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+					return true;
+			}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkUpLeft(Piece piece, Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX()+1,pointer.getY()-1);
+			if(getSquare(pointer)!= null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+					return true;
+			}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkDownLeft(Piece piece,Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX()-1,pointer.getY()-1);
+			if(getSquare(pointer)!= null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+					return true;
+			}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkDownRight(Piece piece, Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX()-1,pointer.getY()+1);
+			if(getSquare(pointer)!= null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam()) {
+					return true;
+			}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 	/**
 	 * A method to move a piece to a new location. It takes a piece object and a new location and, 
 	 * if the pieces move function returns true, will move the piece to its new location
