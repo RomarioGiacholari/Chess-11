@@ -238,6 +238,22 @@ public class Board {
 					}
 				}
 			}
+			else if (end.getY() == piece.getPos().getY()) {
+				if (end.getX()>piece.getPos().getX()) {
+					if(checkUp(piece,end)) {
+						board[end.getX()][end.getY()] = piece;
+						board[piece.getPos().getX()][piece.getPos().getY()] = null;
+						piece.setPos(end);
+					}
+				}
+				else {
+					if (checkDown(piece,end)) {
+						board[end.getX()][end.getY()] = piece;
+						board[piece.getPos().getX()][piece.getPos().getY()] = null;
+						piece.setPos(end);
+					}
+				}
+			}
 		}
 		
 		
