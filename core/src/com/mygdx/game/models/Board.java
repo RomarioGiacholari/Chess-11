@@ -61,6 +61,144 @@ public class Board {
 		board [6][6] = new Pawn(6,6,false);
 		board [6][7] = new Pawn(6,7,false);
 	}
+	public Piece getSquare (Position position) {
+		return board[position.getX()][position.getY()];
+	}
+	
+	public boolean checkRight(Piece piece,Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX(),pointer.getY()+1);
+			if (getSquare(pointer) != null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkLeft(Piece piece, Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX(),pointer.getY()-1);
+			if (getSquare(pointer) != null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkUp(Piece piece, Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX()+1,pointer.getY());
+			if (getSquare(pointer) != null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkDown(Piece piece,Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX()-1,pointer.getY());
+			if (getSquare(pointer) != null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkupRight(Piece piece, Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX()+1,pointer.getY()+1);
+			if(getSquare(pointer)!= null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
+					return true;
+			}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkUpLeft(Piece piece, Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX()+1,pointer.getY()-1);
+			if(getSquare(pointer)!= null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
+					return true;
+			}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkDownLeft(Piece piece,Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX()-1,pointer.getY()-1);
+			if(getSquare(pointer)!= null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
+					return true;
+			}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean checkDownRight(Piece piece, Position end) {
+		Position pointer = piece.getPos();
+		while(pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX()-1,pointer.getY()+1);
+			if(getSquare(pointer)!= null) {
+				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
+					return true;
+			}
+				else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public void setPiece(Piece piece,Position end) {
+		board[end.getX()][end.getY()] = piece;
+		board[piece.getPos().getX()][piece.getPos().getY()] = null;
+		piece.setPos(end);
+	}
+	
 	/**
 	 * A method to move a piece to a new location. It takes a piece object and a new location and, 
 	 * if the pieces move function returns true, will move the piece to its new location
@@ -68,7 +206,81 @@ public class Board {
 	 * @param row the x coordinate of the new location
 	 * @param col the y coordinate of the new location
 	 */
-	public void move( Piece piece, int row, int col) {
+	public void move( Piece piece, int row, int col) throws InvalidMoveExcpeption {
+		Position end = new Position(row,col);
+		
+		if (piece instanceof Knight) {
+			if (getSquare(end) != null) {
+				if (getSquare(end).getTeam() != piece.getTeam()) {
+					setPiece(piece,end);
+				}
+			}
+			else {
+				setPiece(piece,end);
+			}
+		}
+		else {
+			if(end.getX() == piece.getPos().getX()) {
+				if(end.getY()>piece.getPos().getY()) {
+					if(checkRight(piece,end)) {
+						setPiece(piece,end);
+					}
+				}
+				else {
+					if(checkLeft(piece,end)) {
+						setPiece(piece,end);
+					}
+				}
+			}
+			else if (end.getY() == piece.getPos().getY()) {
+				if (end.getX()>piece.getPos().getX()) {
+					if(checkUp(piece,end)) {
+						setPiece(piece,end);
+
+					}
+				}
+				else if (end.getX()<piece.getPos().getX()) {
+					if (checkDown(piece,end)) {
+						setPiece(piece,end);
+
+					}
+				}
+			}
+			else if (end.getX()>piece.getPos().getX()) {
+				if (end.getY()>piece.getPos().getY()) {
+					if (checkupRight(piece,end)) {
+						setPiece(piece,end);
+
+					}
+				}
+				else if (end.getY()<piece.getPos().getY()) {
+					if(checkUpLeft(piece,end)) 
+					{
+						setPiece(piece,end);
+
+					}
+				}
+			}
+			else if(end.getX()< piece.getPos().getX()) {
+				if (end.getY() > piece.getPos().getY()) {
+					if (checkDownRight(piece,end)) {
+						setPiece(piece,end);
+
+					}
+				}
+				else if (end.getY()<piece.getPos().getY()) {
+					if(checkDownLeft(piece,end)) {
+						setPiece(piece,end);
+
+					}
+				}
+			}
+		
+		}
+		throw new InvalidMoveExcpeption();
+	}
+
+	
 			/*if (piece.move(row, col)) {
 				if(piece instanceof Pawn) {
 					movePawn(new Position(row,col),(Pawn) piece);
@@ -89,7 +301,7 @@ public class Board {
 					moveQueen(new Position(row,col),(Queen) piece);
 				}
 			}*/
-		}
+		
 
 	/*private boolean moveKing(Position position, King piece) {
 		while (position.getX() != piece.getPos().getX() || position.getY() != piece.getPos().getY()) {
