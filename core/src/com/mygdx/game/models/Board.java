@@ -206,7 +206,7 @@ public class Board {
 	 * @param row the x coordinate of the new location
 	 * @param col the y coordinate of the new location
 	 */
-	public void move( Piece piece, int row, int col) throws InvalidMoveExcpeption {
+	public void move( Piece piece, int row, int col)  {
 		Position end = new Position(row,col);
 		
 		if (piece instanceof Knight) {
@@ -277,7 +277,7 @@ public class Board {
 			}
 		
 		}
-		throw new InvalidMoveExcpeption();
+		
 	}
 
 	
