@@ -197,6 +197,12 @@ public class Board {
 		return true;
 	}
 	
+	public void setPiece(Piece piece,Position end) {
+		board[end.getX()][end.getY()] = piece;
+		board[piece.getPos().getX()][piece.getPos().getY()] = null;
+		piece.setPos(end);
+	}
+	
 	/**
 	 * A method to move a piece to a new location. It takes a piece object and a new location and, 
 	 * if the pieces move function returns true, will move the piece to its new location
@@ -210,80 +216,66 @@ public class Board {
 		if (piece instanceof Knight) {
 			if (getSquare(end) != null) {
 				if (getSquare(end).getTeam() != piece.getTeam()) {
-					board[end.getX()][end.getY()] = piece;
-					board[piece.getPos().getX()][piece.getPos().getY()] = null;
-					piece.setPos(end);
+					setPiece(piece,end);
 				}
 			}
 			else {
-				board[end.getX()][end.getY()] = piece;
-				board[piece.getPos().getX()][piece.getPos().getY()] = null;
-				piece.setPos(end);
+				setPiece(piece,end);
 			}
 		}
 		else {
 			if(end.getX() == piece.getPos().getX()) {
 				if(end.getY()>piece.getPos().getY()) {
 					if(checkRight(piece,end)) {
-						board[end.getX()][end.getY()] = piece;
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						piece.setPos(end);
+						setPiece(piece,end);
 					}
 				}
 				else {
 					if(checkLeft(piece,end)) {
-						board[end.getX()][end.getY()] = piece;
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						piece.setPos(end);
+						setPiece(piece,end);
 					}
 				}
 			}
 			else if (end.getY() == piece.getPos().getY()) {
 				if (end.getX()>piece.getPos().getX()) {
 					if(checkUp(piece,end)) {
-						board[end.getX()][end.getY()] = piece;
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						piece.setPos(end);
+						setPiece(piece,end);
+
 					}
 				}
 				else if (end.getX()<piece.getPos().getX()) {
 					if (checkDown(piece,end)) {
-						board[end.getX()][end.getY()] = piece;
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						piece.setPos(end);
+						setPiece(piece,end);
+
 					}
 				}
 			}
 			else if (end.getX()>piece.getPos().getX()) {
 				if (end.getY()>piece.getPos().getY()) {
 					if (checkupRight(piece,end)) {
-						board[end.getX()][end.getY()] = piece;
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						piece.setPos(end);
+						setPiece(piece,end);
+
 					}
 				}
 				else if (end.getY()<piece.getPos().getY()) {
 					if(checkUpLeft(piece,end)) 
 					{
-						board[end.getX()][end.getY()] = piece;
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						piece.setPos(end);
+						setPiece(piece,end);
+
 					}
 				}
 			}
 			else if(end.getX()< piece.getPos().getX()) {
 				if (end.getY() > piece.getPos().getY()) {
 					if (checkDownRight(piece,end)) {
-						board[end.getX()][end.getY()] = piece;
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						piece.setPos(end);
+						setPiece(piece,end);
+
 					}
 				}
 				else if (end.getY()<piece.getPos().getY()) {
 					if(checkDownLeft(piece,end)) {
-						board[end.getX()][end.getY()] = piece;
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						piece.setPos(end);
+						setPiece(piece,end);
+
 					}
 				}
 			}
@@ -462,7 +454,6 @@ public class Board {
 		return true;
 	}*/
 	/*private boolean moveBishop(Position position, Bishop piece) {
-		// TODO Auto-generated method stub
 		while (position.getX() != piece.getPos().getX() || position.getY() != piece.getPos().getY()) {
 			if (position.getX() > piece.getPos().getX() && position.getY() > piece.getPos().getY()) {
 				if (board[piece.getPos().getX()+1][piece.getPos().getY()+1] != null) {
@@ -538,7 +529,6 @@ public class Board {
 	}*/
 
 	/*private boolean moveQueen(Position position, Queen piece) {
-		// TODO Auto-generated method stub
 		while (position.getX() != piece.getPos().getX() || position.getY() != piece.getPos().getY()) {
 			if(position.getX() == piece.getPos().getX()) {
 				if(position.getY() > piece.getPos().getY()) {
