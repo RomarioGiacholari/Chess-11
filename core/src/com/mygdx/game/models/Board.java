@@ -204,7 +204,7 @@ public class Board {
 	 * @param row the x coordinate of the new location
 	 * @param col the y coordinate of the new location
 	 */
-	public void move( Piece piece, int row, int col) {
+	public void move( Piece piece, int row, int col) throws InvalidMoveExcpeption {
 		Position end = new Position(row,col);
 		
 		if (piece instanceof Knight) {
@@ -246,7 +246,7 @@ public class Board {
 						piece.setPos(end);
 					}
 				}
-				else {
+				else if (end.getX()<piece.getPos().getX()) {
 					if (checkDown(piece,end)) {
 						board[end.getX()][end.getY()] = piece;
 						board[piece.getPos().getX()][piece.getPos().getY()] = null;
@@ -254,8 +254,44 @@ public class Board {
 					}
 				}
 			}
-		}
+			else if (end.getX()>piece.getPos().getX()) {
+				if (end.getY()>piece.getPos().getY()) {
+					if (checkupRight(piece,end)) {
+						board[end.getX()][end.getY()] = piece;
+						board[piece.getPos().getX()][piece.getPos().getY()] = null;
+						piece.setPos(end);
+					}
+				}
+				else if (end.getY()<piece.getPos().getY()) {
+					if(checkUpLeft(piece,end)) 
+					{
+						board[end.getX()][end.getY()] = piece;
+						board[piece.getPos().getX()][piece.getPos().getY()] = null;
+						piece.setPos(end);
+					}
+				}
+			}
+			else if(end.getX()< piece.getPos().getX()) {
+				if (end.getY() > piece.getPos().getY()) {
+					if (checkDownRight(piece,end)) {
+						board[end.getX()][end.getY()] = piece;
+						board[piece.getPos().getX()][piece.getPos().getY()] = null;
+						piece.setPos(end);
+					}
+				}
+				else if (end.getY()<piece.getPos().getY()) {
+					if(checkDownLeft(piece,end)) {
+						board[end.getX()][end.getY()] = piece;
+						board[piece.getPos().getX()][piece.getPos().getY()] = null;
+						piece.setPos(end);
+					}
+				}
+			}
 		
+		}
+		throw new InvalidMoveExcpeption();
+	}
+}
 		
 			/*if (piece.move(row, col)) {
 				if(piece instanceof Pawn) {
@@ -277,7 +313,7 @@ public class Board {
 					moveQueen(new Position(row,col),(Queen) piece);
 				}
 			}*/
-		}
+		
 
 	/*private boolean moveKing(Position position, King piece) {
 		while (position.getX() != piece.getPos().getX() || position.getY() != piece.getPos().getY()) {
@@ -892,4 +928,3 @@ public class Board {
 		}
 		return true;
 	}*/
-}
