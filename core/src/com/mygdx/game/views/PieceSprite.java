@@ -15,7 +15,7 @@ public abstract class PieceSprite {
 	private int pieceY=0;
 	
 	public PieceSprite() {
-		
+		movePieceUp();
 	}
 	
 	public void draw(Batch batch) {
@@ -45,5 +45,9 @@ public abstract class PieceSprite {
 	
 	public int getMovement() {
 		return PIECE_MOVEMENT;
+	}
+	
+	public void movePieceUp() {
+		pieceY += PIECE_MOVEMENT;
 	}
 }

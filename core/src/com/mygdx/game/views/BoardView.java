@@ -15,7 +15,6 @@ public class BoardView extends ScreenAdapter{
     public void show()
     {
 		white=new WhitePawn();
-		white.setY(50);
     	batch = new SpriteBatch();
     }
 	
