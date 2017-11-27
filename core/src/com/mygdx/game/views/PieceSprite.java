@@ -7,7 +7,7 @@ import com.mygdx.game.rules.Piece;
 public abstract class PieceSprite {
 
 	Texture sprite;
-	Piece piece;
+	
 	
 	private static final int PIECE_MOVEMENT =64;
 	

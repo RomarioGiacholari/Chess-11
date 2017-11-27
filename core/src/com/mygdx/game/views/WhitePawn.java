@@ -9,7 +9,7 @@ public class WhitePawn extends PieceSprite {
 	private Texture texture = new Texture(Gdx.files.internal("WhitePawn.png"));
 
 	public WhitePawn() {
+		super();
 		sprite = texture;
-		piece = new Pawn(0, 0, true);
 	}
 }
