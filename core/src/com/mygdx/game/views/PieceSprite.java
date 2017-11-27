@@ -9,7 +9,7 @@ public abstract class PieceSprite {
 	Texture sprite;
 	
 	
-	private static final int PIECE_MOVEMENT =64;
+	private static final int PIECE_MOVEMENT =60;
 	
 	private int pieceX=0;
 	private int pieceY=0;

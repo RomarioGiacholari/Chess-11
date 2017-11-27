@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.models.chessGame;
+import com.mygdx.game.rules.King;
 import com.mygdx.game.rules.Pawn;
 import com.mygdx.game.rules.Position;
 import com.mygdx.game.views.*;
@@ -32,10 +33,32 @@ public class BoardView extends ScreenAdapter{
 		
 		
 		showPawns();
+		showKings();
 	}
 	
 	public void showKings() {
-		
+		for (int row =0; row< chess.getBoard().getBoard().length; row++) {
+			for(int col =0; col<chess.getBoard().getBoard().length; col++) {
+				if(chess.getBoard().getBoard()[row][col] instanceof King) {
+					if(chess.getBoard().getBoard()[row][col].getTeam() == true) {
+						PieceSprite king = new WhiteKing();
+						king.movePieceUp(row);
+						king.movePieceRight(col);
+						batch.begin();
+						king.draw(batch);
+						batch.end();
+					}
+					else if (chess.getBoard().getBoard()[row][col].getTeam() == false) {
+						PieceSprite king = new BlackKing();
+						king.movePieceUp(row);
+						king.movePieceRight(col);
+						batch.begin();
+						king.draw(batch);
+						batch.end();
+					}
+				}
+			}
+		}
 	}
 	
 	public void showPawns() {
