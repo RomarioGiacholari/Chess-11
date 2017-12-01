@@ -6,9 +6,11 @@ import com.badlogic.gdx.graphics.Texture;
 public class WhiteRook extends PieceSprite {
 
 	
-	private Texture texture = new Texture(Gdx.files.internal("blackRook.png"));
+	private Texture texture = new Texture(Gdx.files.internal("whiteRook.png"));
 
 	public WhiteRook() {
+		super();
+		sprite = texture;	
 		// TODO Auto-generated constructor stub
 	}
 

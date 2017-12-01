@@ -9,6 +9,8 @@ public class WhiteBishop extends PieceSprite {
 	private Texture texture = new Texture(Gdx.files.internal("whiteBishop.png"));
 
 	public WhiteBishop() {
+		super();
+		sprite = texture;	
 		// TODO Auto-generated constructor stub
 	}
 

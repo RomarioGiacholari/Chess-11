@@ -9,6 +9,8 @@ public class BlackQueen extends PieceSprite {
 	private Texture texture = new Texture(Gdx.files.internal("blackQueen.png"));
 
 	public BlackQueen() {
+		super();
+		sprite = texture;	
 		// TODO Auto-generated constructor stub
 	}
 
