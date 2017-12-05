@@ -14,6 +14,9 @@ public abstract class PieceSprite {
 	private int pieceX=0;
 	private int pieceY=0;
 	
+	private int highX = 60;
+	private int highY = 60;
+	
 	public PieceSprite() {
 		
 	}
