@@ -10,6 +10,7 @@ import com.mygdx.game.rules.Bishop;
 import com.mygdx.game.rules.King;
 import com.mygdx.game.rules.Knight;
 import com.mygdx.game.rules.Pawn;
+import com.mygdx.game.rules.Piece;
 import com.mygdx.game.rules.Position;
 import com.mygdx.game.rules.Queen;
 import com.mygdx.game.rules.Rook;
@@ -17,8 +18,8 @@ import com.mygdx.game.views.*;
 
 public class BoardView extends ScreenAdapter{
 	private SpriteBatch batch;
-	private WhitePawn white;
 	private chessGame chess;
+	private Piece selected = null;
 	
 	@Override
     public void show()
@@ -41,6 +42,10 @@ public class BoardView extends ScreenAdapter{
 		showRooks();
 		showBishops();
 		showQueens();
+	}
+	
+	public void select() {
+		
 	}
 	
 	public void showQueens() {

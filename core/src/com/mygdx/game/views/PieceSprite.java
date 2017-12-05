@@ -2,9 +2,10 @@ package com.mygdx.game.views;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.rules.Piece;
 
-public abstract class PieceSprite {
+public abstract class PieceSprite extends Actor {
 
 	Texture sprite;
 	
