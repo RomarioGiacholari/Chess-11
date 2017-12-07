@@ -8,8 +8,8 @@ public class WhitePawn extends PieceSprite {
 
 	private Texture texture = new Texture(Gdx.files.internal("WhitePawn.png"));
 
-	public WhitePawn() {
-		super();
-		sprite = texture;
+	public WhitePawn(Piece piece) {
+		super(piece);
+		sprite = texture;	
 	}
 }

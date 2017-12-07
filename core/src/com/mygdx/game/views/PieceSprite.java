@@ -8,7 +8,7 @@ import com.mygdx.game.rules.Piece;
 public abstract class PieceSprite extends Actor {
 
 	Texture sprite;
-	
+	Piece piece;
 	
 	private static final int PIECE_MOVEMENT =60;
 	
@@ -18,8 +18,8 @@ public abstract class PieceSprite extends Actor {
 	private int highX = 60;
 	private int highY = 60;
 	
-	public PieceSprite() {
-		
+	public PieceSprite(Piece piece) {
+		this.piece = piece;
 	}
 	
 	public void draw(Batch batch) {
