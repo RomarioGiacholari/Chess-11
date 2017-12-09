@@ -16,6 +16,11 @@ public class King extends Piece{
 		moved = false;
 		// TODO Auto-generated constructor stub
 	}
+	public String printPieceType(){
+		System.out.println("King");
+		return "King";
+	}
+	
 	public String toString() {
 		if(team) {
 			return "K";

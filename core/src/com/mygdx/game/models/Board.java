@@ -65,6 +65,14 @@ public class Board {
 		return board[position.getX()][position.getY()];
 	}
 	
+	public void getPieceAtSquare(int x, int y){
+		if(board[x][y] != null){
+		System.out.println(board[x][y].printPieceType());
+		}
+		else{
+			System.out.println("This square is empty.");
+		}
+	}
 	public boolean checkRight(Piece piece,Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
