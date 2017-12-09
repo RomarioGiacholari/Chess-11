@@ -7,6 +7,11 @@ public class Bishop extends Piece{
 	public Bishop(int row, int col, boolean player) {
 		super(row, col, player);
 	}
+	public String printPieceType(){
+		System.out.println("Bishop");
+		return "Bishop";
+	}
+	
 	public String toString() {
 		if(team) {	
 			return "B";

@@ -8,6 +8,10 @@ public class Rook extends Piece{
 		super(row, col, player);
 		// TODO Auto-generated constructor stub
 	}
+	public String printPieceType(){
+		System.out.println("Rook");
+		return "Rook";
+	}
 	
 	public String toString() {
 		if(team) {

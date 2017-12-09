@@ -16,6 +16,11 @@ public class Queen extends Piece {
 		super(row, col, player);
 		this.moved = false;
 	}
+	public String printPieceType(){
+		System.out.println("Queen");
+		return "Queen";
+	}
+	
 	public String toString() {
 		if(team) {
 			return "Q";
