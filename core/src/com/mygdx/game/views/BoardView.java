@@ -1,10 +1,16 @@
 package com.mygdx.game.views;
 
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.mygdx.game.models.chessGame;
 import com.mygdx.game.rules.Bishop;
 import com.mygdx.game.rules.King;
@@ -20,28 +26,52 @@ public class BoardView extends ScreenAdapter{
 	private WhitePawn white;
 	private chessGame chess;
 	
-	@Override
-    public void show()
+
+	OrthographicCamera camera;
+	ShapeRenderer shapeRenderer;
+	private Sprite sprite;
+	
+	public void show()
     {
 		chess = new chessGame();
 		batch = new SpriteBatch();
-
 		
     }
 	
-	@Override
-	public void render(float delta) {
-		Gdx.gl.glClearColor(0.5f,0.5f,0.5f,1f);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		
-		showPawns();
-		showKings();
-		showKnights();
-		showRooks();
-		showBishops();
-		showQueens();
+	
+
+	public void create () {
+	    shapeRenderer = new ShapeRenderer();
+
+	    camera = new OrthographicCamera(500, 500); //FILL THE VALUES HERE
+	    sprite = new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")));  //FILL THE VALUES HERE
+
+	     sprite.setBounds(200, 200, 64, 64);
 	}
+
+
+
+	public void render () {
+
+	     Gdx.gl.glClearColor(1, 1, 1, 1);
+	     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+	     Gdx.gl.glEnable(GL20.GL_BLEND);
+	     Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+	     Gdx.gl.glDisable(GL20.GL_BLEND);
+
+	      batch.setProjectionMatrix(camera.combined);
+
+	      batch.begin();  
+	      sprite.draw(batch);  
+	      batch.end();
+
+	      shapeRenderer.setColor(Color.RED);
+	      shapeRenderer.begin(ShapeType.Filled);
+	      shapeRenderer.circle(100, 100, 32);
+	      shapeRenderer.end();
+	};  
+	
 	
 	public void showQueens() {
 		for (int row =0; row< chess.getBoard().getBoard().length; row++) {
