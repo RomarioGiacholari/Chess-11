@@ -1,10 +1,15 @@
 package com.mygdx.game.views;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.models.chessGame;
 import com.mygdx.game.rules.Bishop;
 import com.mygdx.game.rules.King;
@@ -16,7 +21,7 @@ import com.mygdx.game.rules.Queen;
 import com.mygdx.game.rules.Rook;
 import com.mygdx.game.views.*;
 
-public class BoardView extends ScreenAdapter{
+public class BoardView extends ScreenAdapter {
 	private SpriteBatch batch;
 	private chessGame chess;
 	private Piece selected = null;
@@ -27,6 +32,7 @@ public class BoardView extends ScreenAdapter{
     {
 		chess = new chessGame();
 		batch = new SpriteBatch();
+		
     }
 	
 	@Override
@@ -54,6 +60,10 @@ public class BoardView extends ScreenAdapter{
 		batch.end();
 	}
 	
+	public void teleportQueen(Piece piece) {
+		piece.setPos(new Position(5,5));
+	}
+	
 	public void showQueens() {
 		for (int row =0; row< chess.getBoard().getBoard().length; row++) {
 			for(int col =0; col<chess.getBoard().getBoard().length; col++) {
@@ -65,6 +75,23 @@ public class BoardView extends ScreenAdapter{
 						batch.begin();
 						queen.draw(batch);
 						batch.end();
+						
+						queen.setBounds(queen.pieceX *60, queen.pieceY*60, 60, 60);
+;
+
+						
+						queen.addListener(new InputListener() {
+							public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+								System.out.println("down");
+								return true;
+							}
+							
+							public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+								System.out.println("up");
+							}
+						});
+						
+				
 					}
 					else if (chess.getBoard().getBoard()[row][col].getTeam() == false) {
 						PieceSprite queen = new BlackQueen(chess.getBoard().getBoard()[row][col]);

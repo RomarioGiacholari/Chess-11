@@ -12,7 +12,10 @@ public class WhiteQueen extends PieceSprite {
 	public WhiteQueen(Piece piece) {
 		super(piece);
 		sprite = texture;		
+		setBounds(pieceX *60, pieceY*60, 60, 60);
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 
 }

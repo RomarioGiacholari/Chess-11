@@ -3,6 +3,8 @@ package com.mygdx.game.views;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.game.rules.Piece;
 
 public abstract class PieceSprite extends Actor {
@@ -12,16 +14,16 @@ public abstract class PieceSprite extends Actor {
 	
 	private static final int PIECE_MOVEMENT =60;
 	
-	private int pieceX=0;
-	private int pieceY=0;
+	protected int pieceX=0;
+	protected int pieceY=0;
 	
-	private int highX = 60;
-	private int highY = 60;
+
+	
 	
 	public PieceSprite(Piece piece) {
 		this.piece = piece;
 	}
-	
+		
 	public void draw(Batch batch) {
 		batch.draw(sprite,getPieceX(),getPieceY());
 	}
