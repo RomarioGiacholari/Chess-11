@@ -100,19 +100,7 @@ public class BoardView extends ScreenAdapter {
 						queen.draw(batch);
 						batch.end();
 
-						queen.setBounds(queen.pieceX * 60, queen.pieceY * 60, 60, 60);
-						;
-
-						queen.addListener(new InputListener() {
-							public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-								System.out.println("down");
-								return true;
-							}
-
-							public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-								System.out.println("up");
-							}
-						});
+					
 
 					} else if (chess.getBoard().getBoard()[row][col].getTeam() == false) {
 						PieceSprite queen = new BlackQueen(chess.getBoard().getBoard()[row][col]);
