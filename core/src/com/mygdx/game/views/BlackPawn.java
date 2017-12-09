@@ -10,7 +10,7 @@ public class BlackPawn extends PieceSprite {
 	
 	public BlackPawn(Piece piece) {
 		super(piece);
-		sprite = texture;	
+		sprite = texture;
 		}
 
 }
