@@ -18,14 +18,18 @@ public class Position {
 	public int getY() {
 		return yPosition;
 	}
-	
-	public boolean equals(Position testPos) {
-		if (this.getX() == testPos.getX() && this.getY() ==testPos.getY()) {
-			return true;
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Position) {
+			Position pos = (Position) obj;
+			if(pos.getX() == this.getX()) {
+				if(pos.getY() == this.getY()) {
+					return true;
+				}
+			}
 		}
-		else {
-			return false;
-		}
+		
+		return false;
 		
 	}
 }

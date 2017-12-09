@@ -7,6 +7,11 @@ public class Knight extends Piece {
 		super(row, col, player);
 		// TODO Auto-generated constructor stub
 	}
+	public String printPieceType(){
+		System.out.println("Knight");
+		return "Knight";
+	}
+	
 	public String toString() {
 		if(team) {
 			return "H";
@@ -31,5 +36,5 @@ public class Knight extends Piece {
 		}
 		return false;
 	}
-
+	
 }

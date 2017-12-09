@@ -61,13 +61,17 @@ public class Board {
 		board [6][6] = new Pawn(6,6,false);
 		board [6][7] = new Pawn(6,7,false);
 	}
-	
 	public Piece getSquare (Position position) {
 		return board[position.getX()][position.getY()];
 	}
 	
-	public Piece [][] getBoard(){
-		return board;
+	public void getPieceAtSquare(int x, int y){
+		if(board[x][y] != null){
+		System.out.println(board[x][y].printPieceType());
+		}
+		else{
+			System.out.println("This square is empty.");
+		}
 	}
 	public boolean checkRight(Piece piece,Position end) {
 		Position pointer = piece.getPos();
@@ -210,7 +214,7 @@ public class Board {
 	 * @param row the x coordinate of the new location
 	 * @param col the y coordinate of the new location
 	 */
-	public void move( Piece piece, int row, int col) throws InvalidMoveExcpeption {
+	public void move( Piece piece, int row, int col)  {
 		Position end = new Position(row,col);
 		
 		if (piece instanceof Knight) {
@@ -281,10 +285,10 @@ public class Board {
 			}
 		
 		}
-		throw new InvalidMoveExcpeption();
-	}
-}
 		
+	}
+
+	
 			/*if (piece.move(row, col)) {
 				if(piece instanceof Pawn) {
 					movePawn(new Position(row,col),(Pawn) piece);
@@ -454,6 +458,7 @@ public class Board {
 		return true;
 	}*/
 	/*private boolean moveBishop(Position position, Bishop piece) {
+		// TODO Auto-generated method stub
 		while (position.getX() != piece.getPos().getX() || position.getY() != piece.getPos().getY()) {
 			if (position.getX() > piece.getPos().getX() && position.getY() > piece.getPos().getY()) {
 				if (board[piece.getPos().getX()+1][piece.getPos().getY()+1] != null) {
@@ -529,6 +534,7 @@ public class Board {
 	}*/
 
 	/*private boolean moveQueen(Position position, Queen piece) {
+		// TODO Auto-generated method stub
 		while (position.getX() != piece.getPos().getX() || position.getY() != piece.getPos().getY()) {
 			if(position.getX() == piece.getPos().getX()) {
 				if(position.getY() > piece.getPos().getY()) {
@@ -695,6 +701,13 @@ public class Board {
 	 * @param col the y coordinate of the piece to be returned
 	 * @return the piece requested
 	 */
+	public Piece getSquare (int row, int col) {
+		return board[row][col];
+	}
+	
+	public Piece [][] getBoard(){
+		return board;
+	}
 	
 	/*public boolean moveKing(Position endPos, King king) {
 		while(king.getPos().getX() != endPos.getX() || king.getPos().getY() != endPos.getY()) {
@@ -918,3 +931,4 @@ public class Board {
 		}
 		return true;
 	}*/
+}

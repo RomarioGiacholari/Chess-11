@@ -44,6 +44,12 @@ public class Pawn extends Piece {
 		
 		return possibleMoves;
 	}
+	
+	public String printPieceType(){
+		System.out.println("Pawn");
+		return "Pawn";
+	}
+	
 	public String toString() {
 		if(team) {
 			return "P";
@@ -52,6 +58,7 @@ public class Pawn extends Piece {
 			return "p";
 				}
 	}
+
 	public boolean move(int row, int col) {
 		// TODO Auto-generated method stub
 		if (! moved) {

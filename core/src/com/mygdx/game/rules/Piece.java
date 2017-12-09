@@ -22,7 +22,7 @@ public abstract class Piece implements Movable {
 	 * A field to hold the column of the piece
 	 */
 	protected int locationCol;
-	
+	protected String name;
 	/**
 	 * A constructor that takes an x and y coordinate and a boolean representing if the piece is black or white it then initialises values.
 	 * @param row a parameter that takes an integer representing the x position.
@@ -51,5 +51,10 @@ public abstract class Piece implements Movable {
 	
 	public boolean getTeam() {
 		return team;
+	}
+
+	public String printPieceType() {
+		// TODO Auto-generated method stub
+		return name;
 	}
 }
