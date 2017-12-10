@@ -61,6 +61,9 @@ public class Pawn extends Piece {
 
 	public boolean move(int row, int col) {
 		// TODO Auto-generated method stub
+		 if(row == position.getX()+1 && col == position.getY()+1 ||(row == position.getX()+1 && col == position.getY()-1)){
+			return true;
+			}
 		if (! moved) {
 			if((row == position.getX() +1 || row == position.getX()+2) && col == position.getY() ||(row == position.getX() -1 || row == position.getX()-2) && col == position.getY()) {
 				if (row<8) {
@@ -80,6 +83,7 @@ public class Pawn extends Piece {
 				}
 				return false;
 			}
+			
 			else {
 				return false;
 				}

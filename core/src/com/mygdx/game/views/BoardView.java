@@ -46,6 +46,8 @@ public class BoardView extends ScreenAdapter {
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 			int mouseGridX = Integer.parseInt(Integer.toString(Gdx.input.getX() / 60).substring(0, 1));
 			int mouseGridY = Integer.parseInt(Integer.toString(Gdx.input.getY() / 60).substring(0, 1));
+			
+			
 
 			if (mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0) {
 				showIfSelected(mouseGridX, mouseGridY);

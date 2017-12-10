@@ -93,8 +93,8 @@ public class Board {
 		
 		if(board[x][y] != null){
 		System.out.println(board[x][y].printPieceType());
-		if (board[x][y].move(3, 3)) {
-			move(board[x][y], 3, 3);
+		if (board[x][y].move(2, 3)) {
+			move(board[x][y], 2, 3);
 		}
 		}
 		else{
@@ -254,6 +254,7 @@ public class Board {
 			else {
 				setPiece(piece,end);
 			}
+			
 		}
 		else {
 			if(end.getX() == piece.getPos().getX()) {
