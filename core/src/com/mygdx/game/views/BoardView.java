@@ -28,6 +28,8 @@ public class BoardView extends ScreenAdapter {
 	private chessGame chess;
 	private Piece selected = null;
 	private ChessBoard chessBoard = new ChessBoard();
+	private Position currentPos = null;
+	private Position targetPos = null;
 
 	@Override
 	public void show() {

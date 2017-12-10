@@ -66,8 +66,36 @@ public class Board {
 	}
 	
 	public void getPieceAtSquare(int x, int y){
+		if( x == 0) {
+			 x = 7;
+		}
+		else if (x==1) {
+			x= 6;
+		}
+		else if(x==2) {
+			x=5;
+		}
+		else if (x==3) {
+			x = 4;
+		}
+		else if(x==4) {
+			x = 3;
+		}
+		else if (x==5){
+			x =2;
+		}
+		else if (x==6) {
+			x = 1;
+		}
+		else if (x ==7) {
+			x = 0;
+		}
+		
 		if(board[x][y] != null){
 		System.out.println(board[x][y].printPieceType());
+		if (board[x][y].move(3, 3)) {
+			move(board[x][y], 3, 3);
+		}
 		}
 		else{
 			System.out.println("This square is empty.");
