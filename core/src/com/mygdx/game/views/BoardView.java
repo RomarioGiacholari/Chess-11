@@ -42,17 +42,22 @@ public class BoardView extends ScreenAdapter {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		//count times clicked
 
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 			int mouseGridX = Integer.parseInt(Integer.toString(Gdx.input.getX() / 60).substring(0, 1));
 			int mouseGridY = Integer.parseInt(Integer.toString(Gdx.input.getY() / 60).substring(0, 1));
 			
-			
+			//if second time assume destination
 
 			if (mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0) {
 				showIfSelected(mouseGridX, mouseGridY);
-				System.out.println("selcted square (x, y): " + mouseGridX + ", " + mouseGridY);
-				chess.getBoard().getPieceAtSquare(mouseGridY, mouseGridX);
+				System.out.println("selcted square (x, y): " + mouseGridX + ", " + mouseGridY); // coordinates
+				chess.getBoard().getPieceAtSquare(mouseGridY, mouseGridX); //object selected to move
+				
+				//move piece to new location
+				
 			}
 		}
 
