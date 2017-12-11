@@ -44,31 +44,35 @@ public class BoardView extends ScreenAdapter {
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		//count times clicked
-
+		 
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+			Constants.increment(); //increment count on each click
 			int mouseGridX = Integer.parseInt(Integer.toString(Gdx.input.getX() / 60).substring(0, 1));
 			int mouseGridY = Integer.parseInt(Integer.toString(Gdx.input.getY() / 60).substring(0, 1));
-			Constants.count ++; //increment count on each click
-			
+	
 			//if second time assume destination
 			if (mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0 && Constants.count == 2) {
-				Constants.count = 0; //reset count
 				
 				showIfSelected(mouseGridX, mouseGridY);
-				System.out.println("selcted square (x, y): " + mouseGridX + ", " + mouseGridY); // object selected to move
-				Piece piece = chess.getBoard().getSquare(mouseGridY, mouseGridX); // coordinates
-				chess.getBoard().move(piece, mouseGridY, mouseGridX); //move piece to new location
-				
-			}
+//				System.out.println(Integer.toString(Constants.count)); // object selected to move
+//				Piece piece = chess.getBoard().getSquare(Constants.y,Constants.x ); // coordinates
+				chess.getBoard().move(Constants.piece,mouseGridY, mouseGridX ); //move piece to new location
 
-			if (mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0) {
-				
+				Constants.reset(); //reset count
+			
+			}else if (mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0) {
 				showIfSelected(mouseGridX, mouseGridY);
 				System.out.println("selcted square (x, y): " + mouseGridX + ", " + mouseGridY); // coordinates
 				chess.getBoard().getPieceAtSquare(mouseGridY, mouseGridX); //object selected to move
 				
+				Constants.setX(mouseGridX);
+				Constants.setY(mouseGridY);
+				Position position  = new Position(mouseGridY,mouseGridX);
+				Constants.setPiece(chess.getBoard().getSquare(position));
+				
 			}
+			
+			
 		}
 
 		showBoard();
