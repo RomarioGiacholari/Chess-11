@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.game.constants.Constants;
 import com.mygdx.game.models.Board;
 import com.mygdx.game.models.chessGame;
 import com.mygdx.game.rules.Bishop;
@@ -48,15 +49,24 @@ public class BoardView extends ScreenAdapter {
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 			int mouseGridX = Integer.parseInt(Integer.toString(Gdx.input.getX() / 60).substring(0, 1));
 			int mouseGridY = Integer.parseInt(Integer.toString(Gdx.input.getY() / 60).substring(0, 1));
+			Constants.count ++; //increment count on each click
 			
 			//if second time assume destination
+			if (mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0 && Constants.count == 2) {
+				Constants.count = 0; //reset count
+				
+				showIfSelected(mouseGridX, mouseGridY);
+				System.out.println("selcted square (x, y): " + mouseGridX + ", " + mouseGridY); // object selected to move
+				Piece piece = chess.getBoard().getSquare(mouseGridY, mouseGridX); // coordinates
+				chess.getBoard().move(piece, mouseGridY, mouseGridX); //move piece to new location
+				
+			}
 
 			if (mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0) {
+				
 				showIfSelected(mouseGridX, mouseGridY);
 				System.out.println("selcted square (x, y): " + mouseGridX + ", " + mouseGridY); // coordinates
 				chess.getBoard().getPieceAtSquare(mouseGridY, mouseGridX); //object selected to move
-				
-				//move piece to new location
 				
 			}
 		}
