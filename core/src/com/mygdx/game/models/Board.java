@@ -65,7 +65,7 @@ public class Board {
 		return board[position.getX()][position.getY()];
 	}
 	
-	public void getPieceAtSquare(int x, int y){
+	public void getPieceAtSquare(int x, int y,int oldX,int oldY){
 		if( x == 0) {
 			 x = 7;
 		}
@@ -91,10 +91,35 @@ public class Board {
 			x = 0;
 		}
 		
+		if( oldX == 0) {
+			oldX = 7;
+		}
+		else if (oldX==1) {
+			oldX= 6;
+		}
+		else if(oldX==2) {
+			oldX=5;
+		}
+		else if (oldX==3) {
+			oldX = 4;
+		}
+		else if(oldX==4) {
+			oldX = 3;
+		}
+		else if (oldX==5){
+			oldX =2;
+		}
+		else if (oldX==6) {
+			oldX = 1;
+		}
+		else if (oldX ==7) {
+			oldX = 0;
+		}
+		
 		if(board[x][y] != null){
 		System.out.println(board[x][y].printPieceType());
-		if (board[x][y].move(2, 3)) {
-			move(board[x][y], 2, 3);
+		if (board[x][y].move(oldX, oldY)) {
+			move(board[x][y], oldX, oldY);
 		}
 		}
 		else{
