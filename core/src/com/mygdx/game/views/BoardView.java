@@ -122,9 +122,6 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						queen.draw(batch);
 						batch.end();
-
-					
-
 					} else if (chess.getBoard().getBoard()[row][col].getTeam() == false) {
 						PieceSprite queen = new BlackQueen(chess.getBoard().getBoard()[row][col]);
 						queen.movePieceUp(row);
