@@ -32,7 +32,7 @@ public class BoardView extends ScreenAdapter {
 	private ChessBoard chessBoard = new ChessBoard();
 	private Position currentPos = null;
 	private Position targetPos = null;
-	private static final float MOVE_TIME=1f;
+	private static final float MOVE_TIME=0.5f;
 	private float timer = MOVE_TIME;
 	private int oldX = -1;
 	private int oldY = -1;
@@ -122,6 +122,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						queen.draw(batch);
 						batch.end();
+						queen.dispose();
 					} else if (chess.getBoard().getBoard()[row][col].getTeam() == false) {
 						PieceSprite queen = new BlackQueen(chess.getBoard().getBoard()[row][col]);
 						queen.movePieceUp(row);
@@ -129,6 +130,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						queen.draw(batch);
 						batch.end();
+						queen.dispose();
 					}
 				}
 			}
@@ -146,6 +148,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						bishop.draw(batch);
 						batch.end();
+						bishop.dispose();
 					} else if (chess.getBoard().getBoard()[row][col].getTeam() == false) {
 						PieceSprite bishop = new BlackBishop(chess.getBoard().getBoard()[row][col]);
 						bishop.movePieceUp(row);
@@ -153,6 +156,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						bishop.draw(batch);
 						batch.end();
+						bishop.dispose();
 					}
 				}
 			}
@@ -170,6 +174,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						rook.draw(batch);
 						batch.end();
+						rook.dispose();
 					} else if (chess.getBoard().getBoard()[row][col].getTeam() == false) {
 						PieceSprite rook = new BlackRook(chess.getBoard().getBoard()[row][col]);
 						rook.movePieceUp(row);
@@ -177,6 +182,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						rook.draw(batch);
 						batch.end();
+						rook.dispose();
 					}
 				}
 			}
@@ -194,6 +200,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						knight.draw(batch);
 						batch.end();
+						knight.dispose();
 					} else if (chess.getBoard().getBoard()[row][col].getTeam() == false) {
 						PieceSprite knight = new BlackKnight(chess.getBoard().getBoard()[row][col]);
 						knight.movePieceUp(row);
@@ -201,6 +208,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						knight.draw(batch);
 						batch.end();
+						knight.dispose();
 					}
 				}
 			}
@@ -218,6 +226,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						king.draw(batch);
 						batch.end();
+						king.dispose();
 					} else if (chess.getBoard().getBoard()[row][col].getTeam() == false) {
 						PieceSprite king = new BlackKing(chess.getBoard().getBoard()[row][col]);
 						king.movePieceUp(row);
@@ -225,6 +234,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						king.draw(batch);
 						batch.end();
+						king.dispose();
 					}
 				}
 			}
@@ -242,6 +252,7 @@ public class BoardView extends ScreenAdapter {
 					batch.begin();
 					pawn.draw(batch);
 					batch.end();
+					pawn.dispose();
 				} else if (chess.getBoard().getBoard()[row][col] instanceof Pawn
 						&& chess.getBoard().getBoard()[row][col].getTeam() == false) {
 					PieceSprite pawn = new BlackPawn(chess.getBoard().getBoard()[row][col]);
@@ -250,6 +261,7 @@ public class BoardView extends ScreenAdapter {
 					batch.begin();
 					pawn.draw(batch);
 					batch.end();
+					pawn.dispose();
 				}
 			}
 		}
