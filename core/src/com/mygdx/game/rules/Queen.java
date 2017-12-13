@@ -37,33 +37,20 @@ public class Queen extends Piece {
 		 * - The queen needs to know if it is moving off the board.
 		 */
 		if(row < 8 && col < 8 && row >= 0 && col >= 0) {
-			 if(row == locationRow) {
-				for(int i = 0;i<8;i++) {
-					if (i == col) {
-						return true;
+			 if (row == position.getX()) {
+					for(int i = 0;i<8;i++) {
+						if(i == col) {
+							return true;
+						}
 					}
 				}
-				
-				for(int i = 7; i>=0;i--) {
-					if (i == col) {
-						return true;
+				else if(col == position.getY()) {
+					for( int i = 0 ; i<8;i++) {
+						if(i==row) {
+							return true;
+						}
 					}
 				}
-				
-			}
-			else if (col == locationCol) {
-				for(int i = 0;i<8;i++) {
-					if (i == row) {
-						return true;
-					}
-				}
-				
-				for(int i = 7; i>=0;i--) {
-					if (i == row) {
-						return true;
-					}
-				}
-			}
 			else {
 				for( int i=1; i<8;i++) {
 					if((row == position.getX() + i && col == position.getY() +i ) || (row == position.getX() - i && col ==position.getY() -i )||(row == position.getX() + i && col ==position.getY() -i || (row == position.getX() - i && col ==position.getY() +i ))){

@@ -1,5 +1,7 @@
 package com.mygdx.game.views;
 
+import java.util.concurrent.TimeUnit;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -28,6 +30,12 @@ public class BoardView extends ScreenAdapter {
 	private chessGame chess;
 	private Piece selected = null;
 	private ChessBoard chessBoard = new ChessBoard();
+	private Position currentPos = null;
+	private Position targetPos = null;
+	private static final float MOVE_TIME=0.5f;
+	private float timer = MOVE_TIME;
+	private int oldX = -1;
+	private int oldY = -1;
 
 	@Override
 	public void show() {
@@ -40,16 +48,31 @@ public class BoardView extends ScreenAdapter {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		timer-=delta;
+		if(timer<=0) {
+			timer=MOVE_TIME;
+		
 
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 			int mouseGridX = Integer.parseInt(Integer.toString(Gdx.input.getX() / 60).substring(0, 1));
 			int mouseGridY = Integer.parseInt(Integer.toString(Gdx.input.getY() / 60).substring(0, 1));
-
-			if (mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0) {
+			
+			if(oldX == -1) {
+				oldX = mouseGridX;
+				oldY = mouseGridY;
+			}
+			if (mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0 && (oldX != mouseGridX || oldY != mouseGridY)) {
 				showIfSelected(mouseGridX, mouseGridY);
 				System.out.println("selcted square (x, y): " + mouseGridX + ", " + mouseGridY);
-				chess.getBoard().getPieceAtSquare(mouseGridY, mouseGridX);
+				chess.getBoard().getPieceAtSquare(mouseGridY, mouseGridX, oldY, oldX);
+				System.out.println("old square (x, y): "+oldX+ ", "+ oldY );
+				oldX = -1;
+				oldY = -1;
 			}
+			else if(mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0) {
+				System.out.println("selcted square (x, y): " + mouseGridX + ", " + mouseGridY);
+			}
+		}
 		}
 
 		showBoard();
@@ -99,9 +122,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						queen.draw(batch);
 						batch.end();
-
-					
-
+						queen.dispose();
 					} else if (chess.getBoard().getBoard()[row][col].getTeam() == false) {
 						PieceSprite queen = new BlackQueen(chess.getBoard().getBoard()[row][col]);
 						queen.movePieceUp(row);
@@ -109,6 +130,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						queen.draw(batch);
 						batch.end();
+						queen.dispose();
 					}
 				}
 			}
@@ -126,6 +148,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						bishop.draw(batch);
 						batch.end();
+						bishop.dispose();
 					} else if (chess.getBoard().getBoard()[row][col].getTeam() == false) {
 						PieceSprite bishop = new BlackBishop(chess.getBoard().getBoard()[row][col]);
 						bishop.movePieceUp(row);
@@ -133,6 +156,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						bishop.draw(batch);
 						batch.end();
+						bishop.dispose();
 					}
 				}
 			}
@@ -150,6 +174,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						rook.draw(batch);
 						batch.end();
+						rook.dispose();
 					} else if (chess.getBoard().getBoard()[row][col].getTeam() == false) {
 						PieceSprite rook = new BlackRook(chess.getBoard().getBoard()[row][col]);
 						rook.movePieceUp(row);
@@ -157,6 +182,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						rook.draw(batch);
 						batch.end();
+						rook.dispose();
 					}
 				}
 			}
@@ -174,6 +200,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						knight.draw(batch);
 						batch.end();
+						knight.dispose();
 					} else if (chess.getBoard().getBoard()[row][col].getTeam() == false) {
 						PieceSprite knight = new BlackKnight(chess.getBoard().getBoard()[row][col]);
 						knight.movePieceUp(row);
@@ -181,6 +208,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						knight.draw(batch);
 						batch.end();
+						knight.dispose();
 					}
 				}
 			}
@@ -198,6 +226,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						king.draw(batch);
 						batch.end();
+						king.dispose();
 					} else if (chess.getBoard().getBoard()[row][col].getTeam() == false) {
 						PieceSprite king = new BlackKing(chess.getBoard().getBoard()[row][col]);
 						king.movePieceUp(row);
@@ -205,6 +234,7 @@ public class BoardView extends ScreenAdapter {
 						batch.begin();
 						king.draw(batch);
 						batch.end();
+						king.dispose();
 					}
 				}
 			}
@@ -222,6 +252,7 @@ public class BoardView extends ScreenAdapter {
 					batch.begin();
 					pawn.draw(batch);
 					batch.end();
+					pawn.dispose();
 				} else if (chess.getBoard().getBoard()[row][col] instanceof Pawn
 						&& chess.getBoard().getBoard()[row][col].getTeam() == false) {
 					PieceSprite pawn = new BlackPawn(chess.getBoard().getBoard()[row][col]);
@@ -230,6 +261,7 @@ public class BoardView extends ScreenAdapter {
 					batch.begin();
 					pawn.draw(batch);
 					batch.end();
+					pawn.dispose();
 				}
 			}
 		}

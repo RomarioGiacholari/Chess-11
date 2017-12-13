@@ -65,9 +65,62 @@ public class Board {
 		return board[position.getX()][position.getY()];
 	}
 	
-	public void getPieceAtSquare(int x, int y){
+	public void getPieceAtSquare(int x, int y,int oldX,int oldY){
+		if( x == 0) {
+			 x = 7;
+		}
+		else if (x==1) {
+			x= 6;
+		}
+		else if(x==2) {
+			x=5;
+		}
+		else if (x==3) {
+			x = 4;
+		}
+		else if(x==4) {
+			x = 3;
+		}
+		else if (x==5){
+			x =2;
+		}
+		else if (x==6) {
+			x = 1;
+		}
+		else if (x ==7) {
+			x = 0;
+		}
+		
+		if( oldX == 0) {
+			oldX = 7;
+		}
+		else if (oldX==1) {
+			oldX= 6;
+		}
+		else if(oldX==2) {
+			oldX=5;
+		}
+		else if (oldX==3) {
+			oldX = 4;
+		}
+		else if(oldX==4) {
+			oldX = 3;
+		}
+		else if (oldX==5){
+			oldX =2;
+		}
+		else if (oldX==6) {
+			oldX = 1;
+		}
+		else if (oldX ==7) {
+			oldX = 0;
+		}
+		
 		if(board[x][y] != null){
 		System.out.println(board[x][y].printPieceType());
+		if (board[x][y].move(oldX, oldY)) {
+			move(board[x][y], oldX, oldY);
+		}
 		}
 		else{
 			System.out.println("This square is empty.");
@@ -226,6 +279,7 @@ public class Board {
 			else {
 				setPiece(piece,end);
 			}
+			
 		}
 		else {
 			if(end.getX() == piece.getPos().getX()) {
