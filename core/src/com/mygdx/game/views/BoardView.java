@@ -28,14 +28,13 @@ import com.mygdx.game.views.*;
 public class BoardView extends ScreenAdapter {
 	private SpriteBatch batch;
 	private chessGame chess;
-	private Piece selected = null;
 	private ChessBoard chessBoard = new ChessBoard();
-	private Position currentPos = null;
-	private Position targetPos = null;
 	private static final float MOVE_TIME=0.5f;
 	private float timer = MOVE_TIME;
 	private int oldX = -1;
 	private int oldY = -1;
+	
+	private boolean turn = true;
 
 	@Override
 	public void show() {
@@ -46,6 +45,8 @@ public class BoardView extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
+		
+		
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		timer-=delta;
@@ -63,7 +64,7 @@ public class BoardView extends ScreenAdapter {
 			}
 			if (mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0 && (oldX != mouseGridX || oldY != mouseGridY)) {
 				showIfSelected(mouseGridX, mouseGridY);
-				System.out.println("selcted square (x, y): " + mouseGridX + ", " + mouseGridY);
+				System.out.println("selcted square (x, y): " + mouseGridX + ", " + mouseGridY);		
 				chess.getBoard().getPieceAtSquare(mouseGridY, mouseGridX, oldY, oldX);
 				System.out.println("old square (x, y): "+oldX+ ", "+ oldY );
 				oldX = -1;

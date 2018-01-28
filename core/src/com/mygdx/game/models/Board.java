@@ -11,6 +11,8 @@ import com.mygdx.game.rules.*;
  *
  */
 public class Board {
+	
+	private boolean turn = true;
 	/**
 	 * A 2d array to hold all the Piece objects in their positions on the chess board
 	 */
@@ -118,8 +120,12 @@ public class Board {
 		
 		if(board[x][y] != null){
 		System.out.println(board[x][y].printPieceType());
-		if (board[x][y].move(oldX, oldY)) {
-			move(board[x][y], oldX, oldY);
+		
+		if(board[x][y].getTeam() == turn) {
+			if (board[x][y].move(oldX, oldY)) {
+				move(board[x][y], oldX, oldY);
+			}
+			turn = !turn;
 		}
 		}
 		else{
