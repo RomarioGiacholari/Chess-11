@@ -124,8 +124,8 @@ public class Board {
 		if(board[x][y].getTeam() == turn) {
 			if (board[x][y].move(oldX, oldY)) {
 				move(board[x][y], oldX, oldY);
+				turn = !turn;
 			}
-			turn = !turn;
 		}
 		}
 		else{

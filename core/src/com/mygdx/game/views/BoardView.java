@@ -22,33 +22,17 @@ public class BoardView extends ScreenAdapter {
 	private SpriteBatch batch;
 	private chessGame chess;
 	private ChessBoard chessBoard = new ChessBoard();
-	private static final float MOVE_TIME=0.25f;
+	private static final float MOVE_TIME=0.3f;
 	private float timer = MOVE_TIME;
 	private int oldX = -1;
 	private int oldY = -1;
-	private ArrayList queens;
-	private ArrayList kings;
-	private ArrayList knights;
-	private ArrayList rooks;
-	private ArrayList bishops;
-	private ArrayList pawns;
-	
-	private boolean turn = true;
+
 
 	@Override
 	public void show() {
 		chess = new chessGame();
-		batch = new SpriteBatch();
-		queens = new ArrayList<PieceSprite>();
-		kings = new ArrayList<PieceSprite>();
-		knights = new ArrayList<PieceSprite>();
-		rooks = new ArrayList<PieceSprite>();
-		bishops = new ArrayList<PieceSprite>();
-		pawns = new ArrayList<PieceSprite>();
-		
-
-
-	}
+		batch = new SpriteBatch();	
+		}
 
 	@Override
 	public void render(float delta) {
