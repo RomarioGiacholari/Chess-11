@@ -18,5 +18,7 @@ public class ChessBoard extends Actor{
 	public void draw(Batch batch) {
 		batch.draw(texture, 0, 0);
 	}
+	
+	
 
 }

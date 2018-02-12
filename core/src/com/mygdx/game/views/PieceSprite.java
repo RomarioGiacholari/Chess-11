@@ -61,6 +61,11 @@ public abstract class PieceSprite extends Actor {
 		pieceX= x * PIECE_MOVEMENT;
 	}
 	
+	public void set0() {
+		pieceX = 0;
+		pieceY = 0;
+	}
+	
 	public void dispose() {
 		sprite = null;
 		piece=null;

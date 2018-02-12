@@ -8,7 +8,6 @@ public class GameController{
     public GameController(chessGame game){
 
          game = new chessGame();
-         ClickListener clickListener = new ClickListener();
     }
 
 }
