@@ -1,7 +1,6 @@
 package com.mygdx.game.views;
 
 
-import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -22,7 +21,7 @@ public class BoardView extends ScreenAdapter {
 	private SpriteBatch batch;
 	private chessGame chess;
 	private ChessBoard chessBoard = new ChessBoard();
-	private static final float MOVE_TIME=0.3f;
+	private static final float MOVE_TIME=0.2f;
 	private float timer = MOVE_TIME;
 	private int oldX = -1;
 	private int oldY = -1;
