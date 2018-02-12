@@ -29,7 +29,7 @@ public class BoardView extends ScreenAdapter {
 	private SpriteBatch batch;
 	private chessGame chess;
 	private ChessBoard chessBoard = new ChessBoard();
-	private static final float MOVE_TIME=0.5f;
+	private static final float MOVE_TIME=0.25f;
 	private float timer = MOVE_TIME;
 	private int oldX = -1;
 	private int oldY = -1;
@@ -39,13 +39,12 @@ public class BoardView extends ScreenAdapter {
 	@Override
 	public void show() {
 		chess = new chessGame();
-		batch = new SpriteBatch();
 
 	}
 
 	@Override
 	public void render(float delta) {
-		
+		batch = new SpriteBatch();
 		
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -63,15 +62,12 @@ public class BoardView extends ScreenAdapter {
 				oldY = mouseGridY;
 			}
 			if (mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0 && (oldX != mouseGridX || oldY != mouseGridY)) {
-				showIfSelected(mouseGridX, mouseGridY);
-				System.out.println("selcted square (x, y): " + mouseGridX + ", " + mouseGridY);		
+				//showIfSelected(mouseGridX, mouseGridY);
 				chess.getBoard().getPieceAtSquare(mouseGridY, mouseGridX, oldY, oldX);
-				System.out.println("old square (x, y): "+oldX+ ", "+ oldY );
 				oldX = -1;
 				oldY = -1;
 			}
 			else if(mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0) {
-				System.out.println("selcted square (x, y): " + mouseGridX + ", " + mouseGridY);
 			}
 		}
 		}
@@ -83,6 +79,7 @@ public class BoardView extends ScreenAdapter {
 		showRooks();
 		showBishops();
 		showQueens();
+		batch.dispose();
 
 	}
 
@@ -90,7 +87,7 @@ public class BoardView extends ScreenAdapter {
 
 	}
 
-	public void showIfSelected(int row, int col) {
+	/*public void showIfSelected(int row, int col) {
 
 		IsSelectedSprite highlighted = new IsSelectedSprite();
 		// queen.movePieceUp(row);
@@ -100,12 +97,13 @@ public class BoardView extends ScreenAdapter {
 		batch.end();
 
 		// queen.setBounds(queen.pieceX *60, queen.pieceY*60, 60, 60);
-	}
+	}*/
 
 	public void showBoard() {
 		batch.begin();
 		chessBoard.draw(batch);
 		batch.end();
+		
 	}
 
 	public void teleportQueen(Piece piece) {
