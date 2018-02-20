@@ -3,7 +3,9 @@ package com.mygdx.ai.engine;
 import java.util.ArrayList;
 
 import com.mygdx.game.models.Board;
+import com.mygdx.game.rules.Pawn;
 import com.mygdx.game.rules.Piece;
+import com.mygdx.game.rules.Position;
 
 public class AI {
 	
@@ -15,6 +17,7 @@ public class AI {
 		board = new Board();
 		boardStates = new ArrayList<Piece[][]>();
 		board.setUp();
+		System.out.println(board.numberOfPieces());
 	}
 	
 	public void checkPossibleMoves (Piece[][] currentState) {
@@ -23,7 +26,6 @@ public class AI {
 			// Goes through the row
 			for (int n = 0; n < currentState.length; n++) {
 				
-				if (board.checkUp(currentState[i][n], board.get))
 				System.out.print(currentState[i][n]);
 				System.out.print("\t");
 			}
@@ -31,12 +33,29 @@ public class AI {
 		}
 	}
 	
-	public static void printRow (Piece[] row) {
-		for (Piece i : row) {
-			System.out.print(i);
-			System.out.print("\t");
+	public void possibleMoves (Board currentState) {
+		int count = 0;
+		while (count <= board.getNumberOfPieces()) {
+			/* Search for pieces increment count if piece found */
+			
 		}
-		System.out.println();
+		Piece somePiece = currentState.getSquare(new Position(1, 0));
+		if (somePiece instanceof Pawn) {
+			for (int i = 0; i < 3; i++) {
+				
+			}
+			System.out.println(((Pawn) somePiece).arrMove());
+			
+		}
+//		if (board.checkUp(currentState[1][0], new Position(4, 0))) {
+//			System.out.println("DONE");
+//		} else {
+//			System.out.println("CANNOT BE DONE");
+//		}
+	}
+	
+	public void testMethod () {
+		possibleMoves(board);
 	}
 	
 //	public static void main (String[] args) {
