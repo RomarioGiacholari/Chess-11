@@ -63,7 +63,7 @@ public class BoardView extends ScreenAdapter {
 			}
 		}
 		}
-
+		chess.getBoard().promoteCheck();
 		showBoard();
 		showPawns();
 		showKings();

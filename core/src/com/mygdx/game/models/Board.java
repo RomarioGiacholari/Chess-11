@@ -66,6 +66,20 @@ public class Board {
 		return board[position.getX()][position.getY()];
 	}
 	
+	public void  promoteCheck() {
+		for(int i =0; i<=7; i++) {
+			if(board[0][i] instanceof Pawn && board[0][i] .getTeam() == false) {
+				board[0][i] = null;
+				board[0][i] = new Queen(0,i,false);
+			}
+			if(board[7][i] instanceof Pawn && board[7][i].getTeam()==true) {
+				board[7][i] = null;
+				board[7][i] = new Queen(7,i,true);
+			}
+		}
+		
+	}
+	
 	public void getPieceAtSquare(int x, int y,int oldX,int oldY){
 		if( x == 0) {
 			 x = 7;
