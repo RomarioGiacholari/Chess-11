@@ -440,7 +440,7 @@ public class Board {
 		return board;
 	}
 	
-	public void numberOfPieces () {
+	public int numberOfPieces () {
 		for (int i = 0; i < board.length; i++) {
 			for (int n = 0; n < board.length; n++) {
 				if (board[i][n] != null) {
@@ -448,6 +448,7 @@ public class Board {
 				}
 			}
 		}
+		return pieceCount;
 	}
 	
 	public int getNumberOfPieces () {
