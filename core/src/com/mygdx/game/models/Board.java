@@ -117,13 +117,14 @@ public class Board {
 			oldX = 0;
 		}
 		
-		if(board[x][y] != null){
-		System.out.println(board[x][y].printPieceType());
+		if(board[oldX][oldY] != null){
+		System.out.println(board[oldX][oldY].printPieceType());
 		
-		if(board[x][y].getTeam() == turn) {
-			if (board[x][y].move(oldX, oldY)) {
-				move(board[x][y], oldX, oldY);
+		if(board[oldX][oldY].getTeam() == turn) {
+			if (board[oldX][oldY].move(x, y)) {
+				if(move(board[oldX][oldY], x, y) == true) {
 				turn = !turn;
+				}
 			}
 		}
 		}
@@ -272,30 +273,87 @@ public class Board {
 	 * @param row the x coordinate of the new location
 	 * @param col the y coordinate of the new location
 	 */
-	public void move( Piece piece, int row, int col)  {
+	public boolean move( Piece piece, int row, int col)  {
 		Position end = new Position(row,col);
 		
 		if (piece instanceof Knight) {
 			if (getSquare(end) != null) {
 				if (getSquare(end).getTeam() != piece.getTeam()) {
 					setPiece(piece,end);
+					return true;
 				}
 			}
 			else {
 				setPiece(piece,end);
+				return true;
 			}
 			
 		}
+		else if(piece instanceof Pawn) {
+			if (end.getY() == piece.getPos().getY()) {
+				if (end.getX()>piece.getPos().getX()) {
+					if(checkUp(piece,end)) {
+						setPiece(piece,end);
+						return true;
+
+					}
+				}
+				else if (end.getX()<piece.getPos().getX()) {
+					if (checkDown(piece,end)) {
+						setPiece(piece,end);
+						return true;
+					}
+				}
+			}
+			
+			else if (end.getX()>piece.getPos().getX()) {
+				if (end.getY()>piece.getPos().getY()) {
+					if (checkupRight(piece,end) && ( (board [piece.getPos().getX()+1] [piece.getPos().getY()+1] != null && board [piece.getPos().getX()+1] [piece.getPos().getY()+1].getTeam() != piece.getTeam()))) {
+						setPiece(piece,end);
+						return true;
+					}
+				}
+				else if (end.getY()<piece.getPos().getY()) {
+					if(checkUpLeft(piece,end) && ( (board [piece.getPos().getX()+1] [piece.getPos().getY()-1] != null && board [piece.getPos().getX()+1] [piece.getPos().getY()-1].getTeam() != piece.getTeam()))) {
+					{
+						setPiece(piece,end);
+						return true;
+
+					}
+				}
+			}
+			
+		}
+			else if (end.getX()< piece.getPos().getX()) {
+				if (end.getY() > piece.getPos().getY()) {
+					if (checkDownRight(piece,end) && ( (board [piece.getPos().getX()-1] [piece.getPos().getY()+1] != null && board [piece.getPos().getX()-1] [piece.getPos().getY()+1].getTeam() != piece.getTeam()))) {
+						setPiece(piece,end);
+						return true;
+
+					}
+				}
+				else if (end.getY()<piece.getPos().getY()) {
+					if(checkDownLeft(piece,end)&& ( (board [piece.getPos().getX()-1] [piece.getPos().getY()-1] != null && board [piece.getPos().getX()-1] [piece.getPos().getY()-1].getTeam() != piece.getTeam()))) {
+						setPiece(piece,end);
+						return true;
+
+					}
+				}
+			}
+		}
+		
 		else {
 			if(end.getX() == piece.getPos().getX()) {
 				if(end.getY()>piece.getPos().getY()) {
 					if(checkRight(piece,end)) {
 						setPiece(piece,end);
+						return true;
 					}
 				}
 				else {
 					if(checkLeft(piece,end)) {
 						setPiece(piece,end);
+						return true;
 					}
 				}
 			}
@@ -303,13 +361,14 @@ public class Board {
 				if (end.getX()>piece.getPos().getX()) {
 					if(checkUp(piece,end)) {
 						setPiece(piece,end);
+						return true;
 
 					}
 				}
 				else if (end.getX()<piece.getPos().getX()) {
 					if (checkDown(piece,end)) {
 						setPiece(piece,end);
-
+						return true;
 					}
 				}
 			}
@@ -317,13 +376,14 @@ public class Board {
 				if (end.getY()>piece.getPos().getY()) {
 					if (checkupRight(piece,end)) {
 						setPiece(piece,end);
-
+						return true;
 					}
 				}
 				else if (end.getY()<piece.getPos().getY()) {
 					if(checkUpLeft(piece,end)) 
 					{
 						setPiece(piece,end);
+						return true;
 
 					}
 				}
@@ -332,18 +392,21 @@ public class Board {
 				if (end.getY() > piece.getPos().getY()) {
 					if (checkDownRight(piece,end)) {
 						setPiece(piece,end);
+						return true;
 
 					}
 				}
 				else if (end.getY()<piece.getPos().getY()) {
 					if(checkDownLeft(piece,end)) {
 						setPiece(piece,end);
+						return true;
 
 					}
 				}
 			}
 		
 		}
+		return false;
 		
 	}
 
