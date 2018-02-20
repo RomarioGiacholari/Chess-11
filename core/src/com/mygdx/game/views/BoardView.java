@@ -21,7 +21,7 @@ public class BoardView extends ScreenAdapter {
 	private SpriteBatch batch;
 	private chessGame chess;
 	private ChessBoard chessBoard = new ChessBoard();
-	private static final float MOVE_TIME=0.2f;
+	private static final float MOVE_TIME=0.375f;
 	private float timer = MOVE_TIME;
 	private int oldX = -1;
 	private int oldY = -1;
@@ -55,7 +55,8 @@ public class BoardView extends ScreenAdapter {
 				//showIfSelected(mouseGridX, mouseGridY);
 				System.out.println("selcted square (x, y): " + mouseGridX + ", " + mouseGridY);		
 				chess.getBoard().getPieceAtSquare(mouseGridY, mouseGridX, oldY, oldX);
-				System.out.println("old square (x, y): "+oldX+ ", "+ oldY );				oldX = -1;
+				System.out.println("old square (x, y): "+oldX+ ", "+ oldY );				
+				oldX = -1;
 				oldY = -1;
 			}
 			else if(mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0) {
