@@ -276,7 +276,7 @@ public class Board {
 		return true;
 	}
 	
-	public void setPiece(Piece piece,Position end) {
+	public void setPiece (Piece piece, Position end) {
 		board[end.getX()][end.getY()] = piece;
 		board[piece.getPos().getX()][piece.getPos().getY()] = null;
 		piece.setPos(end);
@@ -289,7 +289,7 @@ public class Board {
 	 * @param row the x coordinate of the new location
 	 * @param col the y coordinate of the new location
 	 */
-	public boolean move(Piece piece, int row, int col)  {
+	public boolean move (Piece piece, int row, int col)  {
 		Position end = new Position(row,col);
 		
 		if (piece instanceof Knight) {
@@ -404,7 +404,7 @@ public class Board {
 					}
 				}
 			}
-			else if(end.getX()< piece.getPos().getX()) {
+			else if(end.getX() < piece.getPos().getX()) {
 				if (end.getY() > piece.getPos().getY()) {
 					if (checkDownRight(piece,end)) {
 						setPiece(piece,end);
@@ -412,7 +412,7 @@ public class Board {
 
 					}
 				}
-				else if (end.getY()<piece.getPos().getY()) {
+				else if (end.getY() < piece.getPos().getY()) {
 					if(checkDownLeft(piece,end)) {
 						setPiece(piece,end);
 						return true;
@@ -441,10 +441,10 @@ public class Board {
 	
 	public ArrayList<Position> allPositions () {
 		
-		for (int i = 0; i < board.length; i++) {
-			for (int n = 0; n < board.length; n++) {
-				if (board[i][n] != null) {
-					positions.add(new Position(i, n));
+		for (int i = 0; i < getBoard().length; i++) {
+			for (int n = 0; n < getBoard().length; n++) {
+				if (getSquare(i, n) instanceof Piece) {
+					positions.add(getBoard()[i][n].getPos());
 				}
 			}
 		}

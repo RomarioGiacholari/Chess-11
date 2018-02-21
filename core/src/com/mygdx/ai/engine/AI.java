@@ -11,13 +11,12 @@ public class AI {
 	
 	private ArrayList boardStates;
 	private Board board;
-	private Piece piece;
+	private Piece team;
 	
-	public AI () {
-		board = new Board();
+	public AI (Board board, boolean team) {
+		this.board = board;
+		this.team = new Piece();
 		boardStates = new ArrayList<Piece[][]>();
-		board.setUp();
-		System.out.println(board.numberOfPieces());
 		
 	}
 	
@@ -26,13 +25,14 @@ public class AI {
 			System.out.println(position.getX() + " " + position.getY());
 		}
 	}
-	public void displayBoard (Piece[][] currentState) {
+	
+	public void displayBoard (Board currentState) {
 		// Goes down the column
-		for (int i = 0; i < currentState.length; i++) {
+		for (int i = 0; i < currentState.getBoard().length; i++) {
 			// Goes through the row
-			for (int n = 0; n < currentState.length; n++) {
+			for (int n = 0; n < currentState.getBoard().length; n++) {
 				
-				System.out.print(currentState[i][n]);
+				System.out.print(currentState.getBoard()[i][n]);
 				System.out.print("\t");
 			}
 			System.out.println();
