@@ -1,5 +1,7 @@
 package com.mygdx.game.models;
 
+import java.util.ArrayList;
+
 import com.mygdx.game.rules.*;
 
 
@@ -17,12 +19,15 @@ public class Board {
 	 */
 	private Piece[][] board;
 	
+	private ArrayList<Position> positions;
+	
 	private int pieceCount;
 	/**
 	 * A constructor for a Board object, it initialises the board array to be 8*8, the dimensions of a normal chess board
 	 */
 	public Board() {
 		board = new Piece[8][8];
+		positions = new ArrayList<Position>();
 	}
 	/**
 	 * A method for setting up the pieces on the chess board
@@ -182,7 +187,7 @@ public class Board {
 	public boolean checkUp(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX()+1,pointer.getY());
+			pointer = new Position(pointer.getX() + 1,pointer.getY());
 			if (getSquare(pointer) != null) {
 				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
 					return true;
@@ -243,17 +248,13 @@ public class Board {
 		return true;
 	}
 	
-	public boolean checkDownLeft(Piece piece, Position end) {
+	public boolean checkDownLeft (Piece piece, Position end) {
 		Position pointer = piece.getPos();
-		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX()-1,pointer.getY()-1);
-			if(getSquare(pointer)!= null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
-					return true;
-			}
-				else {
-					return false;
-				}
+		while (pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX() - 1, pointer.getY() - 1);
+			if (getSquare(pointer)!= null) {
+				if (getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) return true;
+				else return false;
 			}
 		}
 		return true;
@@ -436,7 +437,20 @@ public class Board {
 		return board[row][col];
 	}
 	
-	public Piece [][] getBoard() { return board; }
+	public Piece [][] getBoard () { return board; }
+	
+	public ArrayList<Position> allPositions () {
+		
+		for (int i = 0; i < board.length; i++) {
+			for (int n = 0; n < board.length; n++) {
+				if (board[i][n] != null) {
+					positions.add(new Position(i, n));
+				}
+			}
+		}
+		return positions;
+		
+	}
 	
 	public int numberOfPieces () {
 		for (int i = 0; i < board.length; i++) {
@@ -452,4 +466,6 @@ public class Board {
 	public int getNumberOfPieces () {
 		return pieceCount;
 	}
+	
+	
 }
