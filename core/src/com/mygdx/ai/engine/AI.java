@@ -18,8 +18,14 @@ public class AI {
 		boardStates = new ArrayList<Piece[][]>();
 		board.setUp();
 		System.out.println(board.numberOfPieces());
+		
 	}
 	
+	public void displayAllPositions () {
+		for (Position position : board.allPositions()) {
+			System.out.println(position.getX() + " " + position.getY());
+		}
+	}
 	public void displayBoard (Piece[][] currentState) {
 		// Goes down the column
 		for (int i = 0; i < currentState.length; i++) {
@@ -33,22 +39,31 @@ public class AI {
 		}
 	}
 	
-	public void possibleMoves (Piece[][] currentState) {
-		
-		int count = 0;
-		int row = 0;
-		int col = 0;
-		
-		while (count <= board.numberOfPieces()) {
-			
-			for (int i = 0; i < currentState.length; i++) {
-				for (int n = 0; n < currentState.length; n++)
-			}
-			if (board.move(board.getSquare(row, col), row, col))
-			
-		}
-		
-	}
+//	public void possibleMoves (Piece[][] currentState) {
+//		
+//		int count = 0;
+//		int row = 0;
+//		int col = 0;
+//		
+//		while (true) {
+//			
+//			if (board.move(board., row, col))
+//			
+//		}
+//		
+//		
+//		while (count <= board.numberOfPieces()) {
+//			
+//			for (int i = 0; i < currentState.length; i++) {
+//				for (int n = 0; n < currentState.length; n++) {
+//					
+//				}
+//			}
+//			if (board.move(board.getSquare(row, col), row, col))
+//			
+//		}
+//		
+//	}
 	
 //	public void testMethod () {
 //		possibleMoves(board);

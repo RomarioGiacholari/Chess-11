@@ -10,8 +10,8 @@ public class AITest {
 		Board board = new Board();
 		board.setUp();
 		ai.displayBoard(board.getBoard());
-		board.move(board.getSquare(1, 0), 2, 1);
-		System.out.println();
+		board.move(board.getSquare(1, 0), 5, 0);
+		System.out.println("------------------------------------------------------------");
 		ai.displayBoard(board.getBoard());
 	}
 
