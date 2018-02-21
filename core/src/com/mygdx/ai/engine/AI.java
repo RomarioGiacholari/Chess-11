@@ -1,6 +1,7 @@
 package com.mygdx.ai.engine;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import com.mygdx.game.models.Board;
 import com.mygdx.game.rules.Pawn;
@@ -9,14 +10,18 @@ import com.mygdx.game.rules.Position;
 
 public class AI {
 	
-	private ArrayList boardStates;
 	private Board board;
-	private Piece team;
+	private boolean team;
+	private ArrayList<Piece [][]> boardStates;
+	private ArrayList<Position> positions;
+	private Hashtable<Position, ArrayList<Position>> possibleMoves;
 	
 	public AI (Board board, boolean team) {
 		this.board = board;
-		this.team = new Piece();
+		this.team = team;
 		boardStates = new ArrayList<Piece[][]>();
+		positions = new ArrayList<Position>();
+		possibleMoves = new Hashtable<Position, ArrayList<Position>>();
 		
 	}
 	
@@ -38,6 +43,35 @@ public class AI {
 			System.out.println();
 		}
 	}
+	
+	// All of the possible positions for the AI is added to position
+	public void addPositions () {
+		for (Position position : board.allPositions()) {
+			if (board.getSquare(position).getTeam() == team) {
+				positions.add(position);
+			}
+		}
+	}
+	
+	public void addPossibleMoves () {
+		for (Position position : positions) {
+			ArrayList<Position> newPositions = new ArrayList<Position>();
+			for (int i = 0; i < board.getBoard().length; i++) {
+				for (int n = 0; n < board.getBoard().length; n++) {
+					try {
+						if (board.move(board.getSquare(position), i, n)) {
+							newPositions.add(new Position(i, n));
+							possibleMoves.put(position, newPositions);
+						}
+					} catch (NullPointerException e) {}
+				}
+			}
+		}
+	}
+	
+	public Hashtable<Position, ArrayList<Position>> getPossibleMoves () { return possibleMoves; }
+	
+	public ArrayList<Position> getPositions() { return positions; }
 	
 //	public void possibleMoves (Piece[][] currentState) {
 //		
