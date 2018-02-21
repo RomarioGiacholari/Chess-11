@@ -134,19 +134,18 @@ public class Board {
 		
 		if(board[oldX][oldY] != null){
 		System.out.println(board[oldX][oldY].printPieceType());
-		
-		if(board[oldX][oldY].getTeam() == turn) {
-			if (board[oldX][oldY].move(x, y)) {
-				if(move(board[oldX][oldY], x, y) == true) {
-				turn = !turn;
+			
+			if(board[oldX][oldY].getTeam() == turn) {
+				if (board[oldX][oldY].move(x, y)) {
+					if(move(board[oldX][oldY], x, y) == true) {
+					turn = !turn;
+					}
 				}
 			}
-		}
-		}
-		else{
-			System.out.println("This square is empty.");
-		}
+		} else System.out.println("This square is empty.");
 	}
+	
+	
 	public boolean checkRight(Piece piece,Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
@@ -162,6 +161,7 @@ public class Board {
 		}
 		return true;
 	}
+	
 	
 	public boolean checkLeft(Piece piece, Position end) {
 		Position pointer = piece.getPos();
@@ -243,7 +243,7 @@ public class Board {
 		return true;
 	}
 	
-	public boolean checkDownLeft(Piece piece,Position end) {
+	public boolean checkDownLeft(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX()-1,pointer.getY()-1);
@@ -288,7 +288,7 @@ public class Board {
 	 * @param row the x coordinate of the new location
 	 * @param col the y coordinate of the new location
 	 */
-	public boolean move( Piece piece, int row, int col)  {
+	public boolean move(Piece piece, int row, int col)  {
 		Position end = new Position(row,col);
 		
 		if (piece instanceof Knight) {
@@ -436,9 +436,7 @@ public class Board {
 		return board[row][col];
 	}
 	
-	public Piece [][] getBoard(){
-		return board;
-	}
+	public Piece [][] getBoard() { return board; }
 	
 	public int numberOfPieces () {
 		for (int i = 0; i < board.length; i++) {

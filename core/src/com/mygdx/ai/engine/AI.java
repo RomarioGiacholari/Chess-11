@@ -20,7 +20,7 @@ public class AI {
 		System.out.println(board.numberOfPieces());
 	}
 	
-	public void checkPossibleMoves (Piece[][] currentState) {
+	public void displayBoard (Piece[][] currentState) {
 		// Goes down the column
 		for (int i = 0; i < currentState.length; i++) {
 			// Goes through the row
@@ -33,30 +33,26 @@ public class AI {
 		}
 	}
 	
-	public void possibleMoves (Board currentState) {
+	public void possibleMoves (Piece[][] currentState) {
+		
 		int count = 0;
-		while (count <= board.getNumberOfPieces()) {
-			/* Search for pieces increment count if piece found */
+		int row = 0;
+		int col = 0;
+		
+		while (count <= board.numberOfPieces()) {
 			
-		}
-		Piece somePiece = currentState.getSquare(new Position(1, 0));
-		if (somePiece instanceof Pawn) {
-			for (int i = 0; i < 3; i++) {
-				
+			for (int i = 0; i < currentState.length; i++) {
+				for (int n = 0; n < currentState.length; n++)
 			}
-			System.out.println(((Pawn) somePiece).arrMove());
+			if (board.move(board.getSquare(row, col), row, col))
 			
 		}
-//		if (board.checkUp(currentState[1][0], new Position(4, 0))) {
-//			System.out.println("DONE");
-//		} else {
-//			System.out.println("CANNOT BE DONE");
-//		}
+		
 	}
 	
-	public void testMethod () {
-		possibleMoves(board);
-	}
+//	public void testMethod () {
+//		possibleMoves(board);
+//	}
 	
 //	public static void main (String[] args) {
 //		System.out.println(board.getBoard()[0][1]);
