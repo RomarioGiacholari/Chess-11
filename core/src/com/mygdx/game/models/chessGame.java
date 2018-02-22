@@ -1,15 +1,12 @@
 package com.mygdx.game.models;
 
-import com.mygdx.game.models.*;
 import com.mygdx.game.rules.*;
 
 public class chessGame {
 	
-	private boolean turn;
 	Board board = new Board();
 	
 	public chessGame () {
-		turn = true;
 		board.setUp();
 	}
 	

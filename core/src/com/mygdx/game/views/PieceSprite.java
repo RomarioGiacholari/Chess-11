@@ -1,10 +1,8 @@
 package com.mygdx.game.views;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture; 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.game.rules.Piece;
 
 public abstract class PieceSprite extends Actor {
@@ -59,6 +57,11 @@ public abstract class PieceSprite extends Actor {
 	
 	public void movePieceRight(int x) {
 		pieceX= x * PIECE_MOVEMENT;
+	}
+	
+	public void set0() {
+		pieceX = 0;
+		pieceY = 0;
 	}
 	
 	public void dispose() {

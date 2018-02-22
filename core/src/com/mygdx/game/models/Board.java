@@ -1,6 +1,7 @@
 package com.mygdx.game.models;
 
-import com.mygdx.game.models.*;
+import java.util.ArrayList;
+
 import com.mygdx.game.rules.*;
 
 
@@ -11,16 +12,22 @@ import com.mygdx.game.rules.*;
  *
  */
 public class Board {
+	
+	private boolean turn = true;
 	/**
 	 * A 2d array to hold all the Piece objects in their positions on the chess board
 	 */
 	private Piece[][] board;
 	
+	private ArrayList<Position> positions;
+	
+	private int pieceCount;
 	/**
 	 * A constructor for a Board object, it initialises the board array to be 8*8, the dimensions of a normal chess board
 	 */
 	public Board() {
 		board = new Piece[8][8];
+		positions = new ArrayList<Position>();
 	}
 	/**
 	 * A method for setting up the pieces on the chess board
@@ -63,6 +70,20 @@ public class Board {
 	}
 	public Piece getSquare (Position position) {
 		return board[position.getX()][position.getY()];
+	}
+	
+	public void  promoteCheck() {
+		for(int i =0; i<=7; i++) {
+			if(board[0][i] instanceof Pawn && board[0][i] .getTeam() == false) {
+				board[0][i] = null;
+				board[0][i] = new Queen(0,i,false);
+			}
+			if(board[7][i] instanceof Pawn && board[7][i].getTeam()==true) {
+				board[7][i] = null;
+				board[7][i] = new Queen(7,i,true);
+			}
+		}
+		
 	}
 	
 	public void getPieceAtSquare(int x, int y,int oldX,int oldY){
@@ -116,20 +137,24 @@ public class Board {
 			oldX = 0;
 		}
 		
-		if(board[x][y] != null){
-		System.out.println(board[x][y].printPieceType());
-		if (board[x][y].move(oldX, oldY)) {
-			move(board[x][y], oldX, oldY);
-		}
-		}
-		else{
-			System.out.println("This square is empty.");
-		}
+		if(board[oldX][oldY] != null){
+		System.out.println(board[oldX][oldY].printPieceType());
+			
+			if(board[oldX][oldY].getTeam() == turn) {
+				if (board[oldX][oldY].move(x, y)) {
+					if(move(board[oldX][oldY], x, y) == true) {
+					turn = !turn;
+					}
+				}
+			}
+		} else System.out.println("This square is empty.");
 	}
-	public boolean checkRight(Piece piece,Position end) {
+	
+	
+	private boolean checkRight(Piece piece,Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX(),pointer.getY()+1);
+			pointer = new Position(pointer.getX(), pointer.getY() + 1);
 			if (getSquare(pointer) != null) {
 				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
 					return true;
@@ -142,7 +167,8 @@ public class Board {
 		return true;
 	}
 	
-	public boolean checkLeft(Piece piece, Position end) {
+	
+	private boolean checkLeft(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX(),pointer.getY()-1);
@@ -158,10 +184,10 @@ public class Board {
 		return true;
 	}
 	
-	public boolean checkUp(Piece piece, Position end) {
+	private boolean checkUp(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX()+1,pointer.getY());
+			pointer = new Position(pointer.getX() + 1,pointer.getY());
 			if (getSquare(pointer) != null) {
 				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
 					return true;
@@ -174,7 +200,7 @@ public class Board {
 		return true;
 	}
 	
-	public boolean checkDown(Piece piece,Position end) {
+	private boolean checkDown(Piece piece,Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX()-1,pointer.getY());
@@ -190,7 +216,7 @@ public class Board {
 		return true;
 	}
 	
-	public boolean checkupRight(Piece piece, Position end) {
+	private boolean checkupRight(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX()+1,pointer.getY()+1);
@@ -206,7 +232,7 @@ public class Board {
 		return true;
 	}
 	
-	public boolean checkUpLeft(Piece piece, Position end) {
+	private boolean checkUpLeft(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX()+1,pointer.getY()-1);
@@ -222,23 +248,19 @@ public class Board {
 		return true;
 	}
 	
-	public boolean checkDownLeft(Piece piece,Position end) {
+	private boolean checkDownLeft (Piece piece, Position end) {
 		Position pointer = piece.getPos();
-		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX()-1,pointer.getY()-1);
-			if(getSquare(pointer)!= null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
-					return true;
-			}
-				else {
-					return false;
-				}
+		while (pointer.equals(end) == false) {
+			pointer = new Position(pointer.getX() - 1, pointer.getY() - 1);
+			if (getSquare(pointer)!= null) {
+				if (getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) return true;
+				else return false;
 			}
 		}
 		return true;
 	}
 	
-	public boolean checkDownRight(Piece piece, Position end) {
+	private boolean checkDownRight(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX()-1,pointer.getY()+1);
@@ -254,7 +276,7 @@ public class Board {
 		return true;
 	}
 	
-	public void setPiece(Piece piece,Position end) {
+	public void setPiece (Piece piece, Position end) {
 		board[end.getX()][end.getY()] = piece;
 		board[piece.getPos().getX()][piece.getPos().getY()] = null;
 		piece.setPos(end);
@@ -267,30 +289,87 @@ public class Board {
 	 * @param row the x coordinate of the new location
 	 * @param col the y coordinate of the new location
 	 */
-	public void move( Piece piece, int row, int col)  {
+	public boolean move (Piece piece, int row, int col)  {
 		Position end = new Position(row,col);
 		
 		if (piece instanceof Knight) {
 			if (getSquare(end) != null) {
 				if (getSquare(end).getTeam() != piece.getTeam()) {
 					setPiece(piece,end);
+					return true;
 				}
 			}
 			else {
 				setPiece(piece,end);
+				return true;
 			}
 			
 		}
+		else if(piece instanceof Pawn) {
+			if (end.getY() == piece.getPos().getY()) {
+				if (end.getX() > piece.getPos().getX()) {
+					if(checkUp(piece,end)) {
+						setPiece(piece,end);
+						return true;
+
+					}
+				}
+				else if (end.getX()<piece.getPos().getX()) {
+					if (checkDown(piece,end)) {
+						setPiece(piece,end);
+						return true;
+					}
+				}
+			}
+			
+			else if (end.getX()>piece.getPos().getX()) {
+				if (end.getY()>piece.getPos().getY()) {
+					if (checkupRight(piece,end) && ( (board [piece.getPos().getX()+1] [piece.getPos().getY()+1] != null && board [piece.getPos().getX()+1] [piece.getPos().getY()+1].getTeam() != piece.getTeam()))) {
+						setPiece(piece,end);
+						return true;
+					}
+				}
+				else if (end.getY()<piece.getPos().getY()) {
+					if(checkUpLeft(piece,end) && ( (board [piece.getPos().getX()+1] [piece.getPos().getY()-1] != null && board [piece.getPos().getX()+1] [piece.getPos().getY()-1].getTeam() != piece.getTeam()))) {
+					{
+						setPiece(piece,end);
+						return true;
+
+					}
+				}
+			}
+			
+		}
+			else if (end.getX()< piece.getPos().getX()) {
+				if (end.getY() > piece.getPos().getY()) {
+					if (checkDownRight(piece,end) && ( (board [piece.getPos().getX()-1] [piece.getPos().getY()+1] != null && board [piece.getPos().getX()-1] [piece.getPos().getY()+1].getTeam() != piece.getTeam()))) {
+						setPiece(piece,end);
+						return true;
+
+					}
+				}
+				else if (end.getY()<piece.getPos().getY()) {
+					if(checkDownLeft(piece,end)&& ( (board [piece.getPos().getX()-1] [piece.getPos().getY()-1] != null && board [piece.getPos().getX()-1] [piece.getPos().getY()-1].getTeam() != piece.getTeam()))) {
+						setPiece(piece,end);
+						return true;
+
+					}
+				}
+			}
+		}
+		
 		else {
 			if(end.getX() == piece.getPos().getX()) {
-				if(end.getY()>piece.getPos().getY()) {
+				if(end.getY() > piece.getPos().getY()) {
 					if(checkRight(piece,end)) {
 						setPiece(piece,end);
+						return true;
 					}
 				}
 				else {
 					if(checkLeft(piece,end)) {
 						setPiece(piece,end);
+						return true;
 					}
 				}
 			}
@@ -298,13 +377,14 @@ public class Board {
 				if (end.getX()>piece.getPos().getX()) {
 					if(checkUp(piece,end)) {
 						setPiece(piece,end);
+						return true;
 
 					}
 				}
 				else if (end.getX()<piece.getPos().getX()) {
 					if (checkDown(piece,end)) {
 						setPiece(piece,end);
-
+						return true;
 					}
 				}
 			}
@@ -312,443 +392,41 @@ public class Board {
 				if (end.getY()>piece.getPos().getY()) {
 					if (checkupRight(piece,end)) {
 						setPiece(piece,end);
-
+						return true;
 					}
 				}
 				else if (end.getY()<piece.getPos().getY()) {
 					if(checkUpLeft(piece,end)) 
 					{
 						setPiece(piece,end);
+						return true;
 
 					}
 				}
 			}
-			else if(end.getX()< piece.getPos().getX()) {
+			else if(end.getX() < piece.getPos().getX()) {
 				if (end.getY() > piece.getPos().getY()) {
 					if (checkDownRight(piece,end)) {
 						setPiece(piece,end);
+						return true;
 
 					}
 				}
-				else if (end.getY()<piece.getPos().getY()) {
+				else if (end.getY() < piece.getPos().getY()) {
 					if(checkDownLeft(piece,end)) {
 						setPiece(piece,end);
+						return true;
 
 					}
 				}
 			}
 		
 		}
+		return false;
 		
 	}
 
 	
-			/*if (piece.move(row, col)) {
-				if(piece instanceof Pawn) {
-					movePawn(new Position(row,col),(Pawn) piece);
-				}
-				else if(piece instanceof Rook) {
-					moveRook(new Position(row,col),(Rook) piece);
-				}
-				else if (piece instanceof King) {
-					moveKing(new Position(row,col),(King) piece);
-				}
-				else if (piece instanceof Bishop) {
-					moveBishop(new Position(row,col),(Bishop) piece);
-				}
-				else if(piece instanceof Knight) {
-					moveKnight(new Position(row,col),(Knight) piece);
-				}
-				else if (piece instanceof Queen) {
-					moveQueen(new Position(row,col),(Queen) piece);
-				}
-			}*/
-		
-
-	/*private boolean moveKing(Position position, King piece) {
-		while (position.getX() != piece.getPos().getX() || position.getY() != piece.getPos().getY()) {
-			if(position.getX() == piece.getPos().getX()) {
-				if(position.getY() > piece.getPos().getY()) {
-					if(board[piece.getPos().getX()][piece.getPos().getY()+1] != null) {
-						if(board[piece.getPos().getX()][piece.getPos().getY()+1].getTeam() != piece.getTeam()) {
-							board [piece.getPos().getX()][piece.getPos().getY()] = null;
-							board [piece.getPos().getX()][piece.getPos().getY()+1] = piece;
-							piece.setPos(new Position(piece.getPos().getX(), piece.getPos().getY()+1));
-						}
-						else {
-							return false;
-						}
-					}
-					else {
-						board [piece.getPos().getX()][piece.getPos().getY()] = null;
-						board [piece.getPos().getX()][piece.getPos().getY()+1] = piece;
-						piece.setPos(new Position(piece.getPos().getX(), piece.getPos().getY()+1));
-					}
-				}
-				else if (position.getY()< piece.getPos().getY()) {
-					if(board[piece.getPos().getX()][piece.getPos().getY()-1] != null) {
-						if(board[piece.getPos().getX()][piece.getPos().getY()-1].getTeam() != piece.getTeam()) {
-							board [piece.getPos().getX()][piece.getPos().getY()] = null;
-							board [piece.getPos().getX()][piece.getPos().getY()-1] = piece;
-							piece.setPos(new Position(piece.getPos().getX(), piece.getPos().getY()-1));
-						}
-						else {
-							return false;
-						}
-					}
-					else {
-						board [piece.getPos().getX()][piece.getPos().getY()] = null;
-						board [piece.getPos().getX()][piece.getPos().getY()-1] = piece;
-						piece.setPos(new Position(piece.getPos().getX(), piece.getPos().getY()-1));
-					}
-				}
-			}
-			else if(position.getY() == piece.getPos().getY()) {
-				if(position.getX()> piece.getPos().getX()) {
-					if(board[piece.getPos().getX()+1][piece.getPos().getY()] != null) {
-						if(board[piece.getPos().getX()+1][piece.getPos().getY()].getTeam() != piece.getTeam() ) {
-							board[piece.getPos().getX()][piece.getPos().getY()] = null;
-							board[piece.getPos().getX()+1][piece.getPos().getY()] = piece;
-							piece.setPos(new Position(piece.getPos().getX()+1,piece.getPos().getY()));
-						}
-						else {
-							return false;
-						}
-					}
-					else {
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						board[piece.getPos().getX()+1][piece.getPos().getY()] = piece;
-						piece.setPos(new Position(piece.getPos().getX()+1,piece.getPos().getY()));
-					}
-				}
-				else if(position.getX() < piece.getPos().getX()){
-					if(board[piece.getPos().getX()-1][piece.getPos().getY()] != null) {
-						if(board[piece.getPos().getX()-1][piece.getPos().getY()].getTeam() != piece.getTeam() ) {
-							board[piece.getPos().getX()][piece.getPos().getY()] = null;
-							board[piece.getPos().getX()-1][piece.getPos().getY()] = piece;
-							piece.setPos(new Position(piece.getPos().getX()+1,piece.getPos().getY()));
-						}
-						else {
-							return false;
-						}
-					}
-					else {
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						board[piece.getPos().getX()-1][piece.getPos().getY()] = piece;
-						piece.setPos(new Position(piece.getPos().getX()-1,piece.getPos().getY()));
-					}
-				}
-			}
-			else if (position.getX() > piece.getPos().getX() && position.getY() > piece.getPos().getY()) {
-				if (board[piece.getPos().getX()+1][piece.getPos().getY()+1] != null) {
-					if(board[piece.getPos().getX() +1 ][piece.getPos().getY()+1].getTeam() != piece.getTeam())   {
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						board[piece.getPos().getX()+1][piece.getPos().getY()+1] = piece;
-						piece.setPos(new Position(piece.getPos().getX()+1,piece.getPos().getY()+1));
-					}
-					else {
-						return false;
-					}
-				}
-				else {
-					board[piece.getPos().getX()][piece.getPos().getY()] = null;
-					board[piece.getPos().getX()+1][piece.getPos().getY()+1] = piece;
-					piece.setPos(new Position(piece.getPos().getX()+1,piece.getPos().getY()+1));
-				}
-			}
-			else if (position.getX()> piece.getPos().getX() && position.getY() < piece.getPos().getY()) {
-				if(board[piece.getPos().getX()+1][piece.getPos().getY()-1] != null) {
-					if(board[piece.getPos().getX()+1][piece.getPos().getY()-1].getTeam() != piece.team) {
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						board[piece.getPos().getX()+1][piece.getPos().getY()-1] = piece;
-						piece.setPos(new Position (piece.getPos().getX()+1, piece.getPos().getY()-1));
-					}
-					else {
-						return false;
-					}
-				}
-				else {
-					board[piece.getPos().getX()][piece.getPos().getY()] = null;
-					board[piece.getPos().getX()+1][piece.getPos().getY()-1] = piece;
-					piece.setPos(new Position (piece.getPos().getX()+1, piece.getPos().getY()-1));
-				}
-			}
-		
-		else if (position.getX() < piece.getPos().getX() && position.getY() < piece.getPos().getY()) {
-				if(board[piece.getPos().getX()-1][piece.getPos().getY()-1] != null) {
-					if(board[piece.getPos().getX()-1][piece.getPos().getY()-1].getTeam() != piece.getTeam()) {
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						board[piece.getPos().getX()-1][piece.getPos().getY()-1] = piece;
-						piece.setPos(new Position (piece.getPos().getX()-1, piece.getPos().getY()-1));
-					}
-					else {
-						return false;
-					}
-				}
-				else {
-					board[piece.getPos().getX()][piece.getPos().getY()] = null;
-					board[piece.getPos().getX()-1][piece.getPos().getY()-1] = piece;
-					piece.setPos(new Position (piece.getPos().getX()-1, piece.getPos().getY()-1));
-				}
-			}
-		else if (position.getX() < piece.getPos().getX() && position.getY()> piece.getPos().getY()) {
-			if (board[piece.getPos().getX()-1][piece.getPos().getY()+1] != null) {
-				if(board[piece.getPos().getX()-1][piece.getPos().getY()+1].getTeam() != piece.getTeam()) {
-					board[piece.getPos().getX()][piece.getPos().getY()] = null;
-					board[piece.getPos().getX()-1][piece.getPos().getY()+1] = piece;
-					piece.setPos(new Position(piece.getPos().getX()-1,piece.getPos().getY()+1));
-				}
-				else {
-					return false;
-				}
-			}
-			else {
-				board[piece.getPos().getX()][piece.getPos().getY()] = null;
-				board[piece.getPos().getX()-1][piece.getPos().getY()+1] = piece;
-				piece.setPos(new Position(piece.getPos().getX()-1,piece.getPos().getY()+1));
-			}
-		}
-		}
-		return true;
-	}*/
-	/*private boolean moveBishop(Position position, Bishop piece) {
-		// TODO Auto-generated method stub
-		while (position.getX() != piece.getPos().getX() || position.getY() != piece.getPos().getY()) {
-			if (position.getX() > piece.getPos().getX() && position.getY() > piece.getPos().getY()) {
-				if (board[piece.getPos().getX()+1][piece.getPos().getY()+1] != null) {
-					if(board[piece.getPos().getX() +1 ][piece.getPos().getY()+1].getTeam() != piece.getTeam())   {
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						board[piece.getPos().getX()+1][piece.getPos().getY()+1] = piece;
-						piece.setPos(new Position(piece.getPos().getX()+1,piece.getPos().getY()+1));
-					}
-					else {
-						return false;
-					}
-				}
-				else {
-					board[piece.getPos().getX()][piece.getPos().getY()] = null;
-					board[piece.getPos().getX()+1][piece.getPos().getY()+1] = piece;
-					piece.setPos(new Position(piece.getPos().getX()+1,piece.getPos().getY()+1));
-				}
-			}
-			else if (position.getX()> piece.getPos().getX() && position.getY() < piece.getPos().getY()) {
-				if(board[piece.getPos().getX()+1][piece.getPos().getY()-1] != null) {
-					if(board[piece.getPos().getX()+1][piece.getPos().getY()-1].getTeam() != piece.team) {
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						board[piece.getPos().getX()+1][piece.getPos().getY()-1] = piece;
-						piece.setPos(new Position (piece.getPos().getX()+1, piece.getPos().getY()-1));
-					}
-					else {
-						return false;
-					}
-				}
-				else {
-					board[piece.getPos().getX()][piece.getPos().getY()] = null;
-					board[piece.getPos().getX()+1][piece.getPos().getY()-1] = piece;
-					piece.setPos(new Position (piece.getPos().getX()+1, piece.getPos().getY()-1));
-				}
-			}
-		
-		else if (position.getX() < piece.getPos().getX() && position.getY() < piece.getPos().getY()) {
-				if(board[piece.getPos().getX()-1][piece.getPos().getY()-1] != null) {
-					if(board[piece.getPos().getX()-1][piece.getPos().getY()-1].getTeam() != piece.getTeam()) {
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						board[piece.getPos().getX()-1][piece.getPos().getY()-1] = piece;
-						piece.setPos(new Position (piece.getPos().getX()-1, piece.getPos().getY()-1));
-					}
-					else {
-						return false;
-					}
-				}
-				else {
-					board[piece.getPos().getX()][piece.getPos().getY()] = null;
-					board[piece.getPos().getX()-1][piece.getPos().getY()-1] = piece;
-					piece.setPos(new Position (piece.getPos().getX()-1, piece.getPos().getY()-1));
-				}
-			}
-		else if (position.getX() < piece.getPos().getX() && position.getY()> piece.getPos().getY()) {
-			if (board[piece.getPos().getX()-1][piece.getPos().getY()+1] != null) {
-				if(board[piece.getPos().getX()-1][piece.getPos().getY()+1].getTeam() != piece.getTeam()) {
-					board[piece.getPos().getX()][piece.getPos().getY()] = null;
-					board[piece.getPos().getX()-1][piece.getPos().getY()+1] = piece;
-					piece.setPos(new Position(piece.getPos().getX()-1,piece.getPos().getY()+1));
-				}
-				else {
-					return false;
-				}
-			}
-			else {
-				board[piece.getPos().getX()][piece.getPos().getY()] = null;
-				board[piece.getPos().getX()-1][piece.getPos().getY()+1] = piece;
-				piece.setPos(new Position(piece.getPos().getX()-1,piece.getPos().getY()+1));
-				}
-			}
-		}
-		return true;
-	}*/
-
-	/*private boolean moveQueen(Position position, Queen piece) {
-		// TODO Auto-generated method stub
-		while (position.getX() != piece.getPos().getX() || position.getY() != piece.getPos().getY()) {
-			if(position.getX() == piece.getPos().getX()) {
-				if(position.getY() > piece.getPos().getY()) {
-					if(board[piece.getPos().getX()][piece.getPos().getY()+1] != null) {
-						if(board[piece.getPos().getX()][piece.getPos().getY()+1].getTeam() != piece.getTeam()) {
-							board [piece.getPos().getX()][piece.getPos().getY()] = null;
-							board [piece.getPos().getX()][piece.getPos().getY()+1] = piece;
-							piece.setPos(new Position(piece.getPos().getX(), piece.getPos().getY()+1));
-						}
-						else {
-							return false;
-						}
-					}
-					else {
-						board [piece.getPos().getX()][piece.getPos().getY()] = null;
-						board [piece.getPos().getX()][piece.getPos().getY()+1] = piece;
-						piece.setPos(new Position(piece.getPos().getX(), piece.getPos().getY()+1));
-					}
-				}
-				else if (position.getY()< piece.getPos().getY()) {
-					if(board[piece.getPos().getX()][piece.getPos().getY()-1] != null) {
-						if(board[piece.getPos().getX()][piece.getPos().getY()-1].getTeam() != piece.getTeam()) {
-							board [piece.getPos().getX()][piece.getPos().getY()] = null;
-							board [piece.getPos().getX()][piece.getPos().getY()-1] = piece;
-							piece.setPos(new Position(piece.getPos().getX(), piece.getPos().getY()-1));
-						}
-						else {
-							return false;
-						}
-					}
-					else {
-						board [piece.getPos().getX()][piece.getPos().getY()] = null;
-						board [piece.getPos().getX()][piece.getPos().getY()-1] = piece;
-						piece.setPos(new Position(piece.getPos().getX(), piece.getPos().getY()-1));
-					}
-				}
-			}
-			else if(position.getY() == piece.getPos().getY()) {
-				if(position.getX()> piece.getPos().getX()) {
-					if(board[piece.getPos().getX()+1][piece.getPos().getY()] != null) {
-						if(board[piece.getPos().getX()+1][piece.getPos().getY()].getTeam() != piece.getTeam() ) {
-							board[piece.getPos().getX()][piece.getPos().getY()] = null;
-							board[piece.getPos().getX()+1][piece.getPos().getY()] = piece;
-							piece.setPos(new Position(piece.getPos().getX()+1,piece.getPos().getY()));
-						}
-						else {
-							return false;
-						}
-					}
-					else {
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						board[piece.getPos().getX()+1][piece.getPos().getY()] = piece;
-						piece.setPos(new Position(piece.getPos().getX()+1,piece.getPos().getY()));
-					}
-				}
-				else if(position.getX() < piece.getPos().getX()){
-					if(board[piece.getPos().getX()-1][piece.getPos().getY()] != null) {
-						if(board[piece.getPos().getX()-1][piece.getPos().getY()].getTeam() != piece.getTeam() ) {
-							board[piece.getPos().getX()][piece.getPos().getY()] = null;
-							board[piece.getPos().getX()-1][piece.getPos().getY()] = piece;
-							piece.setPos(new Position(piece.getPos().getX()+1,piece.getPos().getY()));
-						}
-						else {
-							return false;
-						}
-					}
-					else {
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						board[piece.getPos().getX()-1][piece.getPos().getY()] = piece;
-						piece.setPos(new Position(piece.getPos().getX()-1,piece.getPos().getY()));
-					}
-				}
-			}
-			else if (position.getX() > piece.getPos().getX() && position.getY() > piece.getPos().getY()) {
-				if (board[piece.getPos().getX()+1][piece.getPos().getY()+1] != null) {
-					if(board[piece.getPos().getX() +1 ][piece.getPos().getY()+1].getTeam() != piece.getTeam())   {
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						board[piece.getPos().getX()+1][piece.getPos().getY()+1] = piece;
-						piece.setPos(new Position(piece.getPos().getX()+1,piece.getPos().getY()+1));
-					}
-					else {
-						return false;
-					}
-				}
-				else {
-					board[piece.getPos().getX()][piece.getPos().getY()] = null;
-					board[piece.getPos().getX()+1][piece.getPos().getY()+1] = piece;
-					piece.setPos(new Position(piece.getPos().getX()+1,piece.getPos().getY()+1));
-				}
-			}
-			else if (position.getX()> piece.getPos().getX() && position.getY() < piece.getPos().getY()) {
-				if(board[piece.getPos().getX()+1][piece.getPos().getY()-1] != null) {
-					if(board[piece.getPos().getX()+1][piece.getPos().getY()-1].getTeam() != piece.team) {
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						board[piece.getPos().getX()+1][piece.getPos().getY()-1] = piece;
-						piece.setPos(new Position (piece.getPos().getX()+1, piece.getPos().getY()-1));
-					}
-					else {
-						return false;
-					}
-				}
-				else {
-					board[piece.getPos().getX()][piece.getPos().getY()] = null;
-					board[piece.getPos().getX()+1][piece.getPos().getY()-1] = piece;
-					piece.setPos(new Position (piece.getPos().getX()+1, piece.getPos().getY()-1));
-				}
-			}
-		
-		else if (position.getX() < piece.getPos().getX() && position.getY() < piece.getPos().getY()) {
-				if(board[piece.getPos().getX()-1][piece.getPos().getY()-1] != null) {
-					if(board[piece.getPos().getX()-1][piece.getPos().getY()-1].getTeam() != piece.getTeam()) {
-						board[piece.getPos().getX()][piece.getPos().getY()] = null;
-						board[piece.getPos().getX()-1][piece.getPos().getY()-1] = piece;
-						piece.setPos(new Position (piece.getPos().getX()-1, piece.getPos().getY()-1));
-					}
-					else {
-						return false;
-					}
-				}
-				else {
-					board[piece.getPos().getX()][piece.getPos().getY()] = null;
-					board[piece.getPos().getX()-1][piece.getPos().getY()-1] = piece;
-					piece.setPos(new Position (piece.getPos().getX()-1, piece.getPos().getY()-1));
-				}
-			}
-		else if (position.getX() < piece.getPos().getX() && position.getY()> piece.getPos().getY()) {
-			if (board[piece.getPos().getX()-1][piece.getPos().getY()+1] != null) {
-				if(board[piece.getPos().getX()-1][piece.getPos().getY()+1].getTeam() != piece.getTeam()) {
-					board[piece.getPos().getX()][piece.getPos().getY()] = null;
-					board[piece.getPos().getX()-1][piece.getPos().getY()+1] = piece;
-					piece.setPos(new Position(piece.getPos().getX()-1,piece.getPos().getY()+1));
-				}
-				else {
-					return false;
-				}
-			}
-			else {
-				board[piece.getPos().getX()][piece.getPos().getY()] = null;
-				board[piece.getPos().getX()-1][piece.getPos().getY()+1] = piece;
-				piece.setPos(new Position(piece.getPos().getX()-1,piece.getPos().getY()+1));
-			}
-		}
-		}
-		return true;
-		
-	}*/
-	/*public void move(Pawn piece, Position pos) {
-		boolean valid = false;
-		for (Position x:  piece.arrMove()) {
-			if ((x.getX()==pos.getX())&& x.getY()==pos.getY()) {
-				board[pos.getX()][pos.getY()] = piece;
-				board[piece.getPos().getX()][piece.getPos().getY()]= null;
-				piece.setPos(pos);
-				valid = true;
-			}
-		}
-		if(!valid) {
-			System.out.println("Not a valid move");
-		}
-	}*/
 	/**
 	 * A method to return a specic piece for a given location on the board
 	 * @param row the x coordinate of the piece to be returned
@@ -759,230 +437,35 @@ public class Board {
 		return board[row][col];
 	}
 	
-	public Piece [][] getBoard(){
-		return board;
+	public Piece [][] getBoard () { return board; }
+	
+	public ArrayList<Position> allPositions () {
+		positions.clear();
+		for (int i = 0; i < getBoard().length; i++) {
+			for (int n = 0; n < getBoard().length; n++) {
+				if (getSquare(i, n) instanceof Piece) {
+					positions.add(getBoard()[i][n].getPos());
+				}
+			}
+		}
+		return positions;
+		
 	}
 	
-	/*public boolean moveKing(Position endPos, King king) {
-		while(king.getPos().getX() != endPos.getX() || king.getPos().getY() != endPos.getY()) {
-			if(endPos.getX() > king.getPos().getX()) {
-				if(endPos.getY() > king.getPos().getY()) {
-					if(board[king.getPos().getX()+1][king.getPos().getY()+1] != null) {
-						if(board[king.getPos().getX()+1][king.getPos().getY()+1].team != king.team) {
-							board[king.getPos().getX()][king.getPos().getY()] = null;
-							board[king.getPos().getX()+1][king.getPos().getY()+1] = king;
-							king.setPos(new Position(king.getPos().getX()+1,king.getPos().getY()+1));
-						
-						}
-						else {
-							return false;
-						}
-					}
-					else {
-						board[king.getPos().getX()][king.getPos().getY()] = null;
-						board[king.getPos().getX()+1][king.getPos().getY()+1] = king;
-						king.setPos(new Position(king.getPos().getX()+1,king.getPos().getY()+1));
-					}
-				}
-				else {
-					if(board[king.getPos().getX()+1][king.getPos().getY()] != null) {
-						if(board[king.getPos().getX()+1][king.getPos().getY()].team != king.team) {
-							board[king.getPos().getX()][king.getPos().getY()] = null;
-							board[king.getPos().getX()+1][king.getPos().getY()] = king;
-							king.setPos(new Position(king.getPos().getX()+1,king.getPos().getY()));
-						}
-						else {
-							return false;
-						}
-					}
-					else {
-						board[king.getPos().getX()][king.getPos().getY()] = null;
-						board[king.getPos().getX()+1][king.getPos().getY()] = king;
-						king.setPos(new Position(king.getPos().getX()+1,king.getPos().getY()));
-					}
-				}
-			}
-			else {
-				if(endPos.getY()<king.getPos().getY()) {
-					if(board[king.getPos().getX()-1][king.getPos().getY()-1] != null) {
-						if(board[king.getPos().getX()-1][king.getPos().getY()-1].team != king.team) {
-							board[king.getPos().getX()][king.getPos().getY()] = null;
-							board[king.getPos().getX()-1][king.getPos().getY()-1] = king;
-							king.setPos(new Position(king.getPos().getX()-1,king.getPos().getY()-1));
-						}
-						else {
-							return false;
-						}
-					}
-					else {
-						board[king.getPos().getX()][king.getPos().getY()] = null;
-						board[king.getPos().getX()-1][king.getPos().getY()-1] = king;
-						king.setPos(new Position(king.getPos().getX()-1,king.getPos().getY()-1));
-					}
-				}
-				else {
-					if(board[king.getPos().getX()-1][king.getPos().getY()] != null) {
-						if(board[king.getPos().getX()-1][king.getPos().getY()].team != king.team) {
-							board[king.getPos().getX()][king.getPos().getY()] = null;
-							board[king.getPos().getX()-1][king.getPos().getY()] = king;
-							king.setPos(new Position(king.getPos().getX()-1,king.getPos().getY()));
-						}
-						else {
-							return false;
-						}
-					}
-					else {
-						board[king.getPos().getX()][king.getPos().getY()] = null;
-						board[king.getPos().getX()-1][king.getPos().getY()] = king;
-						king.setPos(new Position(king.getPos().getX()-1,king.getPos().getY()));
-					}
+	public int numberOfPieces () {
+		for (int i = 0; i < board.length; i++) {
+			for (int n = 0; n < board.length; n++) {
+				if (board[i][n] != null) {
+					pieceCount ++;
 				}
 			}
 		}
-		return true;
-	}*/
+		return pieceCount;
+	}
 	
-	/*public boolean moveBishop(Position endPos, Bishop bishop) {
-		while(bishop.getPos().getX()!=endPos.getX() || bishop.getPos().getY()!= endPos.getY()) {
-			if (endPos.getX() > bishop.getPos().getX()) {
-				if(board[bishop.getPos().getX()+1][bishop.getPos().getY()+1]!=null) {
-					if (board[bishop.getPos().getX()+1][bishop.getPos().getY()+1].team != bishop.team && (bishop.getPos().getX()+1 == endPos.getX() && bishop.getPos().getY()+1 == endPos.getY())) {
-						board[bishop.getPos().getX()][bishop.getPos().getY()] = null;
-						board[bishop.getPos().getX()+1][bishop.getPos().getY()+1] = bishop;
-						bishop.setPos(new Position(bishop.getPos().getX()+1, bishop.getPos().getY()+1));
-					}
-					else {
-						return false;
-					}
-				}
-				else {
-					board[bishop.getPos().getX()][bishop.getPos().getY()] = null;
-					board[bishop.getPos().getX()+1][bishop.getPos().getY()+1] = bishop;
-					bishop.setPos(new Position(bishop.getPos().getX()+1, bishop.getPos().getY()+1));
-				}
-			}
-			if(endPos.getX()!= bishop.getPos().getX()  || endPos.getY() != bishop.getPos().getY()) {
-				if(board [bishop.getPos().getX()-1][bishop.getPos().getY()-1] != null) {
-					if (board [bishop.getPos().getX()-1][bishop.getPos().getY()-1].team != bishop.team && (bishop.getPos().getX()-1 == endPos.getX() && bishop.getPos().getY()-1 == endPos.getY())) {
-						board [bishop.getPos().getX()][bishop.getPos().getY()] = null;
-						board [bishop.getPos().getX()-1][bishop.getPos().getY()-1] = bishop;
-						bishop.setPos(new Position(bishop.getPos().getX()-1,bishop.getPos().getY()-1));
-					}
-					else {
-						return false;
-					}
-				}
-				else {
-					board [bishop.getPos().getX()][bishop.getPos().getY()] = null;
-					board [bishop.getPos().getX()-1][bishop.getPos().getY()-1] = bishop;
-					bishop.setPos(new Position(bishop.getPos().getX()-1,bishop.getPos().getY()-1));
-				}
-			} 
-		}
-		return true;
-	}*/
+	public int getNumberOfPieces () {
+		return pieceCount;
+	}
 	
-	/*public boolean movePawn(Position endPos, Pawn pawn) {
-		while((pawn.getPos().getX()!=endPos.getX()) || (pawn.getPos().getY()!= endPos.getY())) {
-			if (pawn.team){
-				if(board [pawn.getPos().getX()+1][pawn.getPos().getY()] != null) 
-					return false;
-				else {
-					board[pawn.getPos().getX()][pawn.getPos().getY()] = null;
-					board[pawn.getPos().getX()+1][endPos.getY()] = pawn;
-					pawn.setPos(new Position(pawn.getPos().getX()+1,pawn.getPos().getY()));
-				}
-			}
-			else if (board [pawn.getPos().getX()-1][pawn.getPos().getY()]!=null) {
-				return false;
-				}
-				else {
-					board[pawn.getPos().getX()][pawn.getPos().getY()] = null;
-					board[pawn.getPos().getX()-1][endPos.getY()] = pawn;
-					pawn.setPos(new Position(pawn.getPos().getX()-1,pawn.getPos().getY()));
-				}
-		}
-		return true;
-	}*/
 	
-	/*public boolean moveRook (Position endPos, Rook rook) {
-		while(rook.getPos().getX() != endPos.getX() || rook.getPos().getY() != endPos.getY()) {	
-			if(endPos.getX() == rook.getPos().getX()) {
-				if(endPos.getY()>rook.getPos().getY()) {
-					if (board [rook.getPos().getX()][rook.getPos().getY()+1] !=null && (rook.getPos().getX() == endPos.getX() && rook.getPos().getY()+1 == endPos.getY() )) {
-						board[rook.getPos().getX()][rook.getPos().getY()] = null;
-						board[rook.getPos().getX()][rook.getPos().getY()+1] = rook;
-						rook.setPos(endPos);
-					}
-					else if (board [rook.getPos().getX()][rook.getPos().getY()+1] ==null) {
-						board[rook.getPos().getX()][rook.getPos().getY()] = null;
-						board[rook.getPos().getX()][rook.getPos().getY()+1] = rook;
-						rook.setPos(new Position(rook.getPos().getX(),rook.getPos().getY()+1));
-					}
-					else {
-						return false;
-					}
-				}
-				else if (endPos.getY()< rook.getPos().getY()) {
-					if (board [rook.getPos().getX()][rook.getPos().getY()-1] !=null && (rook.getPos().getX() == endPos.getX() && rook.getPos().getY()-1 == endPos.getY() )) {
-						board[rook.getPos().getX()][rook.getPos().getY()] = null;
-						board[rook.getPos().getX()][rook.getPos().getY()-1] = rook;
-						rook.setPos(endPos);
-					}
-					else if (board [rook.getPos().getX()][rook.getPos().getY()-1] ==null) {
-						board[rook.getPos().getX()][rook.getPos().getY()] = null;
-						board[rook.getPos().getX()][rook.getPos().getY()-1] = rook;
-						rook.setPos(new Position(rook.getPos().getX(),rook.getPos().getY()-1));
-					}
-					else {
-						return false;
-					}
-				}
-			}
-			else {
-				if(endPos.getX()>rook.getPos().getX()) {
-					if (board [rook.getPos().getX()+1][rook.getPos().getY()] !=null && (rook.getPos().getX()+1 == endPos.getX() && rook.getPos().getY() == endPos.getY() )) {
-						board[rook.getPos().getX()][rook.getPos().getY()] = null;
-						board[rook.getPos().getX()+1][rook.getPos().getY()] = rook;
-						rook.setPos(endPos);
-					}
-					else if (board [rook.getPos().getX()+1][rook.getPos().getY()] ==null) {
-						board[rook.getPos().getX()][rook.getPos().getY()] = null;
-						board[rook.getPos().getX()+1][rook.getPos().getY()] = rook;
-						rook.setPos(new Position(rook.getPos().getX()+1,rook.getPos().getY()));
-					}
-					else {
-						return false;
-					}
-				}
-				else {
-					if (board [rook.getPos().getX()-1][rook.getPos().getY()] !=null && (rook.getPos().getX()+1 == endPos.getX() && rook.getPos().getY() == endPos.getY() )) {
-						board[rook.getPos().getX()][rook.getPos().getY()] = null;
-						board[rook.getPos().getX()-1][rook.getPos().getY()] = rook;
-						rook.setPos(endPos);
-					}
-					else if (board [rook.getPos().getX()-1][rook.getPos().getY()] ==null) {
-						board[rook.getPos().getX()][rook.getPos().getY()] = null;
-						board[rook.getPos().getX()-1][rook.getPos().getY()] = rook;
-						rook.setPos(new Position(rook.getPos().getX()-1,rook.getPos().getY()));
-					}
-					else {
-						return false;
-					}
-				}
-			}
-		}
-		return true;
-	}*/
-	/*public boolean moveKnight(Position endPos, Knight knight) {
-		if (board[endPos.getX()][endPos.getY()] != null && board[endPos.getX()][endPos.getY()].team == knight.team) {
-			return false;
-		}
-		else {
-			board[knight.getPos().getX()][knight.getPos().getY()] = null;
-			board[endPos.getX()][endPos.getY()] = knight;
-			knight.setPos(endPos);
-		}
-		return true;
-	}*/
 }
