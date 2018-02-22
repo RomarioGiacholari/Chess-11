@@ -8,18 +8,25 @@ public class AITest {
 	public static void main(String[] args) {
 		
 		Board board = new Board();
-		board.setUp();
-		AI ai = new AI(board);
-		ai.displayBoard(board);
-		System.out.println(board.allPositions().size());
-//		ai.displayAllPositions();
+		AI ai = new AI(true);
 		
-//		System.out.println("\n\n");
-//		
-//		board.move(board.getSquare(1, 0), 2, 0);
-//		ai.displayBoard(board);
-//		System.out.println();
-//		ai.displayAllPositions();
+		board.setUp();
+		ai.displayBoard(board);
+		ai.addPositions(board);
+		ai.displayAllPositions();
+		System.out.println("Number of Positions: " + ai.getPositions().size());
+		
+		board.move(board.getSquare(1, 0), 2, 0);
+		ai.displayBoard(board);
+		ai.addPositions(board);
+		ai.displayAllPositions();
+		System.out.println("Number of Positions: " + ai.getPositions().size());
+		
+		board.move(board.getSquare(2, 0), 3, 0);
+		ai.displayBoard(board);
+		ai.addPositions(board);
+		ai.displayAllPositions();
+		System.out.println("Number of Positions: " + ai.getPositions().size());
 		
 	}
 

@@ -307,7 +307,7 @@ public class Board {
 		}
 		else if(piece instanceof Pawn) {
 			if (end.getY() == piece.getPos().getY()) {
-				if (end.getX()>piece.getPos().getX()) {
+				if (end.getX() > piece.getPos().getX()) {
 					if(checkUp(piece,end)) {
 						setPiece(piece,end);
 						return true;
@@ -360,7 +360,7 @@ public class Board {
 		
 		else {
 			if(end.getX() == piece.getPos().getX()) {
-				if(end.getY()>piece.getPos().getY()) {
+				if(end.getY() > piece.getPos().getY()) {
 					if(checkRight(piece,end)) {
 						setPiece(piece,end);
 						return true;
@@ -440,7 +440,7 @@ public class Board {
 	public Piece [][] getBoard () { return board; }
 	
 	public ArrayList<Position> allPositions () {
-		
+		positions.clear();
 		for (int i = 0; i < getBoard().length; i++) {
 			for (int n = 0; n < getBoard().length; n++) {
 				if (getSquare(i, n) instanceof Piece) {
