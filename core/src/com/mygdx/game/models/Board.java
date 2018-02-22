@@ -151,7 +151,7 @@ public class Board {
 	}
 	
 	
-	public boolean checkRight(Piece piece,Position end) {
+	private boolean checkRight(Piece piece,Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX(),pointer.getY()+1);
@@ -168,7 +168,7 @@ public class Board {
 	}
 	
 	
-	public boolean checkLeft(Piece piece, Position end) {
+	private boolean checkLeft(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX(),pointer.getY()-1);
@@ -184,7 +184,7 @@ public class Board {
 		return true;
 	}
 	
-	public boolean checkUp(Piece piece, Position end) {
+	private boolean checkUp(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX() + 1,pointer.getY());
@@ -200,7 +200,7 @@ public class Board {
 		return true;
 	}
 	
-	public boolean checkDown(Piece piece,Position end) {
+	private boolean checkDown(Piece piece,Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX()-1,pointer.getY());
@@ -216,7 +216,7 @@ public class Board {
 		return true;
 	}
 	
-	public boolean checkupRight(Piece piece, Position end) {
+	private boolean checkupRight(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX()+1,pointer.getY()+1);
@@ -232,7 +232,7 @@ public class Board {
 		return true;
 	}
 	
-	public boolean checkUpLeft(Piece piece, Position end) {
+	private boolean checkUpLeft(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX()+1,pointer.getY()-1);
@@ -248,7 +248,7 @@ public class Board {
 		return true;
 	}
 	
-	public boolean checkDownLeft (Piece piece, Position end) {
+	private boolean checkDownLeft (Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while (pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX() - 1, pointer.getY() - 1);
@@ -260,7 +260,7 @@ public class Board {
 		return true;
 	}
 	
-	public boolean checkDownRight(Piece piece, Position end) {
+	private boolean checkDownRight(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX()-1,pointer.getY()+1);
