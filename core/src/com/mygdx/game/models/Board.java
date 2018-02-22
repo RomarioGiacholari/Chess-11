@@ -154,7 +154,7 @@ public class Board {
 	private boolean checkRight(Piece piece,Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX(),pointer.getY()+1);
+			pointer = new Position(pointer.getX(), pointer.getY() + 1);
 			if (getSquare(pointer) != null) {
 				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
 					return true;

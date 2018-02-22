@@ -16,13 +16,16 @@ public class AITest {
 		ai.displayAllPositions();
 		System.out.println("Number of Positions: " + ai.getPositions().size());
 		
-		board.move(board.getSquare(1, 0), 2, 0);
-		ai.displayBoard(board);
-		ai.addPositions(board);
-		ai.displayAllPositions();
-		System.out.println("Number of Positions: " + ai.getPositions().size());
+		System.out.println("\n");
+		ai.addPossibleMoves(board);
+
+//		for (Position location : ai.getPossibleMoves().keySet()) {
+//			System.out.println("Original Location: " + location.getX() + ", " + location.getY());
+//			for(Position newLocation : ai.getPossibleMoves().get(location)) {
+//				System.out.println(newLocation.getX() + ", " + newLocation.getY());
+//			} 
+//		}
 		
-		board.move(board.getSquare(2, 0), 3, 0);
 		ai.displayBoard(board);
 		ai.addPositions(board);
 		ai.displayAllPositions();
