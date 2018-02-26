@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.badlogic.gdx.ai.utils.Location;
+
 public class BishopTest {
 
 	@Test
@@ -14,7 +16,17 @@ public class BishopTest {
 	}
 	
 	@Test
-	public void test_it_moves_the_piece_to_a_valid_location() {
+	public void test_it_returns_the_position_of_the_piece() {
+		
+		Bishop bishop = new Bishop(1,4,true);
+		
+		Position position = bishop.getPos();
+		
+		assertEquals(4, position.getY());
+	}
+	
+	@Test
+	public void test_it_allows_a_piece_to_be_moved_to_location_withn_the_board() {
 		
 		Bishop bishop = new Bishop(1,4,true);
 	
