@@ -12,12 +12,13 @@ public class AITest {
 		
 		board.setUp();
 		ai.displayBoard(board);
-		ai.addPositions(board);
-		ai.displayAllPositions();
-		System.out.println("Number of Positions: " + ai.getPositions().size());
-		
-		System.out.println("\n");
-		ai.createPossibleMoves(board);
+		board.getDown(board.getSquare(7, 2));
+//		ai.addPositions(board);
+//		ai.displayAllPositions();
+//		System.out.println("Number of Positions: " + ai.getPositions().size());
+//		
+//		System.out.println("\n");
+//		ai.createPossibleMoves(board);
 
 //		for (Position location : ai.getPossibleMoves().keySet()) {
 //			System.out.println("Original Location: " + location.getX() + ", " + location.getY());
@@ -25,11 +26,11 @@ public class AITest {
 //				System.out.println(newLocation.getX() + ", " + newLocation.getY());
 //			} 
 //		}
-		
-		ai.displayBoard(board);
-		ai.addPositions(board);
-		ai.displayAllPositions();
-		System.out.println("Number of Positions: " + ai.getPositions().size());
+//		
+//		ai.displayBoard(board);
+//		ai.addPositions(board);
+//		ai.displayAllPositions();
+//		System.out.println("Number of Positions: " + ai.getPositions().size());
 		
 	}
 

@@ -292,9 +292,13 @@ public class Board {
 		pointer = piece.getPos();
 		
 		while (pointer.equals(end) == false) {
-			
+			for (Position surrounding : pointer.surroundings()) {
+				if (getSquare(surrounding) != null) {
+					if (getSquare(surrounding).getTeam() != piece.getTeam() && surrounding.equals(end)) return true;
+				} else return false;
+			}
 		}
-		return false;
+		return true;
 	}
 	/**
 	 * Sets the new location to the piece
