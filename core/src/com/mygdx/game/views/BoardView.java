@@ -12,11 +12,13 @@ import com.mygdx.game.rules.Bishop;
 import com.mygdx.game.rules.King;
 import com.mygdx.game.rules.Knight;
 import com.mygdx.game.rules.Pawn;
-import com.mygdx.game.rules.Piece;
-import com.mygdx.game.rules.Position;
 import com.mygdx.game.rules.Queen;
 import com.mygdx.game.rules.Rook;
-
+/**
+ * A class to manage the sprites and input logic of the main chess game
+ * @author Nathan Livsey
+ *
+ */
 public class BoardView extends ScreenAdapter {
 	private SpriteBatch batch;
 	private chessGame chess;
@@ -28,12 +30,18 @@ public class BoardView extends ScreenAdapter {
 
 
 	@Override
+	/**
+	 * acts as the constructor and initialises objects
+	 */
 	public void show() {
 		chess = new chessGame();
 		batch = new SpriteBatch();	
 		}
 
 	@Override
+	/**
+	 * draws the sprites each turn cycle and checks for user input 
+	 */
 	public void render(float delta) {
 		
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
@@ -81,14 +89,14 @@ public class BoardView extends ScreenAdapter {
 	}
 
 
-	public void showBoard() {
+	private void showBoard() {
 		batch.begin();
 		chessBoard.draw(batch);
 		batch.end();
 		
 	}
 
-	public PieceSprite assignSprite(int x, int y) {
+	private PieceSprite assignSprite(int x, int y) {
 		if(chess.getBoard().getBoard()[x][y] instanceof Queen) {
 			if(chess.getBoard().getBoard()[x][y].getTeam() == true) {
 				return new WhiteQueen(chess.getBoard().getBoard()[x][y]);
@@ -140,7 +148,7 @@ public class BoardView extends ScreenAdapter {
 		return null;
 	}
 	
-	public void showPiece() {
+	private void showPiece() {
 		for (int row = 0; row < chess.getBoard().getBoard().length; row++) {
 			for (int col = 0; col < chess.getBoard().getBoard().length; col++) {
 				PieceSprite piece = assignSprite(row,col);
