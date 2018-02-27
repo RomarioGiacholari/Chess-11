@@ -65,12 +65,13 @@ public class BoardView extends ScreenAdapter {
 		}
 		chess.getBoard().promoteCheck();
 		showBoard();
-		showPawns();
+		/*showPawns();
 		showKings();
 		showKnights();
 		showRooks();
 		showBishops();
-		showQueens();
+		showQueens();*/
+		showPiece();
 	
 
 	}
@@ -79,17 +80,6 @@ public class BoardView extends ScreenAdapter {
 
 	}
 
-	/*public void showIfSelected(int row, int col) {
-
-		IsSelectedSprite highlighted = new IsSelectedSprite();
-		// queen.movePieceUp(row);
-		// queen.movePieceRight(col);
-		batch.begin();
-		highlighted.draw(batch);
-		batch.end();
-
-		// queen.setBounds(queen.pieceX *60, queen.pieceY*60, 60, 60);
-	}*/
 
 	public void showBoard() {
 		batch.begin();
@@ -98,11 +88,75 @@ public class BoardView extends ScreenAdapter {
 		
 	}
 
-	public void teleportQueen(Piece piece) {
-		piece.setPos(new Position(5, 5));
+	public PieceSprite assignSprite(int x, int y) {
+		if(chess.getBoard().getBoard()[x][y] instanceof Queen) {
+			if(chess.getBoard().getBoard()[x][y].getTeam() == true) {
+				return new WhiteQueen(chess.getBoard().getBoard()[x][y]);
+			}
+			else {
+				return new BlackQueen(chess.getBoard().getBoard()[x][y]);
+			}
+		}
+		else if(chess.getBoard().getBoard()[x][y] instanceof King) {
+			if(chess.getBoard().getBoard()[x][y].getTeam() == true) {
+				return new WhiteKing(chess.getBoard().getBoard()[x][y]);
+			}
+			else {
+				return new BlackKing(chess.getBoard().getBoard()[x][y]);
+			}
+		}
+		else if(chess.getBoard().getBoard()[x][y] instanceof Rook) {
+			if(chess.getBoard().getBoard()[x][y].getTeam() == true) {
+				return new WhiteRook(chess.getBoard().getBoard()[x][y]);
+			}
+			else {
+				return new BlackRook(chess.getBoard().getBoard()[x][y]);
+			}
+		}
+		else if(chess.getBoard().getBoard()[x][y] instanceof Bishop) {
+			if(chess.getBoard().getBoard()[x][y].getTeam() == true) {
+				return new WhiteBishop(chess.getBoard().getBoard()[x][y]);
+			}
+			else {
+				return new BlackBishop(chess.getBoard().getBoard()[x][y]);
+			}
+		}
+		else if(chess.getBoard().getBoard()[x][y] instanceof Knight) {
+			if(chess.getBoard().getBoard()[x][y].getTeam() == true) {
+				return new WhiteKnight(chess.getBoard().getBoard()[x][y]);
+			}
+			else {
+				return new BlackKnight(chess.getBoard().getBoard()[x][y]);
+			}
+		}
+		else if(chess.getBoard().getBoard()[x][y] instanceof Pawn) {
+			if(chess.getBoard().getBoard()[x][y].getTeam() == true) {
+				return new WhitePawn(chess.getBoard().getBoard()[x][y]);
+			}
+			else {
+				return new BlackPawn(chess.getBoard().getBoard()[x][y]);
+			}
+		}
+		return null;
+	}
+	
+	public void showPiece() {
+		for (int row = 0; row < chess.getBoard().getBoard().length; row++) {
+			for (int col = 0; col < chess.getBoard().getBoard().length; col++) {
+				PieceSprite piece = assignSprite(row,col);
+				if(piece != null) {
+				piece.movePieceUp(row);
+				piece.movePieceRight(col);
+				batch.begin();
+				piece.draw(batch);
+				batch.end();
+				piece.sprite.dispose();
+				}
+			}
+		}
 	}
 
-	public void showQueens() {
+	/*public void showQueens() {
 		for (int row = 0; row < chess.getBoard().getBoard().length; row++) {
 			for (int col = 0; col < chess.getBoard().getBoard().length; col++) {
 				if (chess.getBoard().getBoard()[row][col] instanceof Queen) {
@@ -258,6 +312,6 @@ public class BoardView extends ScreenAdapter {
 				}
 			}
 		}
-	}
+	}*/
 
 }
