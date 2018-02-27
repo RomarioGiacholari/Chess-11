@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.rules.Piece;
 /**
  * A class representing the Black Bishop sprite
- * @author Student
+ * @author Nathan Livsey
  *
  */
 public class BlackBishop extends PieceSprite {

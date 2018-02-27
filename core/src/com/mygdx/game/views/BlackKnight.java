@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.rules.Piece;
 /**
- * 
+ * a class to represent the blackKnight sprite
  * @author Nathan Livsey
  *
  */
