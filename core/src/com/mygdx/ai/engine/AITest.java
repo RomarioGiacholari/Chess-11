@@ -17,7 +17,7 @@ public class AITest {
 		System.out.println("Number of Positions: " + ai.getPositions().size());
 		
 		System.out.println("\n");
-		ai.addPossibleMoves(board);
+		ai.createPossibleMoves(board);
 
 //		for (Position location : ai.getPossibleMoves().keySet()) {
 //			System.out.println("Original Location: " + location.getX() + ", " + location.getY());

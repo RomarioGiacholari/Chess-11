@@ -21,6 +21,10 @@ public class Board {
 	
 	private ArrayList<Position> positions;
 	
+	private Position pointer;
+	
+	private Position[] surrounding;
+	
 	private int pieceCount;
 	/**
 	 * A constructor for a Board object, it initialises the board array to be 8*8, the dimensions of a normal chess board
@@ -28,6 +32,8 @@ public class Board {
 	public Board() {
 		board = new Piece[8][8];
 		positions = new ArrayList<Position>();
+		pointer = new Position(0, 0);
+		surrounding = new Position[8];
 	}
 	/**
 	 * A method for setting up the pieces on the chess board
@@ -87,54 +93,59 @@ public class Board {
 	}
 	
 	public void getPieceAtSquare(int x, int y,int oldX,int oldY){
-		if( x == 0) {
-			 x = 7;
-		}
-		else if (x==1) {
-			x= 6;
-		}
-		else if(x==2) {
-			x=5;
-		}
-		else if (x==3) {
-			x = 4;
-		}
-		else if(x==4) {
-			x = 3;
-		}
-		else if (x==5){
-			x =2;
-		}
-		else if (x==6) {
-			x = 1;
-		}
-		else if (x ==7) {
-			x = 0;
+		switch (x) {
+			case 0:
+				x = 7;
+				break;
+			case 1:
+				x = 6;
+				break;
+			case 2:
+				x = 5;
+				break;
+			case 3:
+				x = 4;
+				break;
+			case 4:
+				x = 3;
+				break;
+			case 5:
+				x = 2;
+				break;
+			case 6:
+				x = 1;
+				break;
+			case 7:
+				x = 0;
+				break;
+				
 		}
 		
-		if( oldX == 0) {
-			oldX = 7;
-		}
-		else if (oldX==1) {
-			oldX= 6;
-		}
-		else if(oldX==2) {
-			oldX=5;
-		}
-		else if (oldX==3) {
-			oldX = 4;
-		}
-		else if(oldX==4) {
-			oldX = 3;
-		}
-		else if (oldX==5){
-			oldX =2;
-		}
-		else if (oldX==6) {
-			oldX = 1;
-		}
-		else if (oldX ==7) {
-			oldX = 0;
+		switch (oldX) {
+			case 0:
+				oldX = 7;
+				break;
+			case 1:
+				oldX = 6;
+				break;
+			case 2:
+				oldX = 5;
+				break;
+			case 3:
+				oldX = 4;
+				break;
+			case 4:
+				oldX = 3;
+				break;
+			case 5:
+				oldX = 2;
+				break;
+			case 6:
+				oldX = 1;
+				break;
+			case 7:
+				oldX = 0;
+				break;
 		}
 		
 		if(board[oldX][oldY] != null){
@@ -276,11 +287,33 @@ public class Board {
 		return true;
 	}
 	
+	public boolean check (Piece piece, Position end) {
+		
+		pointer = piece.getPos();
+		
+		while (pointer.equals(end) == false) {
+			
+		}
+		return false;
+	}
+	/**
+	 * Sets the new location to the piece
+	 * Then sets the piece's original location to null
+	 * then set the position to the new one
+	 * @param piece
+	 * @param end
+	 */
 	public void setPiece (Piece piece, Position end) {
 		board[end.getX()][end.getY()] = piece;
 		board[piece.getPos().getX()][piece.getPos().getY()] = null;
 		piece.setPos(end);
 	}
+	
+//	public void setPiece(Position originalPosition, Position newPosition) {
+//		board[newPosition.getX()][newPosition.getY()] = board[originalPosition.getX()][originalPosition.getY()];
+//		board[originalPosition.getX()][originalPosition.getY()] = null;
+//		
+//	}
 	
 	/**
 	 * A method to move a piece to a new location. It takes a piece object and a new location and, 

@@ -63,25 +63,51 @@ public class AI {
 			} catch (NullPointerException e) {}
 		}
 	}
-
+	
+	public void createPossibleMoves(Board currentBoard) {
+		addPositions(currentBoard);
+		// Loop through all of the positions
+		for (Position position : positions) {
+			Position originalPosition = position;
+			// Create an ArrayList that contains all the positions a piece a can move to
+			ArrayList<Position> newPositions = new ArrayList<Position>();
+			// Loop through all of the columns
+			for (int i = 0; i < currentBoard.getBoard().length; i++) {
+				// Loop through all of the rows
+				for (int n = 0; n < currentBoard.getBoard().length; n++) {
+					// If the piece can be moved to a specified location
+					if (currentBoard.move(currentBoard.getSquare(position), i, n)) {
+						// Add the possible location to the newPositions ArrayList
+						newPositions.add(new Position(i, n));
+						currentBoard.setPiece(currentBoard.getSquare(i, n), originalPosition);
+					}
+				}
+			}
+			possibleMoves.put(originalPosition, newPositions);
+		}
+	}
+	
 	public void addPossibleMoves(Board currentBoard) {
 		addPositions(currentBoard);
+		Board originalBoard = currentBoard;
 		for (Position position : positions) {
 
 			Position orignalPosition = position;
 			
 			ArrayList<Position> newPositions = new ArrayList<Position>();
-			for (int i = 0; i < currentBoard.getBoard().length; i++) {
-				for (int n = 0; n < currentBoard.getBoard().length; n++) {
+			for (int i = 0; i < 8; i++) {
+				for (int n = 0; n < 8; n++) {
 					try {
 						if (currentBoard.move(currentBoard.getSquare(position), i, n)) {
-							currentBoard.getSquare(i, n).setPos(orignalPosition);
-							newPositions.add(new Position(i, n));
-							possibleMoves.put(position, newPositions);
-						} else continue;
+//							Position newLocation = new Position(i, n);
+							newPositions.add(position);
+//							currentBoard = originalBoard;
+						}
+						currentBoard.setPiece(currentBoard.getSquare(position), orignalPosition);
 					} catch (NullPointerException e) {}
 				}				
 			}
+			possibleMoves.put(position, newPositions);
 		}
 	}
 
