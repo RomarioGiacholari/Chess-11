@@ -44,6 +44,7 @@ public class AITest {
 			} 
 		}
 //		
+
 //		ai.displayBoard(board);
 //		ai.addPositions(board);
 //		ai.displayAllPositions();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import com.mygdx.game.models.Board;
+import com.mygdx.game.rules.Knight;
 import com.mygdx.game.rules.Pawn;
 import com.mygdx.game.rules.Piece;
 import com.mygdx.game.rules.Position;
@@ -95,7 +96,10 @@ public class AI {
 					for (int n = 0; n < currentBoard.getBoard().length; n++) {
 						// If the piece can be moved to a specified location
 						try {
-							if (currentBoard.checkMove(selectedPiece, i, n)) {
+							if (selectedPiece instanceof Knight) {
+								if (selectedPiece.move(i, n)) newPositions.add(new Position(i, n));
+							}
+							else if (currentBoard.checkMove(selectedPiece, i, n)) {
 								newPositions.add(new Position(i, n)); // Add the possible location to the newPositions ArrayList
 							}
 						} catch (ArrayIndexOutOfBoundsException e) {}
