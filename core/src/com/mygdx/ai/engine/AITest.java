@@ -12,20 +12,37 @@ public class AITest {
 		
 		board.setUp();
 		ai.displayBoard(board);
-		board.getDown(board.getSquare(7, 2));
-//		ai.addPositions(board);
-//		ai.displayAllPositions();
-//		System.out.println("Number of Positions: " + ai.getPositions().size());
+		ai.addPositions(board);
+		ai.displayAllPositions();
+		System.out.println("Number of Positions: " + ai.getPositions().size());
+		
+		ai.createPossibleMoves(board);
+		
+		
 //		
 //		System.out.println("\n");
 //		ai.createPossibleMoves(board);
 
-//		for (Position location : ai.getPossibleMoves().keySet()) {
-//			System.out.println("Original Location: " + location.getX() + ", " + location.getY());
-//			for(Position newLocation : ai.getPossibleMoves().get(location)) {
-//				System.out.println(newLocation.getX() + ", " + newLocation.getY());
-//			} 
-//		}
+		for (Position location : ai.getPossibleMoves().keySet()) {
+			System.out.println("Original Location: " + location.getX() + ", " + location.getY());
+			for(Position newLocation : ai.getPossibleMoves().get(location)) {
+				System.out.println(newLocation.getX() + ", " + newLocation.getY());
+			} 
+		}
+		
+		System.out.println("\n\n");
+		board.move(board.getSquare(new Position(1, 3)), 4, 3);
+		ai.displayBoard(board);
+		ai.addPositions(board);
+		ai.displayAllPositions();
+		System.out.println("Number of Positions: " + ai.getPositions().size());
+		ai.createPossibleMoves(board);
+		for (Position location : ai.getPossibleMoves().keySet()) {
+			System.out.println("Original Location: " + location.getX() + ", " + location.getY());
+			for(Position newLocation : ai.getPossibleMoves().get(location)) {
+				System.out.println(newLocation.getX() + ", " + newLocation.getY());
+			} 
+		}
 //		
 //		ai.displayBoard(board);
 //		ai.addPositions(board);

@@ -7,6 +7,7 @@ import com.mygdx.game.models.Board;
 import com.mygdx.game.rules.Pawn;
 import com.mygdx.game.rules.Piece;
 import com.mygdx.game.rules.Position;
+import com.mygdx.game.rules.Rook;
 
 public class AI {
 	
@@ -23,8 +24,17 @@ public class AI {
 	 */
 	private ArrayList<Position> positions;
 	
+	/**
+	 * The Key is the current position of the AI piece.
+	 * The Value is an ArrayList of all of the possible places the AI's
+	 * piece can move to.
+	 */
 	private Hashtable<Position, ArrayList<Position>> possibleMoves;
-
+	
+	/**
+	 * The AI take in a boolean value to know which side it is playing.
+	 * @param team
+	 */
 	public AI(boolean team) {
 		this.team = team;
 		positions = new ArrayList<Position>();
@@ -57,7 +67,7 @@ public class AI {
 		ArrayList<Position> tempPositions = currentBoard.allPositions();
 		for (Position position : tempPositions) {
 			try {
-				if (currentBoard.getSquare(position).getTeam() == team) {
+				if (currentBoard.getSquare(position).getTeam() == team && currentBoard.getSquare(position) != null) {
 					positions.add(position);
 				}
 			} catch (NullPointerException e) {}
@@ -65,21 +75,30 @@ public class AI {
 	}
 	
 	public void createPossibleMoves(Board currentBoard) {
-		addPositions(currentBoard);
+		possibleMoves.clear();
 		// Loop through all of the positions
 		for (Position position : positions) {
 			Position originalPosition = position;
+			Piece selectedPiece = currentBoard.getSquare(position);
 			// Create an ArrayList that contains all the positions a piece a can move to
 			ArrayList<Position> newPositions = new ArrayList<Position>();
-			// Loop through all of the columns
-			for (int i = 0; i < currentBoard.getBoard().length; i++) {
-				// Loop through all of the rows
-				for (int n = 0; n < currentBoard.getBoard().length; n++) {
-					// If the piece can be moved to a specified location
-					if (currentBoard.move(currentBoard.getSquare(position), i, n)) {
-						// Add the possible location to the newPositions ArrayList
-						newPositions.add(new Position(i, n));
-						currentBoard.setPiece(currentBoard.getSquare(i, n), originalPosition);
+			if (selectedPiece instanceof Pawn)
+				for (Position pos : ((Pawn) selectedPiece).arrMove()) {
+					if (currentBoard.checkMove(selectedPiece, pos.getX(), pos.getY())) {
+						newPositions.add(pos);
+					}
+				}
+			else {
+				// Loop through all of the columns
+				for (int i = 0; i < currentBoard.getBoard().length; i++) {
+					// Loop through all of the rows
+					for (int n = 0; n < currentBoard.getBoard().length; n++) {
+						// If the piece can be moved to a specified location
+						try {
+							if (currentBoard.checkMove(selectedPiece, i, n)) {
+								newPositions.add(new Position(i, n)); // Add the possible location to the newPositions ArrayList
+							}
+						} catch (ArrayIndexOutOfBoundsException e) {}
 					}
 				}
 			}
@@ -87,29 +106,29 @@ public class AI {
 		}
 	}
 	
-	public void addPossibleMoves(Board currentBoard) {
-		addPositions(currentBoard);
-		Board originalBoard = currentBoard;
-		for (Position position : positions) {
-
-			Position orignalPosition = position;
-			
-			ArrayList<Position> newPositions = new ArrayList<Position>();
-			for (int i = 0; i < 8; i++) {
-				for (int n = 0; n < 8; n++) {
-					try {
-						if (currentBoard.move(currentBoard.getSquare(position), i, n)) {
-//							Position newLocation = new Position(i, n);
-							newPositions.add(position);
-//							currentBoard = originalBoard;
-						}
-						currentBoard.setPiece(currentBoard.getSquare(position), orignalPosition);
-					} catch (NullPointerException e) {}
-				}				
-			}
-			possibleMoves.put(position, newPositions);
-		}
-	}
+//	public void addPossibleMoves(Board currentBoard) {
+//		addPositions(currentBoard);
+//		Board originalBoard = currentBoard;
+//		for (Position position : positions) {
+//
+//			Position orignalPosition = position;
+//			
+//			ArrayList<Position> newPositions = new ArrayList<Position>();
+//			for (int i = 0; i < 8; i++) {
+//				for (int n = 0; n < 8; n++) {
+//					try {
+//						if (currentBoard.move(currentBoard.getSquare(position), i, n)) {
+////							Position newLocation = new Position(i, n);
+//							newPositions.add(position);
+////							currentBoard = originalBoard;
+//						}
+//						currentBoard.setPiece(currentBoard.getSquare(position), orignalPosition);
+//					} catch (NullPointerException e) {}
+//				}				
+//			}
+//			possibleMoves.put(position, newPositions);
+//		}
+//	}
 
 	public Hashtable<Position, ArrayList<Position>> getPossibleMoves() { return possibleMoves; }
 

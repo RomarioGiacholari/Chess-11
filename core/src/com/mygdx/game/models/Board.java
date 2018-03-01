@@ -505,7 +505,7 @@ public class Board {
 		return pieceCount;
 	}
 	
-	private boolean checkMove(Piece piece,int x, int y) {
+	public boolean checkMove(Piece piece, int x, int y) {
 		Position pos = new Position(x,y);
 		if (piece instanceof Knight) {
 			if (getSquare(pos) != null) {
@@ -516,7 +516,7 @@ public class Board {
 			else {
 				return true;
 			}
-	}
+		}
 		else if(piece instanceof Pawn) {
 			if (pos.getY() == piece.getPos().getY()) {
 				if (pos.getX() > piece.getPos().getX()) {
