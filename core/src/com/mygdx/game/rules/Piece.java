@@ -3,7 +3,9 @@ package com.mygdx.game.rules;
 
 public abstract class Piece implements Movable {
 	/**
-	 * A field to hold if the piece belongs to the black or white team
+	 * A field to hold if the piece belongs to the black or white team.
+	 * Where true - white 
+	 * Where false - black
 	 */
 	protected boolean team;
 	/**

@@ -19,6 +19,8 @@ public class Board {
 	 */
 	private Piece[][] board;
 	
+	public static final int DIMENSIONS = 8;
+	
 	private ArrayList<Position> positions;
 	
 	private Position pointer;
@@ -30,7 +32,7 @@ public class Board {
 	 * A constructor for a Board object, it initialises the board array to be 8*8, the dimensions of a normal chess board
 	 */
 	public Board() {
-		board = new Piece[8][8];
+		board = new Piece[DIMENSIONS][DIMENSIONS];
 		positions = new ArrayList<Position>();
 		pointer = new Position(0, 0);
 		surrounding = new Position[8];
@@ -163,7 +165,7 @@ public class Board {
 	}
 	
 	
-	private boolean checkRight(Piece piece,Position end) {
+	public boolean checkRight(Piece piece,Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX(), pointer.getY() + 1);
@@ -506,18 +508,11 @@ public class Board {
 	}
 	
 	public boolean checkMove(Piece piece, int x, int y) {
-		Position pos = new Position(x,y);
-		if (piece instanceof Knight) {
-			if (getSquare(pos) != null) {
-				if (getSquare(pos).getTeam() != piece.getTeam()) {
-					return true;
-				}
-			}
-			else {
-				return true;
-			}
-		}
+		Position pos = new Position(x, y);
+		if (piece instanceof Knight) return true;
+		
 		else if(piece instanceof Pawn) {
+			// If the Y position is the same as the original Y
 			if (pos.getY() == piece.getPos().getY()) {
 				if (pos.getX() > piece.getPos().getX()) {
 					if(checkUp(piece,pos)) {

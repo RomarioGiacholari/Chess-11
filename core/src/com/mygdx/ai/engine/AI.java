@@ -96,6 +96,9 @@ public class AI {
 					for (int n = 0; n < currentBoard.getBoard().length; n++) {
 						// If the piece can be moved to a specified location
 						try {
+//							if (selectedPiece instanceof Pawn) {
+//								if (selectedPiece.move(i, n)) newPositions.add(new Position(i, n));
+//							}
 							if (selectedPiece instanceof Knight) {
 								if (selectedPiece.move(i, n)) newPositions.add(new Position(i, n));
 							}
@@ -106,6 +109,36 @@ public class AI {
 					}
 				}
 			}
+			possibleMoves.put(originalPosition, newPositions);
+		}
+	}
+	
+	public void addPossibleMoves(Board currentBoard) {
+		possibleMoves.clear();
+		addPositions(currentBoard);
+		for (Position position : positions) {
+			
+			Position originalPosition = position;
+			Piece selectedPiece = currentBoard.getSquare(originalPosition);
+			// Create an ArrayList that contains all the positions a piece can move to
+			ArrayList<Position> newPositions = new ArrayList<Position>();
+			
+			for (int i = 0; i < currentBoard.getBoard().length; i++) {
+				for  (int n = 0; n < currentBoard.getBoard().length; n++) {
+					try {
+						if (currentBoard.getSquare(i, n).getTeam() != team) {
+							if (selectedPiece instanceof Pawn) {
+								if (selectedPiece.move(i, n)) newPositions.add(new Position(i, n));
+							}
+							else if (selectedPiece instanceof Knight) {
+								if (selectedPiece.move(i, n)) newPositions.add(new Position(i, n));
+							}
+							else if (currentBoard.checkMove(selectedPiece, i, n)) newPositions.add(new Position(i, n));
+						}
+					} catch (ArrayIndexOutOfBoundsException e) {}
+				}
+			}
+			newPositions.remove(originalPosition);
 			possibleMoves.put(originalPosition, newPositions);
 		}
 	}

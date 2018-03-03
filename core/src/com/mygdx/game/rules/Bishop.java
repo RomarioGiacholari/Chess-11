@@ -25,7 +25,11 @@ public class Bishop extends Piece{
 
 	if(row <8 && col < 8){
 		for( int i=1; i<8;i++) {
-			if((row == position.getX() + i && col == position.getY() +i ) || (row == position.getX() - i && col ==position.getY() -i )||(row == position.getX() + i && col ==position.getY() -i || (row == position.getX() - i && col ==position.getY() +i ))){
+			if(
+				(row == position.getX() + i && col == position.getY() + i) || 
+				(row == position.getX() - i && col == position.getY() - i) ||
+				(row == position.getX() + i && col == position.getY() - i) || 
+				(row == position.getX() - i && col == position.getY() + i )) {
 				return true;
 			}
 		}

@@ -31,7 +31,7 @@ public class AITest {
 		}
 		
 		System.out.println("\n\n");
-		board.move(board.getSquare(new Position(1, 3)), 4, 3);
+		board.move(board.getSquare(new Position(1, 3)), 5, 3);
 		ai.displayBoard(board);
 		ai.addPositions(board);
 		ai.displayAllPositions();
