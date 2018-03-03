@@ -75,9 +75,8 @@ public class Pawn extends Piece {
 			if ((row == position.getX() + 1 || row == position.getX() + 2) && col == position.getY() || (row == position.getX() - 1 || row == position.getX() - 2) && col == position.getY()) {
 				if (row < 8) {
 					moved = true;
-					return true;
 				}
-				return false;
+				return true;
 			}
 			else return false;
 		}
