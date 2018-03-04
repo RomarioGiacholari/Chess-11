@@ -150,13 +150,13 @@ public class Board {
 				break;
 		}
 		
-		if(board[oldX][oldY] != null){
+		if(getSquare(oldX, oldY) != null){
 		System.out.println(board[oldX][oldY].printPieceType());
 			
-			if(board[oldX][oldY].getTeam() == turn) {
-				if (board[oldX][oldY].move(x, y)) {
-					if(checkMove(board[oldX][oldY], x, y) == true) {
-					setPiece(board[oldX][oldY],new Position(x,y));
+			if(getSquare(oldX, oldY).getTeam() == turn) {
+				if (getSquare(oldX, oldY).move(x, y)) {
+					if(checkMove(getSquare(oldX, oldY), x, y) == true) {
+					setPiece(getSquare(oldX, oldY), new Position(x,y));
 					turn = !turn;
 					}
 				}
@@ -170,77 +170,53 @@ public class Board {
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX(), pointer.getY() + 1);
 			if (getSquare(pointer) != null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
-					return true;
-				}
-				else {
-					return false;
-				}
+				if(getSquare(pointer).getTeam() == piece.getTeam() && pointer.equals(end)) return false;
+				
 			}
 		}
 		return true;
 	}
 	
 	
-	private boolean checkLeft(Piece piece, Position end) {
+	public boolean checkLeft(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX(),pointer.getY()-1);
+			pointer = new Position(pointer.getX(),pointer.getY() - 1);
 			if (getSquare(pointer) != null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
-					return true;
-				}
-				else {
-					return false;
-				}
+				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
 			}
 		}
 		return true;
 	}
 	
-	private boolean checkUp(Piece piece, Position end) {
+	public boolean checkUp(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX() + 1,pointer.getY());
 			if (getSquare(pointer) != null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
-					return true;
-				}
-				else {
-					return false;
-				}
+				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
 			}
 		}
 		return true;
 	}
 	
-	private boolean checkDown(Piece piece,Position end) {
+	public boolean checkDown(Piece piece,Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX()-1,pointer.getY());
+			pointer = new Position(pointer.getX() - 1,pointer.getY());
 			if (getSquare(pointer) != null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
-					return true;
-				}
-				else {
-					return false;
-				}
+				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
 			}
 		}
 		return true;
 	}
 	
-	private boolean checkupRight(Piece piece, Position end) {
+	public boolean checkupRight(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX()+1,pointer.getY()+1);
+			pointer = new Position(pointer.getX() + 1,pointer.getY() + 1);
 			if(getSquare(pointer)!= null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
-					return true;
-			}
-				else {
-					return false;
-				}
+				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
 			}
 		}
 		return true;
@@ -249,26 +225,20 @@ public class Board {
 	private boolean checkUpLeft(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX()+1,pointer.getY()-1);
+			pointer = new Position(pointer.getX() + 1,pointer.getY() - 1);
 			if(getSquare(pointer)!= null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
-					return true;
-			}
-				else {
-					return false;
-				}
+				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
 			}
 		}
 		return true;
 	}
 	
-	private boolean checkDownLeft (Piece piece, Position end) {
+	private boolean checkDownLeft(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while (pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX() - 1, pointer.getY() - 1);
 			if (getSquare(pointer)!= null) {
-				if (getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) return true;
-				else return false;
+				if (getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
 			}
 		}
 		return true;
@@ -277,32 +247,14 @@ public class Board {
 	private boolean checkDownRight(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX()-1,pointer.getY()+1);
+			pointer = new Position(pointer.getX() - 1, pointer.getY() + 1);
 			if(getSquare(pointer)!= null) {
-				if(getSquare(pointer).getTeam() != piece.getTeam() && pointer.equals(end)) {
-					return true;
-			}
-				else {
-					return false;
-				}
+				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
 			}
 		}
 		return true;
 	}
 	
-	public boolean check(Piece piece, Position end) {
-		
-		pointer = piece.getPos();
-		
-		while (pointer.equals(end) == false) {
-			for (Position surrounding : pointer.surroundings()) {
-				if (getSquare(surrounding) != null) {
-					if (getSquare(surrounding).getTeam() != piece.getTeam() && surrounding.equals(end)) return true;
-				} else return false;
-			}
-		}
-		return true;
-	}
 	/**
 	 * Sets the new location to the piece
 	 * Then sets the piece's original location to null
