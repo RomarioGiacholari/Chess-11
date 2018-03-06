@@ -7,7 +7,7 @@ public class Gym {
 	
 	public static void main(String[] args) {
 		Board board = new Board();
-		ChessAI deepBlue = new ChessAI(false);
+		ChessAI deepBlue = new ChessAI(true);
 		
 		board.setUp();
 		
@@ -17,7 +17,9 @@ public class Gym {
 		
 		deepBlue.displayAllPositions();
 		
-		System.out.println(board.checkMove(board.getSquare(new Position(1, 0)), 4, 0));
+		deepBlue.possibleMoves(board);
+		
+		deepBlue.displayAllPossibleMoves(board);
 	}
 	
 }

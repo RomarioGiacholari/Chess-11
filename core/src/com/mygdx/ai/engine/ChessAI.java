@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import com.mygdx.game.models.Board;
+import com.mygdx.game.rules.Knight;
+import com.mygdx.game.rules.Pawn;
+import com.mygdx.game.rules.Piece;
 import com.mygdx.game.rules.Position;
 
 public class ChessAI {
@@ -55,15 +58,39 @@ public class ChessAI {
 		for (Position position : positions) {
 			// Store the original position
 			Position originalPosition = position;
+			// Selected piece to be moved
+			Piece selectedPiece = currentBoard.getSquare(originalPosition);
 			// Possible locations for the piece to move to
-			ArrayList<Position> moves = new ArrayList<Position>();
+			ArrayList<Position> newPositions = new ArrayList<Position>();
 			
-			for (int i = 0; i < currentBoard.DIMENSIONS; i++) {
-				for (int n = 0; n < currentBoard.DIMENSIONS; n++) {
-					
+			if (selectedPiece instanceof Pawn) {
+				for (Position pos : ((Pawn) selectedPiece).arrMove()) {
+					if (currentBoard.checkMove(selectedPiece, pos.getX(), pos.getY())) {
+						newPositions.add(pos);
+					}
 				}
 			}
-			
+			else if (selectedPiece instanceof Knight) {
+				for (Position pos : ((Knight) selectedPiece).arrMove()) {
+					if (selectedPiece.move(pos.getX(), pos.getY()) && currentBoard.checkMove(selectedPiece, pos.getX(), pos.getY())) {
+						newPositions.add(pos);
+					}
+				}
+			}
+			else {
+				// Loop through all of the columns
+				for (int i = 0; i < Board.DIMENSIONS; i++) {
+					// Loop through all of the rows
+					for (int n = 0; n < Board.DIMENSIONS; n++) {
+						try {
+							if (currentBoard.checkMove(selectedPiece, i, n)) {
+								newPositions.add(new Position(i, n));
+							}
+						} catch (ArrayIndexOutOfBoundsException e) {}
+					}
+				}
+			}
+			possibleMoves.put(originalPosition, newPositions);
 		}
 	}
 	
@@ -71,6 +98,9 @@ public class ChessAI {
 		return positions;
 	}
 	
+	public Hashtable<Position, ArrayList<Position>> getPossibleMoves() {
+		return possibleMoves;
+	}
 	
 	
 	// Methods below are for testing purposes only
@@ -88,6 +118,15 @@ public class ChessAI {
 	
 	public void displayAllPositions() {
 		for (Position position : positions) System.out.println(position.getX() + ", " + position.getY());
+	}
+	
+	public void displayAllPossibleMoves(Board currentBoard) {
+		for (Position location : possibleMoves.keySet()) {
+			System.out.println("Original Location: " + location.getX() + ", " + location.getY());
+			for (Position newLocation : possibleMoves.get(location)) {
+				System.out.println(newLocation.getX() + ", " + newLocation.getY());
+			}
+		}
 	}
 	
 }

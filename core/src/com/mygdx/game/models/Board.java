@@ -23,7 +23,9 @@ public class Board {
 	
 	private ArrayList<Position> positions;
 	
-	private Position pointer;
+	private Position originalPosition;
+	
+	private Position newPosition;
 	
 	private Position[] surrounding;
 	
@@ -34,7 +36,7 @@ public class Board {
 	public Board() {
 		board = new Piece[DIMENSIONS][DIMENSIONS];
 		positions = new ArrayList<Position>();
-		pointer = new Position(0, 0);
+		originalPosition = new Position(0, 0);
 		surrounding = new Position[8];
 	}
 	/**
@@ -165,6 +167,14 @@ public class Board {
 	}
 	
 	
+//	public boolean checkMove(Piece piece, Position end) {
+//		originalPosition = piece.getPos();
+//		while (originalPosition.equals(end) == false) {
+//			newPosition
+//		}
+//		return true;
+//	}
+	
 	public boolean checkRight(Piece piece,Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
@@ -244,7 +254,7 @@ public class Board {
 		return true;
 	}
 	
-	private boolean checkDownRight(Piece piece, Position end) {
+	public boolean checkDownRight(Piece piece, Position end) {
 		Position pointer = piece.getPos();
 		while(pointer.equals(end) == false) {
 			pointer = new Position(pointer.getX() - 1, pointer.getY() + 1);

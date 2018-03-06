@@ -1,5 +1,8 @@
 package com.mygdx.game.rules;
 
+import java.util.ArrayList;
+
+import com.mygdx.game.models.Board;
 
 public class Knight extends Piece {
 
@@ -19,6 +22,26 @@ public class Knight extends Piece {
 		else {
 			return "h";
 		}
+	}
+	
+	public ArrayList<Position> arrMove() {
+		ArrayList<Position> possibleMoves = new ArrayList<Position>();
+		
+		possibleMoves.add(new Position(position.getX() - 2, position.getY() - 1));
+		possibleMoves.add(new Position(position.getX() - 2, position.getY() + 1));
+		possibleMoves.add(new Position(position.getX() - 1, position.getY() + 2));
+		possibleMoves.add(new Position(position.getX() - 1, position.getY() - 2));
+		possibleMoves.add(new Position(position.getX() + 1, position.getY() - 2));
+		possibleMoves.add(new Position(position.getX() + 1, position.getY() + 2));
+		possibleMoves.add(new Position(position.getX() + 2, position.getY() + 1));
+		possibleMoves.add(new Position(position.getX() + 2, position.getY() - 1));
+		
+		for (Position position : possibleMoves) {
+			if ((position.getX() > 7 && position.getX() < 0)) {
+				possibleMoves.remove(position);
+			}
+		}
+		return possibleMoves;
 	}
 	
 	@Override

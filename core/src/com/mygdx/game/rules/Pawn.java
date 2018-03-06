@@ -24,26 +24,26 @@ public class Pawn extends Piece {
 	 * 
 	 * if the pawn has moved it does the same but within 1 space
 	 */
-//	
-//	public Position[] arrMove () {
-//		Position[] possibleMoves = new Position[2] ;
-//		if (!moved && team == true) {
-//			possibleMoves[0] = new Position(position.getX() + 1, position.getY());
-//			possibleMoves[1] = new Position(position.getX() + 2, position.getY());
-//		}
-//		else if (!moved && !team) {
-//			possibleMoves[0] = new Position(position.getX() - 1, position.getY());
-//			possibleMoves[1] = new Position(position.getX() - 2, position.getY());
-//		}
-//		else if (moved && team) {
-//			possibleMoves[0] = new Position(position.getX() + 1, position.getY());
-//		}
-//		else if (moved && !team) {
-//			possibleMoves[0] = new Position(position.getX() - 1, position.getY());
-//		}
-//		
-//		return possibleMoves;
-//	}
+	
+	public Position[] arrMove () {
+		Position[] possibleMoves = new Position[2] ;
+		if (!moved && team == true) {
+			possibleMoves[0] = new Position(position.getX() + 1, position.getY());
+			possibleMoves[1] = new Position(position.getX() + 2, position.getY());
+		}
+		else if (!moved && !team) {
+			possibleMoves[0] = new Position(position.getX() - 1, position.getY());
+			possibleMoves[1] = new Position(position.getX() - 2, position.getY());
+		}
+		else if (moved && team) {
+			possibleMoves[0] = new Position(position.getX() + 1, position.getY());
+		}
+		else if (moved && !team) {
+			possibleMoves[0] = new Position(position.getX() - 1, position.getY());
+		}
+		
+		return possibleMoves;
+	}
 	
 	public String printPieceType(){
 		System.out.println("Pawn");
