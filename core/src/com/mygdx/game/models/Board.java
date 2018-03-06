@@ -8,7 +8,7 @@ import com.mygdx.game.rules.*;
 
 /**
  * A class to represent the board of a game of chess
- * @author Student
+ * @author Nathan Livsey
  *
  */
 public class Board {
@@ -78,10 +78,16 @@ public class Board {
 		board [6][6] = new Pawn(6,6,false);
 		board [6][7] = new Pawn(6,7,false);
 	}
+	/**
+	 * A method that returns the contents of a given chessboard square
+	 * @param position the chess position representing the target location
+	 */
 	public Piece getSquare (Position position) {
 		return board[position.getX()][position.getY()];
 	}
-	
+	/**
+	 * a method to check if a pawn is in need of promotion, if it is it turned into a queen as is the common practice
+	 */
 	public void  promoteCheck() {
 		for(int i = 0; i <= 7; i++) {
 			if( board[0][i] instanceof Pawn && board[0][i].getTeam() == false) {
@@ -95,7 +101,13 @@ public class Board {
 		}
 		
 	}
-	
+	/**
+	 * Moves the underlying pieces and switches the turn counter to the other player if the move is succesful
+	 * @param x the x coordinate of the target position
+	 * @param y the y coordinate of the target position
+	 * @param oldX the x coordinate of the original piece
+	 * @param oldY the y coordinate of the orignal piece
+	 */
 	public void getPieceAtSquare(int x, int y,int oldX,int oldY){
 		switch (x) {
 			case 0:
