@@ -1,5 +1,6 @@
 package com.mygdx.game.rules;
 
+import java.util.ArrayList;
 
 public class Pawn extends Piece {
 	/**
@@ -25,21 +26,30 @@ public class Pawn extends Piece {
 	 * if the pawn has moved it does the same but within 1 space
 	 */
 	
-	public Position[] arrMove () {
-		Position[] possibleMoves = new Position[2] ;
-		if (!moved && team == true) {
-			possibleMoves[0] = new Position(position.getX() + 1, position.getY());
-			possibleMoves[1] = new Position(position.getX() + 2, position.getY());
+	public ArrayList<Position> arrMove() {
+		ArrayList<Position> possibleMoves = new ArrayList<Position>();
+		
+		// If the piece is of the WHITE team.
+		if (!moved && team) {
+			possibleMoves.add(new Position(position.getX() + 1, position.getY()));
+			possibleMoves.add(new Position(position.getX() + 2, position.getY()));
+		} else if (moved && team) {
+			possibleMoves.add(new Position(position.getX() - 1, position.getY()));
+		} else if (!moved && !team) {
+			
+			possibleMoves.add(new Position(position.getX() - 1, position.getY()));
+			possibleMoves.add(new Position(position.getX() - 2, position.getY()));
+		} else if (moved && !team) {
+			possibleMoves.add(new Position(position.getX() + 2, position.getY()));
 		}
-		else if (!moved && !team) {
-			possibleMoves[0] = new Position(position.getX() - 1, position.getY());
-			possibleMoves[1] = new Position(position.getX() - 2, position.getY());
-		}
-		else if (moved && team) {
-			possibleMoves[0] = new Position(position.getX() + 1, position.getY());
-		}
-		else if (moved && !team) {
-			possibleMoves[0] = new Position(position.getX() - 1, position.getY());
+		
+		for (Position position : possibleMoves) {
+			if (position.getX() > 7 && position.getX() < 0) {
+				possibleMoves.remove(position);
+			}
+			if (position.getY() > 7 && position.getY() < 0) {
+				possibleMoves.remove(position);
+			}
 		}
 		
 		return possibleMoves;
@@ -60,35 +70,12 @@ public class Pawn extends Piece {
 	}
 
 	public boolean move(int row, int col) {
-		// If it is a white pawn
-		if (team == true) {
-			if ((row == position.getX() + 1 && col == position.getY() + 1) || (row == position.getX() + 1 && col == position.getY() - 1))
-				return true;
-		}
-		// If it is a black pawn
-		else if (team == false) {
-			if ((row == position.getX() - 1 && col == position.getY() + 1) || (row == position.getX() - 1 && col == position.getY() - 1))
-				return true;
+		
+		for (Position position : arrMove()) {
+			if (position.getX() == row && position.getY() == col) return true;
 		}
 		
-		if (!moved) {
-			if ((row == position.getX() + 1 || row == position.getX() + 2) && col == position.getY() || (row == position.getX() - 1 || row == position.getX() - 2) && col == position.getY()) {
-				if (row < 8) {
-					moved = true;
-				}
-				return true;
-			}
-			else return false;
-		}
-		else {
-			if (row == position.getX() + 1 && col == position.getY()) {
-				if (row < 8) return true;
-				
-				return false;
-			}
-			
-			else return false;
-		}
+		return false; 
 	}
 		
 }

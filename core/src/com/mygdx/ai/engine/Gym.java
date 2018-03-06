@@ -1,6 +1,8 @@
 package com.mygdx.ai.engine;
 
 import com.mygdx.game.models.Board;
+import com.mygdx.game.rules.Rook;
+import com.mygdx.game.rules.Piece;
 import com.mygdx.game.rules.Position;
 
 public class Gym {
@@ -13,13 +15,20 @@ public class Gym {
 		
 		deepBlue.displayBoard(board);
 		
-		deepBlue.positions(board);
+		System.out.println();
 		
-		deepBlue.displayAllPositions();
+		Piece p = board.getSquare(new Position(0, 0));
+		for (Position pos : (((Rook) p).arrMove())) {
+			System.out.println(pos.getX() + ", " + pos.getY());
+		}
 		
-		deepBlue.possibleMoves(board);
-		
-		deepBlue.displayAllPossibleMoves(board);
+//		deepBlue.positions(board);
+//		
+//		deepBlue.displayAllPositions();
+//		
+//		deepBlue.possibleMoves(board);
+//		
+//		deepBlue.displayAllPossibleMoves(board);
 	}
 	
 }

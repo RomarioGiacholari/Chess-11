@@ -1,5 +1,6 @@
 package com.mygdx.game.rules;
 
+import java.util.ArrayList;
 
 public class Rook extends Piece{
 
@@ -21,30 +22,30 @@ public class Rook extends Piece{
 			return"r";
 		}
 	}
+	
+	public ArrayList<Position> arrMove() {
+		ArrayList<Position> possibleMoves = new ArrayList<Position>();
+		
+		for (int i = 0; i < 8; i++) {
+			
+			if (i == position.getX()) continue;
+			else possibleMoves.add(new Position(position.getX() + i, position.getY()));
+			
+			if (i == position.getY()) continue;
+			else possibleMoves.add(new Position(position.getY(), position.getX() + i));
+		}
 
+		return possibleMoves;
+	}
+	
 	@Override
 	public boolean move(int row, int col) {
-		// TODO Auto-generated method stub
-		if((row <8 && col<8)&&(row >= 0 && col>=0)) {
-			if (row == position.getX()) {
-				for(int i = 0;i<8;i++) {
-					if(i == col) {
-						return true;
-					}
-				}
-			}
-			else if(col == position.getY()) {
-				for( int i = 0 ; i<8;i++) {
-					if(i==row) {
-						return true;
-					}
-				}
-			}
-			
+		
+		for (Position position : arrMove()) {
+			if (position.getX() == row && position.getY() == col) return true;
 		}
 		
 		return false;
-		
 	}
 
 }
