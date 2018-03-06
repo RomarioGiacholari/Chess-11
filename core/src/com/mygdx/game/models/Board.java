@@ -422,5 +422,9 @@ public class Board {
 		
 	}
 	
+	public boolean getTurn() {
+		return turn;
+	}
+	
 	
 }

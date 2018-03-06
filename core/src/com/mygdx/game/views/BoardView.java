@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.models.chessGame;
 import com.mygdx.game.rules.Bishop;
@@ -23,6 +24,7 @@ public class BoardView extends ScreenAdapter {
 	private SpriteBatch batch;
 	private chessGame chess;
 	private ChessBoard chessBoard = new ChessBoard();
+	private Texture indicator;
 	private static final float MOVE_TIME=0.375f;
 	private float timer = MOVE_TIME;
 	private int oldX = -1;
@@ -36,6 +38,7 @@ public class BoardView extends ScreenAdapter {
 	public void show() {
 		chess = new chessGame();
 		batch = new SpriteBatch();	
+		indicator = new Texture (Gdx.files.internal("indicator.png"));
 		}
 
 	@Override
@@ -72,6 +75,7 @@ public class BoardView extends ScreenAdapter {
 		}
 		}
 		chess.getBoard().promoteCheck();
+		switchIndicator();
 		showBoard();
 		/*showPawns();
 		showKings();
@@ -80,7 +84,9 @@ public class BoardView extends ScreenAdapter {
 		showBishops();
 		showQueens();*/
 		showPiece();
-	
+		batch.begin();
+		batch.draw(indicator,480,220);
+		batch.end();
 
 	}
 
@@ -146,6 +152,17 @@ public class BoardView extends ScreenAdapter {
 			}
 		}
 		return null;
+	}
+	
+	private void switchIndicator() {
+		if(chess.getBoard().getTurn()) {
+			indicator.dispose();
+			indicator  = new Texture (Gdx.files.internal("indicator.png"));
+		}
+		else {
+			indicator.dispose();
+			indicator  = new Texture (Gdx.files.internal("indicator2.png"));
+		}
 	}
 	
 	private void showPiece() {
