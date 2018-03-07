@@ -25,15 +25,23 @@ public class Rook extends Piece{
 	
 	public ArrayList<Position> arrMove() {
 		ArrayList<Position> possibleMoves = new ArrayList<Position>();
+		ArrayList<Position> outOfBounds = new ArrayList<Position>();
 		
 		for (int i = 0; i < 8; i++) {
-			
-			if (i == position.getX()) continue;
-			else possibleMoves.add(new Position(position.getX() + i, position.getY()));
-			
-			if (i == position.getY()) continue;
-			else possibleMoves.add(new Position(position.getY(), position.getX() + i));
+			possibleMoves.add(new Position(position.getX() + i, position.getY()));
+			possibleMoves.add(new Position(position.getX() - i, position.getY()));
+			possibleMoves.add(new Position(position.getX(), position.getY() + i));
+			possibleMoves.add(new Position(position.getX(), position.getY() - i));
 		}
+		
+		while (true) {
+			if (possibleMoves.contains(position)) possibleMoves.remove(position);
+			else break;
+		}
+		
+		for (Position pos : possibleMoves) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		
+		possibleMoves.removeAll(outOfBounds);
 
 		return possibleMoves;
 	}
@@ -41,8 +49,8 @@ public class Rook extends Piece{
 	@Override
 	public boolean move(int row, int col) {
 		
-		for (Position position : arrMove()) {
-			if (position.getX() == row && position.getY() == col) return true;
+		for (Position pos : arrMove()) {
+			if (pos.getX() == row && pos.getY() == col) return true;
 		}
 		
 		return false;

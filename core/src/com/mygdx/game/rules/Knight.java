@@ -26,6 +26,7 @@ public class Knight extends Piece {
 	
 	public ArrayList<Position> arrMove() {
 		ArrayList<Position> possibleMoves = new ArrayList<Position>();
+		ArrayList<Position> outOfBounds = new ArrayList<Position>();
 		
 		possibleMoves.add(new Position(position.getX() - 2, position.getY() - 1));
 		possibleMoves.add(new Position(position.getX() - 2, position.getY() + 1));
@@ -36,11 +37,14 @@ public class Knight extends Piece {
 		possibleMoves.add(new Position(position.getX() + 2, position.getY() + 1));
 		possibleMoves.add(new Position(position.getX() + 2, position.getY() - 1));
 		
-		for (Position position : possibleMoves) {
-			if ((position.getX() > 7 && position.getX() < 0)) {
-				possibleMoves.remove(position);
-			}
-		}
+		if (possibleMoves.contains(position)) possibleMoves.remove(position);
+		
+		
+		for (Position pos : possibleMoves) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		
+		
+		possibleMoves.removeAll(outOfBounds);
+		
 		return possibleMoves;
 	}
 	

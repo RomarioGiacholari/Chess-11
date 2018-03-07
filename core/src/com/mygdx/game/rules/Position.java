@@ -53,6 +53,12 @@ public class Position {
 		return surrounding;
 	}
 	
+	public boolean checkOutOfBounds() {
+		if (xPosition > 7 || xPosition < 0) return true;
+		if (yPosition > 7 || yPosition < 0) return true;
+		return false;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Position) {

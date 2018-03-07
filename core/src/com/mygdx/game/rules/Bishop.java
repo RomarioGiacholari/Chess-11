@@ -1,5 +1,7 @@
 package com.mygdx.game.rules;
 
+import java.util.ArrayList;
+
 public class Bishop extends Piece{
 
 	protected boolean moved = false;
@@ -19,23 +21,41 @@ public class Bishop extends Piece{
 			return "b";
 		}
 	}
-
+	
+	public ArrayList<Position> arrMove() {
+		ArrayList<Position> possibleMoves = new ArrayList<Position>();
+		ArrayList<Position> outOfBounds = new ArrayList<Position>();
+		for (int i = 0; i < 8; i++) {
+			// Up Right moves
+			possibleMoves.add(new Position(position.getX() - i, position.getY() + i));
+			// Down Right moves
+			possibleMoves.add(new Position(position.getX() + i, position.getY() + i));
+			// Up Left moves
+			possibleMoves.add(new Position(position.getX() - i, position.getY() - i));
+			// Down Left moves
+			possibleMoves.add(new Position(position.getX() + i, position.getY() - i));
+		}
+		
+		while (true) {
+			if (possibleMoves.contains(position)) possibleMoves.remove(position);
+			else break;
+		}
+		
+		
+		for (Position pos : possibleMoves) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		
+		possibleMoves.removeAll(outOfBounds);
+		
+		return possibleMoves;
+	}
 	@Override
 	public boolean move(int row, int col) {
 
-	if(row <8 && col < 8){
-		for( int i=1; i<8;i++) {
-			if(
-				(row == position.getX() + i && col == position.getY() + i) || 
-				(row == position.getX() - i && col == position.getY() - i) ||
-				(row == position.getX() + i && col == position.getY() - i) || 
-				(row == position.getX() - i && col == position.getY() + i )) {
-				return true;
-			}
+		for (Position pos : arrMove()) {
+			if (pos.getX() == row && pos.getY() == col) return true;
 		}
+		
 		return false;
-	}
-
-	return false;
+	
 	}
 }

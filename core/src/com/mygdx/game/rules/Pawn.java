@@ -15,7 +15,6 @@ public class Pawn extends Piece {
 	 */
 	public Pawn(int row, int col, boolean player) {
 		super(row, col,player);
-		moved = false;
 	}
 	/**
 	 * This is the override for the Movable move function
@@ -28,29 +27,24 @@ public class Pawn extends Piece {
 	
 	public ArrayList<Position> arrMove() {
 		ArrayList<Position> possibleMoves = new ArrayList<Position>();
-		
+		ArrayList<Position> outOfBounds = new ArrayList<Position>();
 		// If the piece is of the WHITE team.
 		if (!moved && team) {
 			possibleMoves.add(new Position(position.getX() + 1, position.getY()));
 			possibleMoves.add(new Position(position.getX() + 2, position.getY()));
 		} else if (moved && team) {
-			possibleMoves.add(new Position(position.getX() - 1, position.getY()));
+			possibleMoves.add(new Position(position.getX() + 1, position.getY()));
 		} else if (!moved && !team) {
 			
 			possibleMoves.add(new Position(position.getX() - 1, position.getY()));
 			possibleMoves.add(new Position(position.getX() - 2, position.getY()));
 		} else if (moved && !team) {
-			possibleMoves.add(new Position(position.getX() + 2, position.getY()));
+			possibleMoves.add(new Position(position.getX() - 1, position.getY()));
 		}
 		
-		for (Position position : possibleMoves) {
-			if (position.getX() > 7 && position.getX() < 0) {
-				possibleMoves.remove(position);
-			}
-			if (position.getY() > 7 && position.getY() < 0) {
-				possibleMoves.remove(position);
-			}
-		}
+		for (Position pos : possibleMoves) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		
+		possibleMoves.removeAll(outOfBounds);
 		
 		return possibleMoves;
 	}
@@ -72,7 +66,10 @@ public class Pawn extends Piece {
 	public boolean move(int row, int col) {
 		
 		for (Position position : arrMove()) {
-			if (position.getX() == row && position.getY() == col) return true;
+			if (position.getX() == row && position.getY() == col) {
+
+				return true;
+			}
 		}
 		
 		return false; 
