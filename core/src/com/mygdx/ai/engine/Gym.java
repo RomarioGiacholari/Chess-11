@@ -7,6 +7,7 @@ import com.mygdx.game.rules.Position;
 
 public class Gym {
 	
+	
 	public static void main(String[] args) {
 		Board board = new Board();
 		ChessAI deepBlue = new ChessAI(true);
@@ -17,10 +18,17 @@ public class Gym {
 		
 		System.out.println();
 		
-		Piece p = board.getSquare(new Position(0, 4));
+		Piece p = board.getSquare(new Position(1, 4));
 		System.out.println(p.getPos().getX() + ", " + p.getPos().getY());
-		System.out.println(p.toString());
-		for (Position pos : (((King) p).arrMove())) {
+		for (Position pos : (((Pawn) p).arrMove())) {
+			System.out.println(pos.getX() + ", " + pos.getY());
+		}
+		System.out.println(((Pawn) p).hasMoved());
+		board.move(p, 3, 4);
+		Piece n = board.getSquare(new Position(3, 4));
+		System.out.println(((Pawn) n).hasMoved());
+		System.out.println(n.toString());
+		for (Position pos : (((Pawn) n).arrMove())) {
 			System.out.println(pos.getX() + ", " + pos.getY());
 		}
 		
