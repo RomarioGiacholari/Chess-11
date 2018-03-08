@@ -179,7 +179,7 @@ public class Board {
 	}
 	
 	
-//	public boolean checkMove(Piece piece, Position end) {
+//	public boolean checkCollision(Piece piece, Position end) {
 //		originalPosition = piece.getPos();
 //		while (originalPosition.equals(end) == false) {
 //			newPosition
@@ -428,6 +428,24 @@ public class Board {
 	
 	public boolean getTurn() {
 		return turn;
+	}
+	
+	public boolean checkBlackCheck() {
+		Position kingPos = null;
+		for (int i = 0; i < getBoard().length; i++) {
+			for (int n = 0; n < getBoard().length; n++) {
+				if(getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == false && ( getSquare(i, n) instanceof King)) {
+					kingPos = new Position(i,n);
+				}
+				if (getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == true) {
+					ArrayList<Position> testing = getSquare(i,n).arrMove();
+					for(Position pos: testing) {
+						
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 	
