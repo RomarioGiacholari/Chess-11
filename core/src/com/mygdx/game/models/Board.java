@@ -169,10 +169,10 @@ public class Board {
 			
 			if(getSquare(oldX, oldY).getTeam() == turn) {
 				if (getSquare(oldX, oldY).move(x, y)) {
-					if(checkMove(getSquare(oldX, oldY), x, y) == true) {
+					//check collosion here
 					setPiece(getSquare(oldX, oldY), new Position(x,y));
 					turn = !turn;
-					}
+					
 				}
 			}
 		} else System.out.println("This square is empty.");
@@ -430,17 +430,21 @@ public class Board {
 		return turn;
 	}
 	
-	public boolean checkBlackCheck() {
+	public boolean checkCheck(boolean teamType) {
 		Position kingPos = null;
 		for (int i = 0; i < getBoard().length; i++) {
 			for (int n = 0; n < getBoard().length; n++) {
-				if(getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == false && ( getSquare(i, n) instanceof King)) {
+				if(getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == teamType && ( getSquare(i, n) instanceof King)) {
 					kingPos = new Position(i,n);
 				}
-				if (getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == true) {
+				if (getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == !teamType) {
 					ArrayList<Position> testing = getSquare(i,n).arrMove();
 					for(Position pos: testing) {
-						
+						if(pos.equals(kingPos)) {
+							// test for collision between route and target
+							// collision needs to a method taking a target and location postion that returns boolean
+							// return true
+						}
 					}
 				}
 			}
