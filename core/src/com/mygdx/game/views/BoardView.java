@@ -25,10 +25,12 @@ public class BoardView extends ScreenAdapter {
 	private chessGame chess;
 	private ChessBoard chessBoard = new ChessBoard();
 	private Texture indicator;
+	private Texture selected;
 	private static final float MOVE_TIME=0.375f;
 	private float timer = MOVE_TIME;
 	private int oldX = -1;
 	private int oldY = -1;
+	private boolean isSelected;
 
 
 	@Override
@@ -39,6 +41,7 @@ public class BoardView extends ScreenAdapter {
 		chess = new chessGame();
 		batch = new SpriteBatch();	
 		indicator = new Texture (Gdx.files.internal("indicator.png"));
+		selected = new Texture (Gdx.files.internal("indicator3.png"));
 		}
 
 	@Override
@@ -61,6 +64,7 @@ public class BoardView extends ScreenAdapter {
 			if(oldX == -1) {
 				oldX = mouseGridX;
 				oldY = mouseGridY;
+				isSelected = true;
 			}
 			if (mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0 && (oldX != mouseGridX || oldY != mouseGridY)) {
 				//showIfSelected(mouseGridX, mouseGridY);
@@ -69,6 +73,7 @@ public class BoardView extends ScreenAdapter {
 				System.out.println("old square (x, y): "+oldX+ ", "+ oldY );				
 				oldX = -1;
 				oldY = -1;
+				isSelected = false;
 			}
 			else if(mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0) {
 			}
@@ -85,7 +90,10 @@ public class BoardView extends ScreenAdapter {
 		showQueens();*/
 		showPiece();
 		batch.begin();
-		batch.draw(indicator,480,220);
+		batch.draw(indicator,480,240);
+		if(isSelected) {
+			batch.draw(selected,480,300);
+		}
 		batch.end();
 
 	}
@@ -164,6 +172,7 @@ public class BoardView extends ScreenAdapter {
 			indicator  = new Texture (Gdx.files.internal("indicator2.png"));
 		}
 	}
+	
 	
 	private void showPiece() {
 		for (int row = 0; row < chess.getBoard().getBoard().length; row++) {
