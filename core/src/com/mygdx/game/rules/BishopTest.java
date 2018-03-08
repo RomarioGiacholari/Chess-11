@@ -1,10 +1,7 @@
 package com.mygdx.game.rules;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
-import com.badlogic.gdx.ai.utils.Location;
 
 public class BishopTest {
 
