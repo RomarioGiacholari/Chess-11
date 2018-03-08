@@ -333,92 +333,95 @@ public class Board {
 		Position pos = new Position(x, y);
 		Position origin = piece.getPos();
 		
-		if (piece instanceof Knight) return true;
-		
-		else if(piece instanceof Pawn) {
-			// If the new Y is the same as the original Y
-			if (pos.getY() == origin.getY()) {
-				// If the new X is greater than the original X 
-				if (pos.getX() > origin.getX()) {
-					// Call the check up method 
-					if(checkUp(piece, pos)) return true;
-
-				}
-				// If the new X is less than the original X
-				else if (pos.getX() < piece.getPos().getX()) {
-					// Call the check down method
-					if (checkDown(piece,pos)) return true;
-				}
-			}
-			
-			// If the new X is greater than the old X
-			else if (pos.getX() > origin.getX()) {
-				// If the new Y is greater than the old Y
-				if (pos.getY() > origin.getY()) {
-					// If the checkUpRight is true AND original X + 1, original Y + 1 does not equal null AND
-					// original X + 1, original Y + 1 team is not the same as the team on new position.
-					if (checkupRight(piece, pos) && (getSquare(origin.getX() + 1, origin.getY() + 1) != null && 
-						getSquare(origin.getX() + 1, origin.getY() + 1).getTeam() != piece.getTeam())) return true;
-				}
-				// If the new Y is less than the original Y
-				else if (pos.getY() < origin.getY()) {
-					if (checkUpLeft(piece, pos) && (getSquare(origin.getX() + 1, origin.getY() - 1) != null && 
-						getSquare(origin.getX() + 1, origin.getY() - 1).getTeam() != piece.getTeam())) return true;
-
-				}
-			
-			}
-			
-			else if (pos.getX() < origin.getX()) {
-				
-				if (pos.getY() > origin.getY()) {
-					if (checkDownRight(piece, pos) && ((getSquare(origin.getX() - 1, origin.getY()) != null && 
-						getSquare(origin.getX() - 1, origin.getY() + 1).getTeam() != piece.getTeam()))) return true;
-				}
-				
-				else if (pos.getY() < origin.getY()) {
-					if(checkDownLeft(piece, pos) && ((getSquare(origin.getX() - 1, origin.getY() - 1) != null && 
-						getSquare(origin.getX() - 1, origin.getY() - 1).getTeam() != piece.getTeam()))) return true;
-				}
-			}
-		}
-		
-		else {
-			
-			if(pos.getX() == origin.getX()) return true;
-			
-			else if (pos.getY() == piece.getPos().getY()) {
-				if (pos.getX() > origin.getX()) {
-					if(checkUp(piece, pos)) return true;
-				}
-				
-				else if (pos.getX() < origin.getX()) {
-					if (checkDown(piece, pos)) return true;
-				}
-			}
-			
-			else if (pos.getX() > origin.getX()) {
-				if (pos.getY() > origin.getY()) {
-					if (checkupRight(piece, pos)) return true;
-				}
-				
-				else if (pos.getY() < origin.getY()) {
-					if(checkUpLeft(piece, pos)) return true;
-				}
-			}
-			
-			else if(pos.getX() < origin.getX()) {
-				if (pos.getY() > origin.getY()) {
-					if (checkDownRight(piece, pos))	return true;
-				}
-				
-				else if (pos.getY() < origin.getY()) {
-					if(checkDownLeft(piece, pos)) return true;
-				}
-			}
-		
-		}
+		if (piece.move(x, y)) {
+			return true;
+		} 
 		return false;
+		
+//		else if(piece instanceof Pawn) {
+//			// If the new Y is the same as the original Y
+//			if (pos.getY() == origin.getY()) {
+//				// If the new X is greater than the original X 
+//				if (pos.getX() > origin.getX()) {
+//					// Call the check up method 
+//					if(checkUp(piece, pos)) return true;
+//
+//				}
+//				// If the new X is less than the original X
+//				else if (pos.getX() < piece.getPos().getX()) {
+//					// Call the check down method
+//					if (checkDown(piece,pos)) return true;
+//				}
+//			}
+//			
+//			// If the new X is greater than the old X
+//			else if (pos.getX() > origin.getX()) {
+//				// If the new Y is greater than the old Y
+//				if (pos.getY() > origin.getY()) {
+//					// If the checkUpRight is true AND original X + 1, original Y + 1 does not equal null AND
+//					// original X + 1, original Y + 1 team is not the same as the team on new position.
+//					if (checkupRight(piece, pos) && (getSquare(origin.getX() + 1, origin.getY() + 1) != null && 
+//						getSquare(origin.getX() + 1, origin.getY() + 1).getTeam() != piece.getTeam())) return true;
+//				}
+//				// If the new Y is less than the original Y
+//				else if (pos.getY() < origin.getY()) {
+//					if (checkUpLeft(piece, pos) && (getSquare(origin.getX() + 1, origin.getY() - 1) != null && 
+//						getSquare(origin.getX() + 1, origin.getY() - 1).getTeam() != piece.getTeam())) return true;
+//
+//				}
+//			
+//			}
+//			
+//			else if (pos.getX() < origin.getX()) {
+//				
+//				if (pos.getY() > origin.getY()) {
+//					if (checkDownRight(piece, pos) && ((getSquare(origin.getX() - 1, origin.getY()) != null && 
+//						getSquare(origin.getX() - 1, origin.getY() + 1).getTeam() != piece.getTeam()))) return true;
+//				}
+//				
+//				else if (pos.getY() < origin.getY()) {
+//					if(checkDownLeft(piece, pos) && ((getSquare(origin.getX() - 1, origin.getY() - 1) != null && 
+//						getSquare(origin.getX() - 1, origin.getY() - 1).getTeam() != piece.getTeam()))) return true;
+//				}
+//			}
+//		}
+//		
+//		else {
+//			
+//			if(pos.getX() == origin.getX()) return true;
+//			
+//			else if (pos.getY() == piece.getPos().getY()) {
+//				if (pos.getX() > origin.getX()) {
+//					if(checkUp(piece, pos)) return true;
+//				}
+//				
+//				else if (pos.getX() < origin.getX()) {
+//					if (checkDown(piece, pos)) return true;
+//				}
+//			}
+//			
+//			else if (pos.getX() > origin.getX()) {
+//				if (pos.getY() > origin.getY()) {
+//					if (checkupRight(piece, pos)) return true;
+//				}
+//				
+//				else if (pos.getY() < origin.getY()) {
+//					if(checkUpLeft(piece, pos)) return true;
+//				}
+//			}
+//			
+//			else if(pos.getX() < origin.getX()) {
+//				if (pos.getY() > origin.getY()) {
+//					if (checkDownRight(piece, pos))	return true;
+//				}
+//				
+//				else if (pos.getY() < origin.getY()) {
+//					if(checkDownLeft(piece, pos)) return true;
+//				}
+//			}
+//		
+//		}
+//		return false;
 		
 	}
 	

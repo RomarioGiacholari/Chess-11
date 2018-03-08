@@ -1,5 +1,6 @@
 package com.mygdx.game.rules;
 
+import java.util.ArrayList;
 
 public class Rook extends Piece{
 
@@ -21,30 +22,38 @@ public class Rook extends Piece{
 			return"r";
 		}
 	}
+	
+	public ArrayList<Position> arrMove() {
+		ArrayList<Position> possibleMoves = new ArrayList<Position>();
+		ArrayList<Position> outOfBounds = new ArrayList<Position>();
+		
+		for (int i = 0; i < 8; i++) {
+			possibleMoves.add(new Position(position.getX() + i, position.getY()));
+			possibleMoves.add(new Position(position.getX() - i, position.getY()));
+			possibleMoves.add(new Position(position.getX(), position.getY() + i));
+			possibleMoves.add(new Position(position.getX(), position.getY() - i));
+		}
+		
+		while (true) {
+			if (possibleMoves.contains(position)) possibleMoves.remove(position);
+			else break;
+		}
+		
+		for (Position pos : possibleMoves) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		
+		possibleMoves.removeAll(outOfBounds);
 
+		return possibleMoves;
+	}
+	
 	@Override
 	public boolean move(int row, int col) {
-		// TODO Auto-generated method stub
-		if((row <8 && col<8)&&(row >= 0 && col>=0)) {
-			if (row == position.getX()) {
-				for(int i = 0;i<8;i++) {
-					if(i == col) {
-						return true;
-					}
-				}
-			}
-			else if(col == position.getY()) {
-				for( int i = 0 ; i<8;i++) {
-					if(i==row) {
-						return true;
-					}
-				}
-			}
-			
+		
+		for (Position pos : arrMove()) {
+			if (pos.getX() == row && pos.getY() == col) return true;
 		}
 		
 		return false;
-		
 	}
 
 }

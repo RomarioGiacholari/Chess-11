@@ -1,5 +1,7 @@
 package com.mygdx.game.rules;
 
+import java.util.ArrayList;
+
 public class King extends Piece{
 	/**
 	 * A field to hold if the King piece has moved or not
@@ -13,7 +15,7 @@ public class King extends Piece{
 	 */
 	public King(int row, int col , boolean player) {
 		super(row, col, player);
-		moved = false;
+		
 		// TODO Auto-generated constructor stub
 	}
 	public String printPieceType(){
@@ -29,6 +31,26 @@ public class King extends Piece{
 			return"k";
 		}
 	}
+	
+	public ArrayList<Position> arrMove() {
+		ArrayList<Position> possibleMoves = new ArrayList<Position>();
+		ArrayList<Position> outOfBounds = new ArrayList<Position>();
+		
+		possibleMoves.add(new Position(position.getX() - 1, position.getY() - 1));
+		possibleMoves.add(new Position(position.getX() - 1, position.getY()));
+		possibleMoves.add(new Position(position.getX() - 1, position.getY() + 1));
+		possibleMoves.add(new Position(position.getX(), position.getY() - 1));
+		possibleMoves.add(new Position(position.getX(), position.getY() + 1));
+		possibleMoves.add(new Position(position.getX() + 1, position.getY() - 1));
+		possibleMoves.add(new Position(position.getX() + 1, position.getY()));
+		possibleMoves.add(new Position(position.getX() + 1, position.getY() + 1));
+		
+		for (Position pos : possibleMoves) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		
+		possibleMoves.removeAll(outOfBounds);
+		
+		return possibleMoves;
+	}
 	/**
 	 * This is the override for the Movable move function
 	 * it tests if the King has moved. 
@@ -43,21 +65,14 @@ public class King extends Piece{
 	 */
 	@Override
 	public boolean move(int row, int col) {
-		if((row == position.getX() + 1) 
-				|| (row == position.getX() + 1 && col == position.getY() + 1) 
-				|| (col == position.getY() + 1) 
-				|| (row == position.getX() - 1 && col == position.getY() + 1)
-				|| (row == position.getX() - 1)
-				|| (row == position.getX() - 1 && col == position.getY() - 1)
-				|| (col == position.getY() - 1)
-				|| (row == position.getX() + 1 && col == position.getY() - 1)) {
-			if((row < 8 && col < 8) && (row >= 0 && col >= 0)) {
+		
+		for (Position pos : arrMove()) {
+			if (pos.getX() == row && pos.getY() == col) {
 				return true;
-			} else {
-				return false;
 			}
-	
 		}
-		return moved;
+		
+		return false;
+		
 	}
 }
