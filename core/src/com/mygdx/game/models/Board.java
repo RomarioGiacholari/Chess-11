@@ -102,11 +102,11 @@ public class Board {
 		
 	}
 	/**
-	 * Moves the underlying pieces and switches the turn counter to the other player if the move is succesful
+	 * Moves the underlying pieces and switches the turn counter to the other player if the move is successful
 	 * @param x the x coordinate of the target position
 	 * @param y the y coordinate of the target position
 	 * @param oldX the x coordinate of the original piece
-	 * @param oldY the y coordinate of the orignal piece
+	 * @param oldY the y coordinate of the original piece
 	 */
 	public void getPieceAtSquare(int x, int y,int oldX,int oldY){
 		switch (x) {
@@ -169,10 +169,10 @@ public class Board {
 			
 			if(getSquare(oldX, oldY).getTeam() == turn) {
 				if (getSquare(oldX, oldY).move(x, y)) {
-					if(checkMove(getSquare(oldX, oldY), x, y) == true) {
+	
 					setPiece(getSquare(oldX, oldY), new Position(x,y));
 					turn = !turn;
-					}
+					
 				}
 			}
 		} else System.out.println("This square is empty.");
@@ -329,13 +329,49 @@ public class Board {
 		
 	}
 	
+	/**
+	 * 
+	 * @param piece
+	 * @param x
+	 * @param y
+	 * @return boolean - True if there is a collision and False if not
+	 */
+	public boolean collision(Piece piece, int x, int y) {
+		
+		Position currentPosition = piece.getPos();
+		Position newPosition = new Position(x, y);
+		
+		if (getSquare(newPosition).getTeam() == piece.getTeam()) return true;
+		
+		return false;
+	}
+	
 	public boolean checkMove(Piece piece, int x, int y) {
 		Position pos = new Position(x, y);
 		Position origin = piece.getPos();
 		
-		if (piece.move(x, y)) {
-			return true;
-		} 
+		if (piece instanceof Pawn) {
+			if (piece.getTeam()) {
+				
+				Position left = new Position(origin.getX() + 1, origin.getY() - 1);
+				Position right = new Position(origin.getX() + 1, origin.getY() + 1);
+				
+				if (getSquare(left) != null && getSquare(left).getTeam() != piece.getTeam()) {
+					((Pawn) piece).takeLeft = true;
+				} else {
+					((Pawn) piece).takeLeft = false;
+				}
+				
+				if (getSquare(right) != null && getSquare(right).getTeam() != piece.getTeam()) {
+					((Pawn) piece).takeRight = true;
+				}
+				else ((Pawn) piece).takeRight = false;
+				
+			}
+		}
+		
+		if (piece.move(x, y)) return true;
+		
 		return false;
 		
 //		else if(piece instanceof Pawn) {
