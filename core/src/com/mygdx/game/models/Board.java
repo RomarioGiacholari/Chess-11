@@ -169,7 +169,7 @@ public class Board {
 			
 			if(getSquare(oldX, oldY).getTeam() == turn) {
 				if (getSquare(oldX, oldY).move(x, y)) {
-	
+
 					setPiece(getSquare(oldX, oldY), new Position(x,y));
 					turn = !turn;
 					
@@ -179,7 +179,7 @@ public class Board {
 	}
 	
 	
-//	public boolean checkMove(Piece piece, Position end) {
+//	public boolean checkCollision(Piece piece, Position end) {
 //		originalPosition = piece.getPos();
 //		while (originalPosition.equals(end) == false) {
 //			newPosition
@@ -464,6 +464,28 @@ public class Board {
 	
 	public boolean getTurn() {
 		return turn;
+	}
+	
+	public boolean checkCheck(boolean teamType) {
+		Position kingPos = null;
+		for (int i = 0; i < getBoard().length; i++) {
+			for (int n = 0; n < getBoard().length; n++) {
+				if(getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == teamType && ( getSquare(i, n) instanceof King)) {
+					kingPos = new Position(i,n);
+				}
+				if (getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == !teamType) {
+					ArrayList<Position> testing = getSquare(i,n).arrMove();
+					for(Position pos: testing) {
+						if(pos.equals(kingPos)) {
+							// test for collision between route and target
+							// collision needs to a method taking a target and location postion that returns boolean
+							// return true
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 	
