@@ -1,6 +1,7 @@
 package com.mygdx.game.rules;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.mygdx.game.models.Board;
 
@@ -8,9 +9,9 @@ public class Pawn extends Piece {
 	/**
 	 * A field to hold if the piece has moved or not
 	 */
-	private boolean moved;
+	private boolean moved = false;
 	
-	public boolean takeLeft, takeRight;
+	private boolean takeLeft, takeRight = false;
 
 	/**
 	 * A constructor for Pawn taking an initial x and y coordinate and the team it is playing for
@@ -20,7 +21,8 @@ public class Pawn extends Piece {
 	 */
 	public Pawn(int row, int col, boolean player) {
 		super(row, col,player);
-		moved = false;
+		
+		
 	}
 	
 	/**
@@ -31,32 +33,42 @@ public class Pawn extends Piece {
 	 * 
 	 * if the pawn has moved it does the same but within 1 space
 	 */
+	public void takeLeft(boolean take) {
+		this.takeLeft = take;
+	}
+	
+	public void takeRight(boolean take) {
+		this.takeRight = take;
+	}
 	
 	public ArrayList<Position> arrMove() {
+		HashMap<String, ArrayList<Position>> moves = new HashMap<String, ArrayList<Position>>();
+
 		ArrayList<Position> possibleMoves = new ArrayList<Position>();
 		ArrayList<Position> outOfBounds = new ArrayList<Position>();
 		// If the piece is of the WHITE team.
-		if (team == true) {
+		if (team) {
 			possibleMoves.add(new Position(position.getX() + 1, position.getY()));
 			possibleMoves.add(new Position(position.getX() + 2, position.getY()));
 //			// Left
-			if (takeLeft) possibleMoves.add(new Position(position.getX() + 1, position.getY() - 1));
-			if (takeRight) possibleMoves.add(new Position(position.getX() + 1, position.getY() + 1));
-//			possibleMoves.add(new Position(position.getX() - 1, position.getY() - 1));
+//			if (takeLeft) possibleMoves.add(new Position(position.getX() + 1, position.getY() - 1));
+//			if (takeRight) possibleMoves.add(new Position(position.getX() + 1, position.getY() + 1));
+			// Left
+			// Right
 //			// Right
 //			possibleMoves.add(new Position(position.getX() + 1, position.getY() - 1));
 		}
+		
+		
 		// If the piece is of the BLACK team
-		else if (team == false) {
+		else if (!team) {
 			possibleMoves.add(new Position(position.getX() - 1, position.getY()));
 			possibleMoves.add(new Position(position.getX() - 2, position.getY()));
-			// Right
-//			if (takeRight) possibleMoves.add(new Position(position.getX() - 1, position.getY() - 1));
-//			// Left
-//			if (takeLeft) possibleMoves.add(new Position(position.getX() - 1, position.getY() + 1));
 		}
 		
 		if (moved) possibleMoves.remove(1);
+//		if (!takeLeft) possibleMoves.remove(2);
+//		if (!takeRight) possibleMoves.remove(3);
 		
 		for (Position pos : possibleMoves) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
 		
@@ -73,15 +85,12 @@ public class Pawn extends Piece {
 	}
 	
 	public String toString() {
-		if(team) {
-			return "P";
-		}
-		else {
-			return "p";
-				}
+		if(team) return "P";
+		else return "p";
 	}
 
 	public boolean move(int row, int col) {
+		
 		for (Position position : arrMove()) {
 			if (position.getX() == row && position.getY() == col) {
 				moved = true;

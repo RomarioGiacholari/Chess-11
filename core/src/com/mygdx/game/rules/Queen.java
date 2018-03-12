@@ -1,6 +1,7 @@
 package com.mygdx.game.rules;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Queen extends Piece {
 	/**
@@ -31,78 +32,80 @@ public class Queen extends Piece {
 		}
 	}
 	
-	public ArrayList<Position> arrMove() {
-		ArrayList<Position> possibleMoves = new ArrayList<Position>();
+	public HashMap<String, ArrayList<Position>> hashMove() {
+		HashMap<String, ArrayList<Position>> moves = new HashMap<String, ArrayList<Position>>();
+		ArrayList<Position> left = new ArrayList<Position>();
+		ArrayList<Position> right = new ArrayList<Position>();
+		ArrayList<Position> up = new ArrayList<Position>();
+		ArrayList<Position> down = new ArrayList<Position>();
+		ArrayList<Position> upRight = new ArrayList<Position>();
+		ArrayList<Position> downRight = new ArrayList<Position>();
+		ArrayList<Position> upLeft = new ArrayList<Position>();
+		ArrayList<Position> downLeft = new ArrayList<Position>();
 		ArrayList<Position> outOfBounds = new ArrayList<Position>();
 		
 		for (int i = 0; i < 8; i++) {
-			// Up Right Moves
-			possibleMoves.add(new Position(position.getX() - i, position.getY() + i));
-			// Down Right moves
-			possibleMoves.add(new Position(position.getX() + i, position.getY() + i));
-			// Up Left Moves
-			possibleMoves.add(new Position(position.getX() - i, position.getY() - i));
-			// Down Left moves
-			possibleMoves.add(new Position(position.getX() + i, position.getY() - i));
-			// Down Moves
-			possibleMoves.add(new Position(position.getX() + i, position.getY()));
-			// Up Moves
-			possibleMoves.add(new Position(position.getX() - i, position.getY()));
-			// Right Moves
-			possibleMoves.add(new Position(position.getX(), position.getY() + i));
-			// Left Moves
-			possibleMoves.add(new Position(position.getX(), position.getY() - i));
+			upRight.add(new Position(position.getX() - i, position.getY() + i));
+			downRight.add(new Position(position.getX() + i, position.getY() + i));
+			upLeft.add(new Position(position.getX() - i, position.getY() - i));
+			downLeft.add(new Position(position.getX() + i, position.getY() - i));
+			down.add(new Position(position.getX() + i, position.getY()));
+			up.add(new Position(position.getX() - i, position.getY()));
+			right.add(new Position(position.getX(), position.getY() + i));
+			left.add(new Position(position.getX(), position.getY() - i));
 		}
 		
 		while (true) {
-			if (possibleMoves.contains(position)) possibleMoves.remove(position);
+			if (up.contains(position)) up.remove(position);
+			if (down.contains(position)) down.remove(position);
+			if (left.contains(position)) left.remove(position);
+			if (right.contains(position)) right.remove(position);
+			if (upRight.contains(position)) upRight.remove(position);
+			if (downRight.contains(position)) downRight.remove(position);
+			if (upLeft.contains(position)) upLeft.remove(position);
+			if (downLeft.contains(position)) downLeft.remove(position);
 			else break;
 		}
 		
-		for (Position pos : possibleMoves) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : up) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : down) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : right) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : left) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : upRight) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : downRight) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : upLeft) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : downRight) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+
+		up.removeAll(outOfBounds);
+		down.removeAll(outOfBounds);
+		right.removeAll(outOfBounds);
+		left.removeAll(outOfBounds);
+		upRight.removeAll(outOfBounds);
+		downRight.removeAll(outOfBounds);
+		upLeft.removeAll(outOfBounds);
+		downLeft.removeAll(outOfBounds);
 		
-		possibleMoves.removeAll(outOfBounds);
+		moves.put("up", up);
+		moves.put("down", down);
+		moves.put("left", left);
+		moves.put("right", right);
+		moves.put("upRight", upRight);
+		moves.put("downRight", downRight);
+		moves.put("upLeft", upLeft);
+		moves.put("downLeft", downLeft);
 		
-		return possibleMoves;
-		
+		return moves;
 	}
+	
 	@Override
 	public boolean move(int row, int col) {
-		/**
-		 * To-Do:
-		 * - The queen needs to be able to check if there is a piece in front of it.
-		 * - The queen needs to know if it is moving off the board.
-		 */
+		Position choice = new Position(row, col);
 		
-		for (Position pos : arrMove()) {
-			if (pos.getX() == row && pos.getY() == col) return true;
+		for (String direction : hashMove().keySet()) {
+			if (hashMove().get(direction).contains(choice)) return true;
 		}
 		
 		return false;
-//		if(row < 8 && col < 8 && row >= 0 && col >= 0) {
-//			 if (row == position.getX()) {
-//					for(int i = 0;i<8;i++) {
-//						if(i == col) {
-//							return true;
-//						}
-//					}
-//				}
-//				else if(col == position.getY()) {
-//					for( int i = 0 ; i<8;i++) {
-//						if(i==row) {
-//							return true;
-//						}
-//					}
-//				}
-//			else {
-//				for( int i=1; i<8;i++) {
-//					if((row == position.getX() + i && col == position.getY() +i ) || (row == position.getX() - i && col ==position.getY() -i )||(row == position.getX() + i && col ==position.getY() -i || (row == position.getX() - i && col ==position.getY() +i ))){
-//						return true;
-//					}
-//				}
-//			}
-//		}
-//		return false;
 		
 		
 	}

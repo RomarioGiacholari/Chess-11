@@ -23,21 +23,12 @@ public class Board {
 	
 	private ArrayList<Position> positions;
 	
-	private Position originalPosition;
-	
-	private Position newPosition;
-	
-	private Position[] surrounding;
-	
-	private int pieceCount;
 	/**
 	 * A constructor for a Board object, it initialises the board array to be 8*8, the dimensions of a normal chess board
 	 */
 	public Board() {
 		board = new Piece[DIMENSIONS][DIMENSIONS];
 		positions = new ArrayList<Position>();
-		originalPosition = new Position(0, 0);
-		surrounding = new Position[8];
 	}
 	/**
 	 * A method for setting up the pieces on the chess board
@@ -78,13 +69,7 @@ public class Board {
 		board [6][6] = new Pawn(6,6,false);
 		board [6][7] = new Pawn(6,7,false);
 	}
-	/**
-	 * A method that returns the contents of a given chessboard square
-	 * @param position the chess position representing the target location
-	 */
-	public Piece getSquare (Position position) {
-		return board[position.getX()][position.getY()];
-	}
+	
 	/**
 	 * a method to check if a pawn is in need of promotion, if it is it turned into a queen as is the common practice
 	 */
@@ -164,13 +149,15 @@ public class Board {
 				break;
 		}
 		
-		if(getSquare(oldX, oldY) != null){
-		System.out.println(board[oldX][oldY].printPieceType());
+		Piece piece = getSquare(oldX, oldY);
+		
+		if(piece != null) {
+			System.out.println(piece.printPieceType());
 			
-			if(getSquare(oldX, oldY).getTeam() == turn) {
-				if (getSquare(oldX, oldY).move(x, y)) {
+			if(piece.getTeam() == turn) {
+				if (checkMove(piece, x, y)) {
 
-					setPiece(getSquare(oldX, oldY), new Position(x,y));
+					setPiece(piece, new Position(x, y));
 					turn = !turn;
 					
 				}
@@ -300,7 +287,13 @@ public class Board {
 		if(checkMove(piece, row, col)) setPiece(piece, new Position(row, col));
 	}
 
-	
+	/**
+	 * A method that returns the contents of a given chessboard square
+	 * @param position the chess position representing the target location
+	 */
+	public Piece getSquare (Position position) {
+		return board[position.getX()][position.getY()];
+	}
 	/**
 	 * A method to return a specic piece for a given location on the board
 	 * @param row the x coordinate of the piece to be returned
@@ -329,48 +322,54 @@ public class Board {
 		
 	}
 	
-	/**
-	 * 
-	 * @param piece
-	 * @param x
-	 * @param y
-	 * @return boolean - True if there is a collision and False if not
-	 */
+	// If there is a collision then return true.
+	// Else return false.
+	
 	public boolean collision(Piece piece, int x, int y) {
 		
-		Position currentPosition = piece.getPos();
+		ArrayList<Position> path = new ArrayList<Position>();
 		Position newPosition = new Position(x, y);
 		
-		if (getSquare(newPosition).getTeam() == piece.getTeam()) return true;
+		if (piece instanceof Bishop) {
+			((Bishop) piece).hashMove();
+			// Loop through each keySet in the HashMap.
+			for (String move : ((Bishop) piece).hashMove().keySet()) {
+				
+				// If the new position exists in one of the ArrayLists of the keys
+				if (((Bishop) piece).hashMove().get(move).contains(newPosition)) {
+					
+					path = ((Bishop) piece).hashMove().get(move);
+					
+					int location = path.indexOf(newPosition);
+					
+					for (int i = path.size() - 1; i > location; i--) {
+						path.remove(i);
+					}
+				}
+			}
+			
+		}
+		
+		for (Position pos : path) {
+			if (getSquare(pos) != null && getSquare(pos).getTeam() != piece.getTeam()) return false;
+			else return true;
+		}
 		
 		return false;
 	}
-	
 	public boolean checkMove(Piece piece, int x, int y) {
 		Position pos = new Position(x, y);
 		Position origin = piece.getPos();
 		
-		if (piece instanceof Pawn) {
-			if (piece.getTeam()) {
-				
-				Position left = new Position(origin.getX() + 1, origin.getY() - 1);
-				Position right = new Position(origin.getX() + 1, origin.getY() + 1);
-				
-				if (getSquare(left) != null && getSquare(left).getTeam() != piece.getTeam()) {
-					((Pawn) piece).takeLeft = true;
-				} else {
-					((Pawn) piece).takeLeft = false;
-				}
-				
-				if (getSquare(right) != null && getSquare(right).getTeam() != piece.getTeam()) {
-					((Pawn) piece).takeRight = true;
-				}
-				else ((Pawn) piece).takeRight = false;
-				
+		if (piece instanceof Bishop) {
+			if (piece.move(x, y)) {
+				if (collision(piece, x, y)) return false;
+				else return true;
 			}
+			
 		}
 		
-		if (piece.move(x, y)) return true;
+		else if (piece.move(x, y)) return true;
 		
 		return false;
 		
@@ -466,27 +465,27 @@ public class Board {
 		return turn;
 	}
 	
-	public boolean checkCheck(boolean teamType) {
-		Position kingPos = null;
-		for (int i = 0; i < getBoard().length; i++) {
-			for (int n = 0; n < getBoard().length; n++) {
-				if(getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == teamType && ( getSquare(i, n) instanceof King)) {
-					kingPos = new Position(i,n);
-				}
-				if (getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == !teamType) {
-					ArrayList<Position> testing = getSquare(i,n).arrMove();
-					for(Position pos: testing) {
-						if(pos.equals(kingPos)) {
-							// test for collision between route and target
-							// collision needs to a method taking a target and location postion that returns boolean
-							// return true
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
+//	public boolean checkCheck(boolean teamType) {
+//		Position kingPos = null;
+//		for (int i = 0; i < getBoard().length; i++) {
+//			for (int n = 0; n < getBoard().length; n++) {
+//				if(getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == teamType && ( getSquare(i, n) instanceof King)) {
+//					kingPos = new Position(i,n);
+//				}
+//				if (getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == !teamType) {
+//					ArrayList<Position> testing = getSquare(i,n).arrMove();
+//					for(Position pos: testing) {
+//						if(pos.equals(kingPos)) {
+//							// test for collision between route and target
+//							// collision needs to a method taking a target and location postion that returns boolean
+//							// return true
+//						}
+//					}
+//				}
+//			}
+//		}
+//		return false;
+//	}
 	
 	
 }

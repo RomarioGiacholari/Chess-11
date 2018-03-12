@@ -44,7 +44,7 @@ public abstract class Piece implements Movable {
 		position = pos;
 	}
 	
-	public abstract ArrayList<Position> arrMove();
+	//public abstract ArrayList<Position> arrMove();
 	/**
 	 * A method for setting the {@link team} field of the piece
 	 * @param player the new value for team field
