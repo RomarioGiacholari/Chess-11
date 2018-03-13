@@ -165,104 +165,95 @@ public class Board {
 		} else System.out.println("This square is empty.");
 	}
 	
-	
-//	public boolean checkCollision(Piece piece, Position end) {
-//		originalPosition = piece.getPos();
-//		while (originalPosition.equals(end) == false) {
-//			newPosition
+//	public boolean checkRight(Piece piece,Position end) {
+//		Position pointer = piece.getPos();
+//		while(pointer.equals(end) == false) {
+//			pointer = new Position(pointer.getX(), pointer.getY() + 1);
+//			if (getSquare(pointer) != null) {
+//				if(getSquare(pointer).getTeam() == piece.getTeam() && pointer.equals(end)) return false;
+//				
+//			}
 //		}
 //		return true;
 //	}
-	
-	public boolean checkRight(Piece piece,Position end) {
-		Position pointer = piece.getPos();
-		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX(), pointer.getY() + 1);
-			if (getSquare(pointer) != null) {
-				if(getSquare(pointer).getTeam() == piece.getTeam() && pointer.equals(end)) return false;
-				
-			}
-		}
-		return true;
-	}
-	
-	
-	public boolean checkLeft(Piece piece, Position end) {
-		Position pointer = piece.getPos();
-		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX(),pointer.getY() - 1);
-			if (getSquare(pointer) != null) {
-				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
-			}
-		}
-		return true;
-	}
-	
-	public boolean checkUp(Piece piece, Position end) {
-		Position pointer = piece.getPos();
-		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX() + 1,pointer.getY());
-			if (getSquare(pointer) != null) {
-				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
-			}
-		}
-		return true;
-	}
-	
-	public boolean checkDown(Piece piece,Position end) {
-		Position pointer = piece.getPos();
-		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX() - 1,pointer.getY());
-			if (getSquare(pointer) != null) {
-				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
-			}
-		}
-		return true;
-	}
-	
-	public boolean checkupRight(Piece piece, Position end) {
-		Position pointer = piece.getPos();
-		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX() + 1,pointer.getY() + 1);
-			if(getSquare(pointer)!= null) {
-				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
-			}
-		}
-		return true;
-	}
-	
-	private boolean checkUpLeft(Piece piece, Position end) {
-		Position pointer = piece.getPos();
-		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX() + 1,pointer.getY() - 1);
-			if(getSquare(pointer)!= null) {
-				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
-			}
-		}
-		return true;
-	}
-	
-	private boolean checkDownLeft(Piece piece, Position end) {
-		Position pointer = piece.getPos();
-		while (pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX() - 1, pointer.getY() - 1);
-			if (getSquare(pointer)!= null) {
-				if (getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
-			}
-		}
-		return true;
-	}
-	
-	public boolean checkDownRight(Piece piece, Position end) {
-		Position pointer = piece.getPos();
-		while(pointer.equals(end) == false) {
-			pointer = new Position(pointer.getX() - 1, pointer.getY() + 1);
-			if(getSquare(pointer)!= null) {
-				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
-			}
-		}
-		return true;
-	}
+//	
+//	
+//	public boolean checkLeft(Piece piece, Position end) {
+//		Position pointer = piece.getPos();
+//		while(pointer.equals(end) == false) {
+//			pointer = new Position(pointer.getX(),pointer.getY() - 1);
+//			if (getSquare(pointer) != null) {
+//				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
+//			}
+//		}
+//		return true;
+//	}
+//	
+//	public boolean checkUp(Piece piece, Position end) {
+//		Position pointer = piece.getPos();
+//		while(pointer.equals(end) == false) {
+//			pointer = new Position(pointer.getX() + 1,pointer.getY());
+//			if (getSquare(pointer) != null) {
+//				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
+//			}
+//		}
+//		return true;
+//	}
+//	
+//	public boolean checkDown(Piece piece,Position end) {
+//		Position pointer = piece.getPos();
+//		while(pointer.equals(end) == false) {
+//			pointer = new Position(pointer.getX() - 1,pointer.getY());
+//			if (getSquare(pointer) != null) {
+//				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
+//			}
+//		}
+//		return true;
+//	}
+//	
+//	public boolean checkupRight(Piece piece, Position end) {
+//		Position pointer = piece.getPos();
+//		while(pointer.equals(end) == false) {
+//			pointer = new Position(pointer.getX() + 1,pointer.getY() + 1);
+//			if(getSquare(pointer)!= null) {
+//				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
+//			}
+//		}
+//		return true;
+//	}
+//	
+//	private boolean checkUpLeft(Piece piece, Position end) {
+//		Position pointer = piece.getPos();
+//		while(pointer.equals(end) == false) {
+//			pointer = new Position(pointer.getX() + 1,pointer.getY() - 1);
+//			if(getSquare(pointer)!= null) {
+//				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
+//			}
+//		}
+//		return true;
+//	}
+//	
+//	private boolean checkDownLeft(Piece piece, Position end) {
+//		Position pointer = piece.getPos();
+//		while (pointer.equals(end) == false) {
+//			pointer = new Position(pointer.getX() - 1, pointer.getY() - 1);
+//			if (getSquare(pointer)!= null) {
+//				if (getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
+//			}
+//		}
+//		return true;
+//	}
+//	
+//	public boolean checkDownRight(Piece piece, Position end) {
+//		Position pointer = piece.getPos();
+//		while(pointer.equals(end) == false) {
+//			pointer = new Position(pointer.getX() - 1, pointer.getY() + 1);
+//			if(getSquare(pointer)!= null) {
+//				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
+//			}
+//		}
+//		return true;
+//	}
 	
 	/**
 	 * Sets the new location to the piece
@@ -295,7 +286,7 @@ public class Board {
 		return board[position.getX()][position.getY()];
 	}
 	/**
-	 * A method to return a specic piece for a given location on the board
+	 * A method to return a specific piece for a given location on the board
 	 * @param row the x coordinate of the piece to be returned
 	 * @param col the y coordinate of the piece to be returned
 	 * @return the piece requested
@@ -311,8 +302,8 @@ public class Board {
 	
 	public ArrayList<Position> allPositions () {
 		positions.clear();
-		for (int i = 0; i < getBoard().length; i++) {
-			for (int n = 0; n < getBoard().length; n++) {
+		for (int i = 0; i < DIMENSIONS; i++) {
+			for (int n = 0; n < DIMENSIONS; n++) {
 				if (getSquare(i, n) instanceof Piece) {
 					positions.add(getBoard()[i][n].getPos());
 				}
@@ -322,54 +313,70 @@ public class Board {
 		
 	}
 	
+	public ArrayList<Position> createPath(Piece piece, Position newPosition) {
+		
+		ArrayList<Position> path = new ArrayList<Position>();
+		
+		piece.hashMove();
+		
+			
+		for (String move : piece.hashMove().keySet()) {
+			
+			if (piece.hashMove().get(move).contains(newPosition)) {
+				
+				path = piece.hashMove().get(move);
+				
+				int location = path.indexOf(newPosition);
+				
+				for (int i = path.size() - 1; i > location; i--) path.remove(i);
+			}
+		}
+		
+		return path;
+	}
 	// If there is a collision then return true.
 	// Else return false.
 	
 	public boolean collision(Piece piece, int x, int y) {
-		
-		ArrayList<Position> path = new ArrayList<Position>();
 		Position newPosition = new Position(x, y);
+		// The last element in the ArrayList is the new position
+		ArrayList<Position> path = createPath(piece, newPosition);
 		
-		if (piece instanceof Bishop) {
-			((Bishop) piece).hashMove();
-			// Loop through each keySet in the HashMap.
-			for (String move : ((Bishop) piece).hashMove().keySet()) {
-				
-				// If the new position exists in one of the ArrayLists of the keys
-				if (((Bishop) piece).hashMove().get(move).contains(newPosition)) {
-					
-					path = ((Bishop) piece).hashMove().get(move);
-					
-					int location = path.indexOf(newPosition);
-					
-					for (int i = path.size() - 1; i > location; i--) {
-						path.remove(i);
-					}
-				}
+		for (int i = 0; i < path.size() - 1; i++) {
+			
+			if (getSquare(path.get(i)) != null) {
+				return true;
 			}
 			
 		}
 		
-		for (Position pos : path) {
-			if (getSquare(pos) != null && getSquare(pos).getTeam() != piece.getTeam()) return false;
-			else if (getSquare(pos) != null) return true;
+		if (getSquare(newPosition) != null && getSquare(newPosition).getTeam() == piece.getTeam()) {
+			return true;
 		}
 		
 		return false;
 	}
+	
+	/**
+	 * This check if a move is valid. Taking collision into account
+	 * @param piece - the selected piece
+	 * @param x - the x coordinate of the new position for the selected piece
+	 * @param y - the y coordinate of the new position for the selected piece
+	 * @return - true is the move is possible & false if the move is not possible
+	 */
 	public boolean checkMove(Piece piece, int x, int y) {
-		Position pos = new Position(x, y);
-		Position origin = piece.getPos();
 		
-		if (piece instanceof Bishop) {
-			if (piece.move(x, y)) {
-				if (collision(piece, x, y)) return false;
-				else return true;
-			}
+		if (piece.move(x, y)) {
 			
+			if (collision(piece, x, y)) return false;
+			
+			else {
+				
+				if (piece instanceof Pawn) ((Pawn) piece).hasMoved();
+				
+				return true;
+			}
 		}
-		
-		else if (piece.move(x, y)) return true;
 		
 		return false;
 		

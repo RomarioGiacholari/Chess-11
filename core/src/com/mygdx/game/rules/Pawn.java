@@ -23,6 +23,23 @@ public class Pawn extends Piece {
 		
 	}
 	
+	public void hasMoved() {
+		
+		this.moved = true;
+		
+	}
+	
+	public void takeLeft(boolean take) {
+		
+		this.takeLeft = take;
+		
+	}
+	
+	public void takeRight(boolean take) {
+		
+		this.takeRight = take;
+		
+	}
 	/**
 	 * This is the override for the Movable move function
 	 * it tests if the pawn has moved
@@ -42,15 +59,15 @@ public class Pawn extends Piece {
 		if (team) {
 			vertical.add(new Position(position.getX() + 1, position.getY()));
 			vertical.add(new Position(position.getX() + 2, position.getY()));
-			left.add(new Position(position.getX() + 1, position.getY() - 1));
-			right.add(new Position(position.getX() + 1, position.getY() + 1));
+			if (takeLeft) left.add(new Position(position.getX() + 1, position.getY() - 1));
+			if (takeRight) right.add(new Position(position.getX() + 1, position.getY() + 1));
 		}
 		// If the piece is of the BLACK team
 		else if (!team) {
 			vertical.add(new Position(position.getX() - 1, position.getY()));
 			vertical.add(new Position(position.getX() - 2, position.getY()));
-			left.add(new Position(position.getX() - 1, position.getY() - 1));
-			right.add(new Position(position.getX() - 1, position.getY() + 1));
+			if (takeLeft) left.add(new Position(position.getX() - 1, position.getY() - 1));
+			if (takeRight) right.add(new Position(position.getX() - 1, position.getY() + 1));
 		}
 		
 		if (moved) vertical.remove(1);
