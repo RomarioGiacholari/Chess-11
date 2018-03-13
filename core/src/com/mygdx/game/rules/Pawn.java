@@ -3,8 +3,6 @@ package com.mygdx.game.rules;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.mygdx.game.models.Board;
-
 public class Pawn extends Piece {
 	/**
 	 * A field to hold if the piece has moved or not
@@ -33,51 +31,40 @@ public class Pawn extends Piece {
 	 * 
 	 * if the pawn has moved it does the same but within 1 space
 	 */
-	public void takeLeft(boolean take) {
-		this.takeLeft = take;
-	}
 	
-	public void takeRight(boolean take) {
-		this.takeRight = take;
-	}
-	
-	public ArrayList<Position> arrMove() {
+	public HashMap<String, ArrayList<Position>> hashMove() {
 		HashMap<String, ArrayList<Position>> moves = new HashMap<String, ArrayList<Position>>();
-
-		ArrayList<Position> possibleMoves = new ArrayList<Position>();
+		ArrayList<Position> vertical = new ArrayList<Position>();
+		ArrayList<Position> left = new ArrayList<Position>();
+		ArrayList<Position> right = new ArrayList<Position>();
 		ArrayList<Position> outOfBounds = new ArrayList<Position>();
 		// If the piece is of the WHITE team.
 		if (team) {
-			possibleMoves.add(new Position(position.getX() + 1, position.getY()));
-			possibleMoves.add(new Position(position.getX() + 2, position.getY()));
-//			// Left
-//			if (takeLeft) possibleMoves.add(new Position(position.getX() + 1, position.getY() - 1));
-//			if (takeRight) possibleMoves.add(new Position(position.getX() + 1, position.getY() + 1));
-			// Left
-			// Right
-//			// Right
-//			possibleMoves.add(new Position(position.getX() + 1, position.getY() - 1));
+			vertical.add(new Position(position.getX() + 1, position.getY()));
+			vertical.add(new Position(position.getX() + 2, position.getY()));
+			left.add(new Position(position.getX() + 1, position.getY() - 1));
+			right.add(new Position(position.getX() + 1, position.getY() + 1));
 		}
-		
-		
 		// If the piece is of the BLACK team
 		else if (!team) {
-			possibleMoves.add(new Position(position.getX() - 1, position.getY()));
-			possibleMoves.add(new Position(position.getX() - 2, position.getY()));
+			vertical.add(new Position(position.getX() - 1, position.getY()));
+			vertical.add(new Position(position.getX() - 2, position.getY()));
+			left.add(new Position(position.getX() - 1, position.getY() - 1));
+			right.add(new Position(position.getX() - 1, position.getY() + 1));
 		}
 		
-		if (moved) possibleMoves.remove(1);
-//		if (!takeLeft) possibleMoves.remove(2);
-//		if (!takeRight) possibleMoves.remove(3);
-		
-		for (Position pos : possibleMoves) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
-		
-		possibleMoves.removeAll(outOfBounds);
-		
-		return possibleMoves;
+		if (moved) vertical.remove(1);
+		for (Position pos : vertical) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : right) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : left) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		vertical.removeAll(outOfBounds);
+		right.removeAll(outOfBounds);
+		left.removeAll(outOfBounds);
+		moves.put("vertical", vertical);
+		moves.put("left", left);
+		moves.put("right", right);
+		return moves;
 	}
-	
-	public boolean hasMoved() { return moved; }
 	
 	public String printPieceType(){
 //		System.out.println("Pawn");
@@ -89,16 +76,16 @@ public class Pawn extends Piece {
 		else return "p";
 	}
 
+	@Override
 	public boolean move(int row, int col) {
+		Position choice = new Position(row, col);
 		
-		for (Position position : arrMove()) {
-			if (position.getX() == row && position.getY() == col) {
-				moved = true;
-				return true;
-			}
+		for (String direction : hashMove().keySet()) {
+			if (hashMove().get(direction).contains(choice)) return true;
 		}
 		
-		return false; 
+		return false;
+		
 	}
 		
 }

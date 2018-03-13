@@ -1,6 +1,7 @@
 package com.mygdx.game.rules;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class King extends Piece{
 	/**
@@ -32,24 +33,56 @@ public class King extends Piece{
 		}
 	}
 	
-	public ArrayList<Position> arrMove() {
-		ArrayList<Position> possibleMoves = new ArrayList<Position>();
+	public HashMap<String, ArrayList<Position>> hashMove() {
+		
+		HashMap<String, ArrayList<Position>> moves = new HashMap<String, ArrayList<Position>>();
+		ArrayList<Position> up = new ArrayList<Position>();
+		ArrayList<Position> down = new ArrayList<Position>();
+		ArrayList<Position> left = new ArrayList<Position>();
+		ArrayList<Position> right = new ArrayList<Position>();
+		ArrayList<Position> upRight = new ArrayList<Position>();
+		ArrayList<Position> downRight = new ArrayList<Position>();
+		ArrayList<Position> upLeft = new ArrayList<Position>();
+		ArrayList<Position> downLeft = new ArrayList<Position>();
 		ArrayList<Position> outOfBounds = new ArrayList<Position>();
 		
-		possibleMoves.add(new Position(position.getX() - 1, position.getY() - 1));
-		possibleMoves.add(new Position(position.getX() - 1, position.getY()));
-		possibleMoves.add(new Position(position.getX() - 1, position.getY() + 1));
-		possibleMoves.add(new Position(position.getX(), position.getY() - 1));
-		possibleMoves.add(new Position(position.getX(), position.getY() + 1));
-		possibleMoves.add(new Position(position.getX() + 1, position.getY() - 1));
-		possibleMoves.add(new Position(position.getX() + 1, position.getY()));
-		possibleMoves.add(new Position(position.getX() + 1, position.getY() + 1));
+		up.add(new Position(position.getX() + 1, position.getY()));
+		down.add(new Position(position.getX() - 1, position.getY()));
+		left.add(new Position(position.getX(), position.getY() - 1));
+		right.add(new Position(position.getX(), position.getY() + 1));
+		upLeft.add(new Position(position.getX() + 1, position.getY() - 1));
+		upRight.add(new Position(position.getX() + 1, position.getY() + 1));
+		downLeft.add(new Position(position.getX() - 1, position.getY() - 1));
+		downRight.add(new Position(position.getX() - 1, position.getY() + 1));
 		
-		for (Position pos : possibleMoves) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : up) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : down) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : right) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : left) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : upRight) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : downRight) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : upLeft) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
+		for (Position pos : downRight) if (pos.checkOutOfBounds()) outOfBounds.add(pos);
 		
-		possibleMoves.removeAll(outOfBounds);
+		up.removeAll(outOfBounds);
+		down.removeAll(outOfBounds);
+		right.removeAll(outOfBounds);
+		left.removeAll(outOfBounds);
+		upRight.removeAll(outOfBounds);
+		downRight.removeAll(outOfBounds);
+		upLeft.removeAll(outOfBounds);
+		downLeft.removeAll(outOfBounds);
 		
-		return possibleMoves;
+		moves.put("up", up);
+		moves.put("down", down);
+		moves.put("left", left);
+		moves.put("right", right);
+		moves.put("upLeft", upLeft);
+		moves.put("upRight", upRight);
+		moves.put("downLeft", downLeft);
+		moves.put("downRight", downRight);
+		
+		return moves;
 	}
 	/**
 	 * This is the override for the Movable move function
@@ -65,11 +98,10 @@ public class King extends Piece{
 	 */
 	@Override
 	public boolean move(int row, int col) {
+		Position choice = new Position(row, col);
 		
-		for (Position pos : arrMove()) {
-			if (pos.getX() == row && pos.getY() == col) {
-				return true;
-			}
+		for (String direction : hashMove().keySet()) {
+			if (hashMove().get(direction).contains(choice)) return true;
 		}
 		
 		return false;

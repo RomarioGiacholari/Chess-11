@@ -352,7 +352,7 @@ public class Board {
 		
 		for (Position pos : path) {
 			if (getSquare(pos) != null && getSquare(pos).getTeam() != piece.getTeam()) return false;
-			else return true;
+			else if (getSquare(pos) != null) return true;
 		}
 		
 		return false;
