@@ -366,13 +366,33 @@ public class Board {
 	 */
 	public boolean checkMove(Piece piece, int x, int y) {
 		
+		if (piece instanceof Pawn) {
+			
+			
+			
+			Position left = ((Pawn) piece).getLeft();
+			Position right = ((Pawn) piece).getRight();
+			if (getSquare(left) != null && getSquare(left).getTeam() != piece.getTeam()) {
+				((Pawn) piece).takeLeft(true);
+			}
+			else ((Pawn) piece).takeLeft(false);
+			
+			if (getSquare(right) != null && getSquare(right).getTeam() != piece.getTeam()) {
+				((Pawn) piece).takeRight(true);
+			}
+			else ((Pawn) piece).takeRight(false);
+		
+		}
+		
 		if (piece.move(x, y)) {
 			
 			if (collision(piece, x, y)) return false;
 			
 			else {
 				
-				if (piece instanceof Pawn) ((Pawn) piece).hasMoved();
+				if (piece instanceof Pawn) {
+					((Pawn) piece).hasMoved();
+				}
 				
 				return true;
 			}
