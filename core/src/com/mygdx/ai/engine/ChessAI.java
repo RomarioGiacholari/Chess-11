@@ -2,6 +2,7 @@ package com.mygdx.ai.engine;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Random;
 
 import com.mygdx.game.models.Board;
 import com.mygdx.game.rules.Knight;
@@ -24,6 +25,8 @@ public class ChessAI {
 	 */
 	private ArrayList<Position> positions;
 	
+	private Random random;
+	
 	/**
 	 * Hashtable for all of the possible moves the AI can play
 	 * KEY - POSITION -> original position of the piece
@@ -35,6 +38,7 @@ public class ChessAI {
 		this.team = team;
 		positions = new ArrayList<Position>();
 		possibleMoves = new Hashtable<Position, ArrayList<Position>>();
+		random = new Random();
 	}
 	
 	/**
@@ -55,44 +59,62 @@ public class ChessAI {
 	public void possibleMoves(Board currentBoard) {
 		possibleMoves.clear();
 		
-		for (Position position : positions) {
-			// Store the original position
-			Position originalPosition = position;
-			// Selected piece to be moved
-			Piece selectedPiece = currentBoard.getSquare(originalPosition);
-			// Possible locations for the piece to move to
-			ArrayList<Position> newPositions = new ArrayList<Position>();
+		/**
+		 * 1. Loop through all of the AI's positions
+		 * 2. Get the piece at the selected position
+		 * 3. Go through every square on the board and the ones
+		 * 	  that are possible will be added to the Hashtable
+		 */
+		
+		for (Position location : positions) {
 			
-			if (selectedPiece instanceof Pawn) {
-				for (Position pos : ((Pawn) selectedPiece).arrMove()) {
-					if (currentBoard.checkMove(selectedPiece, pos.getX(), pos.getY())) {
-						newPositions.add(pos);
-					}
+			Piece selectedPiece = currentBoard.getSquare(location);
+			ArrayList<Position> newLocations = new ArrayList<Position>();
+			
+			for (int i = 0; i < Board.DIMENSIONS; i++) {
+				
+				for (int y = 0; y < Board.DIMENSIONS; y++) {
+					try {
+						if (currentBoard.checkMove(selectedPiece, i, y)) {
+							
+							newLocations.add(new Position(i, y));
+							
+						}
+					} catch (ArrayIndexOutOfBoundsException e) {}
+					
 				}
+				
 			}
-			else if (selectedPiece instanceof Knight) {
-				for (Position pos : ((Knight) selectedPiece).arrMove()) {
-					if (selectedPiece.move(pos.getX(), pos.getY()) && currentBoard.checkMove(selectedPiece, pos.getX(), pos.getY())) {
-						newPositions.add(pos);
-					}
-				}
-			}
-			else {
-				// Loop through all of the columns
-				for (int i = 0; i < Board.DIMENSIONS; i++) {
-					// Loop through all of the rows
-					for (int n = 0; n < Board.DIMENSIONS; n++) {
-						try {
-							if (currentBoard.checkMove(selectedPiece, i, n)) {
-								newPositions.add(new Position(i, n));
-							}
-						} catch (ArrayIndexOutOfBoundsException e) {}
-					}
-				}
-			}
-			possibleMoves.put(originalPosition, newPositions);
+			if (newLocations.size() > 0) possibleMoves.put(location, newLocations);
 		}
 	}
+	
+	/**
+	 * Selects a random move from the possibleMoves Hashtable
+	 * @return position where the piece will be placed.
+	 */
+	public ArrayList<Position> selectAMove(Board currentBoard) {
+		
+		possibleMoves(currentBoard);
+		
+		ArrayList<Position> moveInfo = new ArrayList<Position>();
+		
+		ArrayList<Position> currentPositions = new ArrayList<Position>();
+		
+		for (Position pos : possibleMoves.keySet()) currentPositions.add(pos);
+		
+		Position currentPosition = currentPositions.get(random.nextInt(currentPositions.size()));
+		
+		ArrayList<Position> newLocations = possibleMoves.get(currentPosition);
+		
+		Position newPosition = newLocations.get(random.nextInt(newLocations.size()));
+		
+		moveInfo.add(currentPosition);
+		moveInfo.add(newPosition);
+		
+		return moveInfo;
+	}
+	
 	
 	public ArrayList<Position> getPositions() {
 		return positions;
@@ -106,9 +128,9 @@ public class ChessAI {
 	// Methods below are for testing purposes only
 	public void displayBoard(Board currentBoard) {
 		
-		for (int i = 0; i < currentBoard.DIMENSIONS; i++) {
+		for (int i = 0; i < Board.DIMENSIONS; i++) {
 			
-			for(int n = 0; n < currentBoard.DIMENSIONS; n++) {
+			for(int n = 0; n < Board.DIMENSIONS; n++) {
 				System.out.print(currentBoard.getBoard()[i][n] + "\t");
 			}
 			System.out.println();

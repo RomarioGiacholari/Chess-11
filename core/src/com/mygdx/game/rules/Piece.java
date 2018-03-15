@@ -59,7 +59,6 @@ public abstract class Piece implements Movable {
 	}
 
 	public String printPieceType() {
-		// TODO Auto-generated method stub
 		return name;
 	}
 }

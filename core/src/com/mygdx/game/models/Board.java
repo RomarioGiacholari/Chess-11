@@ -10,6 +10,7 @@ import com.mygdx.game.rules.*;
 /**
  * A class to represent the board of a game of chess
  * @author Nathan Livsey
+ * @author Farhan Ali
  *
  */
 public class Board {
@@ -372,23 +373,24 @@ public class Board {
 	 * @return - true is the move is possible & false if the move is not possible
 	 */
 	public boolean checkMove(Piece piece, int x, int y) {
+		Position newLocation = new Position(x, y);
+		
+		if (piece.getPos().equals(newLocation)) return false;
 		
 		if (piece instanceof Pawn) {
-			
-			
-			
 			Position left = ((Pawn) piece).getLeft();
 			Position right = ((Pawn) piece).getRight();
-			if (getSquare(left) != null && getSquare(left).getTeam() != piece.getTeam()) {
-				((Pawn) piece).takeLeft(true);
-			}
-			else ((Pawn) piece).takeLeft(false);
-			
-			if (getSquare(right) != null && getSquare(right).getTeam() != piece.getTeam()) {
-				((Pawn) piece).takeRight(true);
-			}
-			else ((Pawn) piece).takeRight(false);
-		
+			try {
+				if (getSquare(left) != null && getSquare(left).getTeam() != piece.getTeam()) {
+					((Pawn) piece).takeLeft(true);
+				}
+				else ((Pawn) piece).takeLeft(false);
+				
+				if (getSquare(right) != null && getSquare(right).getTeam() != piece.getTeam()) {
+					((Pawn) piece).takeRight(true);
+				}
+				else ((Pawn) piece).takeRight(false);
+			} catch (ArrayIndexOutOfBoundsException e) {}
 		}
 		
 		if (piece.move(x, y)) {

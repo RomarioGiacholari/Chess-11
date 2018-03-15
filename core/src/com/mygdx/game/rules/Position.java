@@ -53,6 +53,10 @@ public class Position {
 		return surrounding;
 	}
 	
+	/**
+	 * 
+	 * @return true if the position is in bounds or false if position out of bounds
+	 */
 	public boolean checkOutOfBounds() {
 		if (xPosition > 7 || xPosition < 0) return true;
 		if (yPosition > 7 || yPosition < 0) return true;
