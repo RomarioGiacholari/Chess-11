@@ -77,6 +77,8 @@ public class BoardView extends ScreenAdapter {
 			}
 			else if(mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0) {
 			}
+			System.out.println(chess.getBoard().checkCheck(true));
+			System.out.println(chess.getBoard().checkCheck(false));
 		}
 		}
 		chess.getBoard().promoteCheck();

@@ -1,6 +1,7 @@
 package com.mygdx.game.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.mygdx.game.rules.*;
 
@@ -498,27 +499,44 @@ public class Board {
 		return turn;
 	}
 	
-//	public boolean checkCheck(boolean teamType) {
-//		Position kingPos = null;
-//		for (int i = 0; i < getBoard().length; i++) {
-//			for (int n = 0; n < getBoard().length; n++) {
-//				if(getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == teamType && ( getSquare(i, n) instanceof King)) {
-//					kingPos = new Position(i,n);
-//				}
-//				if (getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == !teamType) {
-//					ArrayList<Position> testing = getSquare(i,n).arrMove();
-//					for(Position pos: testing) {
-//						if(pos.equals(kingPos)) {
-//							// test for collision between route and target
-//							// collision needs to a method taking a target and location postion that returns boolean
-//							// return true
-//						}
-//					}
-//				}
-//			}
-//		}
-//		return false;
-//	}
+	public boolean checkCheck(boolean teamType) {
+		Position kingPos = null;
+		for (int i = 0; i < getBoard().length; i++) {
+			for (int n = 0; n < getBoard().length; n++) {
+				if(getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == teamType && ( getSquare(i, n) instanceof King)) {
+					kingPos = new Position(i,n);
+				}
+			}
+		}
+		for (int i = 0; i < getBoard().length; i++) {
+			for (int n = 0; n < getBoard().length; n++) {
+				if (getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == !teamType) {
+					HashMap<String, ArrayList<Position>> testing = getSquare(i,n).hashMove();
+					for(String key: testing.keySet()) {
+						ArrayList<Position> pos = testing.get(key);
+						for(Position pos2:pos) {
+					
+						if(pos2.equals(kingPos)) {
+							// test for collision between route and target
+							// collision needs to a method taking a target and location postion that returns boolean
+							// return true
+							if(collision(getSquare(i,n),pos2.getX(),pos2.getY())) {
+							
+							}
+							else {
+								return true;
+							}
+							
+							
+						}
+					}
+					}
+				}
+			}
+		}
+		return false;
+	}
 	
 	
 }
+	
