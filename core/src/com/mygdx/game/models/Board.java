@@ -354,6 +354,12 @@ public class Board {
 			return true;
 		}
 		
+		if(getSquare(newPosition)!=null && piece instanceof Pawn) {
+			if(y == piece.getPos().getY()) {
+				return true;
+			}
+		}
+		
 		return false;
 	}
 	
