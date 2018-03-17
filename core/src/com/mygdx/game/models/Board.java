@@ -552,8 +552,8 @@ public class Board {
 							}
 							
 							
+							}
 						}
-					}
 					}
 				}
 			}
@@ -561,6 +561,21 @@ public class Board {
 		return false;
 	}
 	
-	
-}
+	public void AIMove(int x, int y, int oldX, int oldY) {
+		Piece piece = getSquare(oldX, oldY);
+		
+			if(piece != null) {
+				System.out.println(piece.printPieceType());
+			
+				if(piece.getTeam() == turn) {
+					if (checkMove(piece, x, y)) {
+
+						setPiece(piece, new Position(x, y));
+						turn = !turn;
+					
+				}
+			}
+		}
+	}
+}	
 	

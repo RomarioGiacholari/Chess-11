@@ -2,6 +2,8 @@ package com.mygdx.game.views;
 
 
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
@@ -14,6 +16,7 @@ import com.mygdx.game.rules.Bishop;
 import com.mygdx.game.rules.King;
 import com.mygdx.game.rules.Knight;
 import com.mygdx.game.rules.Pawn;
+import com.mygdx.game.rules.Position;
 import com.mygdx.game.rules.Queen;
 import com.mygdx.game.rules.Rook;
 /**
@@ -33,7 +36,7 @@ public class BoardView extends ScreenAdapter {
 	private int oldY = -1;
 	private boolean isSelected;
 	private boolean AIEnabled = true;
-	private boolean singleteam = false;
+	private boolean singleteam = true;
 	private ChessAI AI;
 
 
@@ -63,7 +66,17 @@ public class BoardView extends ScreenAdapter {
 		
 		if(AIEnabled) {
 			if(chess.getBoard().getTurn() == singleteam) {
+				inputs();
+			}
+			else {
+				ArrayList<Position> moveList = AI.selectAMove(chess.getBoard());
+				int moveX = moveList.get(0).getX();
+				int moveY = moveList.get(0).getY();
 				
+				int oldX = moveList.get(1).getX();
+				int oldY = moveList.get(1).getY();
+				
+				chess.getBoard().AIMove(moveX, moveY, oldX, oldY);
 			}
 			}
 		else if (!AIEnabled) {
