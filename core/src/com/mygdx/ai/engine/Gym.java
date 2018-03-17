@@ -30,9 +30,7 @@ public class Gym {
 		
 		deepBlue.displayAllPossibleMoves(board);
 		
-		int selectPosition = rand.nextInt(deepBlue.getPossibleMoves().size());
 		
-		System.out.println();
 		
 		
 		
