@@ -26,11 +26,13 @@ public class BoardView extends ScreenAdapter {
 	private ChessBoard chessBoard = new ChessBoard();
 	private Texture indicator;
 	private Texture selected;
-	private static final float MOVE_TIME = 0.275f;
+	private static float MOVE_TIME = 0.275f;
 	private float timer = MOVE_TIME;
 	private int oldX = -1;
 	private int oldY = -1;
 	private boolean isSelected;
+	private boolean AI = false;
+	private boolean singleteam = true;
 
 
 	@Override
@@ -190,6 +192,12 @@ public class BoardView extends ScreenAdapter {
 				}
 			}
 		}
+	}
+	
+	
+	public void setTimers(float x) {
+		MOVE_TIME = x;
+		timer = x;
 	}
 
 }
