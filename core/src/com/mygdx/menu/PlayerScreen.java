@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.views.BoardView;
 
 public class PlayerScreen implements Screen {
 	private MainClass main;
@@ -48,9 +49,12 @@ public class PlayerScreen implements Screen {
 		twoPlayerButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				dispose();
 				getSound().play(0.75f);
+				main.setScreen(new BoardView());
 			}
 		});
+		
 		backButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
