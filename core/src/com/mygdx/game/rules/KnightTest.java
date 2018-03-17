@@ -4,22 +4,23 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class KingTest {
+public class KnightTest {
+
 
 	@Test
 	public void test_it_prints_the_piece_type() {
 		
-		King king = new King(1,5,true);
+		Knight knight = new Knight(1,2,true);
 		
-		assertEquals("King", king.printPieceType());
+		assertEquals("Knight", knight.printPieceType());
 	}
 	
 	@Test
 	public void test_it_validates_the_moves() {
 		
-		King king = new King(1,5,true);
+		Knight knight = new Knight(1,2,true);
 		
-		assertTrue(king.move(2,5));
+		assertTrue(knight.move(3,1));
 	}
 
 }
