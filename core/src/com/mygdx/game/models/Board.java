@@ -3,6 +3,7 @@ package com.mygdx.game.models;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.mygdx.ai.engine.ChessAI;
 import com.mygdx.game.rules.*;
 
 
@@ -23,6 +24,8 @@ public class Board {
 	
 	public static final int DIMENSIONS = 8;
 	
+	private ChessAI deepBlue;
+	
 	private ArrayList<Position> positions;
 	
 	/**
@@ -31,6 +34,7 @@ public class Board {
 	public Board() {
 		board = new Piece[DIMENSIONS][DIMENSIONS];
 		positions = new ArrayList<Position>();
+		deepBlue = new ChessAI(false);
 	}
 	/**
 	 * A method for setting up the pieces on the chess board
@@ -95,7 +99,7 @@ public class Board {
 	 * @param oldX the x coordinate of the original piece
 	 * @param oldY the y coordinate of the original piece
 	 */
-	public void getPieceAtSquare(int x, int y,int oldX,int oldY){
+	public void getPieceAtSquare(int x, int y, int oldX, int oldY){
 		switch (x) {
 			case 0:
 				x = 7;
@@ -156,15 +160,33 @@ public class Board {
 		if(piece != null) {
 			System.out.println(piece.printPieceType());
 			
-			if(piece.getTeam() == turn) {
+			if(piece.getTeam() == true) {
 				if (checkMove(piece, x, y)) {
 
 					setPiece(piece, new Position(x, y));
 					turn = !turn;
 					
 				}
-			}
+			} 
+			
+//			else if (piece.getTeam() == false) {
+//				Position currentPosition = deepBlue.selectAMove(this).get(0);
+//				Position newPosition = deepBlue.selectAMove(this).get(1);
+//				
+//				set
+//			}
 		} else System.out.println("This square is empty.");
+	}
+	
+	public void AITest() {
+		if (turn) {
+			
+			Position currentPosition = deepBlue.selectAMove(this).get(0);
+			Position newPosition = deepBlue.selectAMove(this).get(1);
+			
+			getPieceAtSquare(currentPosition.getX(), currentPosition.getY(), newPosition.getX(), newPosition.getY());
+			
+		}
 	}
 	
 //	public boolean checkRight(Piece piece,Position end) {

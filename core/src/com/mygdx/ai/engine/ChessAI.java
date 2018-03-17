@@ -10,6 +10,11 @@ import com.mygdx.game.rules.Pawn;
 import com.mygdx.game.rules.Piece;
 import com.mygdx.game.rules.Position;
 
+/**
+ * The artificial intelligence for the chess game 
+ * @author Farhan Ali
+ *
+ */
 public class ChessAI {
 	
 	/**
@@ -113,6 +118,10 @@ public class ChessAI {
 		moveInfo.add(newPosition);
 		
 		return moveInfo;
+	}
+	
+	public boolean getTeam() {
+		return this.team;
 	}
 	
 	
