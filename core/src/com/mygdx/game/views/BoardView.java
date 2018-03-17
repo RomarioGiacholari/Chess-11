@@ -8,6 +8,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.ai.engine.ChessAI;
 import com.mygdx.game.models.chessGame;
 import com.mygdx.game.rules.Bishop;
 import com.mygdx.game.rules.King;
@@ -31,8 +32,9 @@ public class BoardView extends ScreenAdapter {
 	private int oldX = -1;
 	private int oldY = -1;
 	private boolean isSelected;
-	private boolean AI = false;
-	private boolean singleteam = true;
+	private boolean AIEnabled = true;
+	private boolean singleteam = false;
+	private ChessAI AI;
 
 
 	@Override
@@ -42,6 +44,7 @@ public class BoardView extends ScreenAdapter {
 	public void show() {
 		chess = new chessGame();
 		batch = new SpriteBatch();	
+		AI = new ChessAI(!singleteam);
 		indicator = new Texture (Gdx.files.internal("indicator.png"));
 		selected = new Texture (Gdx.files.internal("indicator3.png"));
 		}
@@ -58,29 +61,13 @@ public class BoardView extends ScreenAdapter {
 		if(timer<=0) {
 			timer=MOVE_TIME;
 		
-
-		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-			int mouseGridX = Integer.parseInt(Integer.toString(Gdx.input.getX() / 60).substring(0, 1));
-			int mouseGridY = Integer.parseInt(Integer.toString(Gdx.input.getY() / 60).substring(0, 1));
-			
-			if(oldX == -1) {
-				oldX = mouseGridX;
-				oldY = mouseGridY;
-				isSelected = true;
+		if(AIEnabled) {
+			if(chess.getBoard().getTurn() == singleteam) {
+				
 			}
-			if (mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0 && (oldX != mouseGridX || oldY != mouseGridY)) {
-				//showIfSelected(mouseGridX, mouseGridY);
-				System.out.println("selcted square (x, y): " + mouseGridX + ", " + mouseGridY);		
-				chess.getBoard().getPieceAtSquare(mouseGridY, mouseGridX, oldY, oldX);
-				System.out.println("old square (x, y): "+oldX+ ", "+ oldY );				
-				oldX = -1;
-				oldY = -1;
-				isSelected = false;
 			}
-			else if(mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0) {
-			}
-			System.out.println(chess.getBoard().checkCheck(true));
-			System.out.println(chess.getBoard().checkCheck(false));
+		else if (!AIEnabled) {
+			inputs();
 		}
 		}
 		chess.getBoard().promoteCheck();
@@ -198,6 +185,37 @@ public class BoardView extends ScreenAdapter {
 	public void setTimers(float x) {
 		MOVE_TIME = x;
 		timer = x;
+	}
+	
+	private void inputs() {
+		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+			int mouseGridX = Integer.parseInt(Integer.toString(Gdx.input.getX() / 60).substring(0, 1));
+			int mouseGridY = Integer.parseInt(Integer.toString(Gdx.input.getY() / 60).substring(0, 1));
+			
+			if(oldX == -1) {
+				oldX = mouseGridX;
+				oldY = mouseGridY;
+				isSelected = true;
+			}
+			if (mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0 && (oldX != mouseGridX || oldY != mouseGridY)) {
+				//showIfSelected(mouseGridX, mouseGridY);
+				System.out.println("selcted square (x, y): " + mouseGridX + ", " + mouseGridY);		
+				chess.getBoard().getPieceAtSquare(mouseGridY, mouseGridX, oldY, oldX);
+				System.out.println("old square (x, y): "+oldX+ ", "+ oldY );				
+				oldX = -1;
+				oldY = -1;
+				isSelected = false;
+			}
+			else if(mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0) {
+			}
+			System.out.println(chess.getBoard().checkCheck(true));
+			System.out.println(chess.getBoard().checkCheck(false));
+		}
+		
+	}
+	
+	public void setTeam(boolean team) {
+		singleteam = team;
 	}
 
 }

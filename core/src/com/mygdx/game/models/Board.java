@@ -24,7 +24,7 @@ public class Board {
 	
 	public static final int DIMENSIONS = 8;
 	
-	private ChessAI deepBlue;
+	//private ChessAI deepBlue;
 	
 	private ArrayList<Position> positions;
 	
@@ -34,7 +34,7 @@ public class Board {
 	public Board() {
 		board = new Piece[DIMENSIONS][DIMENSIONS];
 		positions = new ArrayList<Position>();
-		deepBlue = new ChessAI(false);
+		//deepBlue = new ChessAI(false);
 	}
 	/**
 	 * A method for setting up the pieces on the chess board
@@ -160,7 +160,7 @@ public class Board {
 		if(piece != null) {
 			System.out.println(piece.printPieceType());
 			
-			if(piece.getTeam() == true) {
+			if(piece.getTeam() == turn) {
 				if (checkMove(piece, x, y)) {
 
 					setPiece(piece, new Position(x, y));
@@ -178,7 +178,7 @@ public class Board {
 		} else System.out.println("This square is empty.");
 	}
 	
-	public void AITest() {
+	/*public void AITest() {
 		if (turn) {
 			
 			Position currentPosition = deepBlue.selectAMove(this).get(0);
@@ -187,7 +187,7 @@ public class Board {
 			getPieceAtSquare(currentPosition.getX(), currentPosition.getY(), newPosition.getX(), newPosition.getY());
 			
 		}
-	}
+	}*/
 	
 //	public boolean checkRight(Piece piece,Position end) {
 //		Position pointer = piece.getPos();
