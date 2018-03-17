@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.mygdx.game.rules.Piece;
+
 public class BoardTest {
 
 	@Test
@@ -97,6 +99,19 @@ public class BoardTest {
 			assertEquals("Pawn", board.getSquare(1, i).printPieceType());
 		}
 		
+	}
+	
+	@Test
+	public void test_that_it_checks_for_collision() {
+		
+		Board board = new Board();
+		
+		board.setUp();
+		
+		Piece pawn = board.getSquare(1, 0);
+		
+		assertTrue(board.collision(pawn, 6, 0));
+	
 	}
 
 }
