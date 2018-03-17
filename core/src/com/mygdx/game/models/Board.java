@@ -53,7 +53,7 @@ public class Board {
 		board [1][1] = new Pawn(1,1,true);
 		board [1][2] = new Pawn(1,2,true);
 		board [1][3] = new Pawn(1,3,true);
-		board [1][4] = new Pawn(1,4,false);
+		board [1][4] = new Pawn(1,4,true);
 		board [1][5] = new Pawn(1,5,true);
 		board [1][6] = new Pawn(1,6,true);
 		board [1][7] = new Pawn(1,7,true);
@@ -561,7 +561,7 @@ public class Board {
 		return false;
 	}
 	
-	public void AIMove(int x, int y, int oldX, int oldY) {
+	public void AIMove(int oldX, int oldY, int x, int y) {
 		Piece piece = getSquare(oldX, oldY);
 		
 			if(piece != null) {

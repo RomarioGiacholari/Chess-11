@@ -32,6 +32,7 @@ public class ChessAI {
 	
 	private Random random;
 	
+	
 	/**
 	 * Hashtable for all of the possible moves the AI can play
 	 * KEY - POSITION -> original position of the piece
@@ -62,6 +63,7 @@ public class ChessAI {
 	}
 	
 	public void possibleMoves(Board currentBoard) {
+		positions(currentBoard);
 		possibleMoves.clear();
 		
 		/**
