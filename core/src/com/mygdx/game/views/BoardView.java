@@ -39,6 +39,15 @@ public class BoardView extends ScreenAdapter {
 	private boolean singleteam = true;
 	private ChessAI AI;
 
+	public BoardView(boolean ai, boolean team) {
+		AIEnabled = ai;
+		singleteam = team;
+	}
+	
+	public BoardView() {
+		AIEnabled = false;
+		singleteam = false;
+	}
 
 	@Override
 	/**
