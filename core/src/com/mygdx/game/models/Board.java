@@ -1,7 +1,7 @@
 package com.mygdx.game.models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 import com.mygdx.game.rules.*;
 
@@ -11,6 +11,8 @@ import com.mygdx.game.rules.*;
  * This class represents the board logic for the chess board game.
  * The game board state is setup and updated here. Collision is
  * checked for the pieces as well as legal moves.
+ * 
+ * {@link com.mygdx.game.models}
  * 
  * @author Farhan Ali
  * @author Nathan Livsey
@@ -190,6 +192,11 @@ public class Board {
 			System.out.println(piece.printPieceType());
 			
 			if(piece.getTeam() == turn) {
+				
+				if (checkCheck(turn)) {
+					System.out.println("CHECK");
+				}
+				
 				if (checkMove(piece, x, y)) {
 
 					setPiece(piece, new Position(x, y));
@@ -250,19 +257,26 @@ public class Board {
 	
 	
 	public ArrayList<Position> allPositions () {
+		
 		positions.clear();
+		
 		for (int i = 0; i < DIMENSIONS; i++) {
+			
 			for (int n = 0; n < DIMENSIONS; n++) {
+				
 				if (getSquare(i, n) instanceof Piece) {
+					
 					positions.add(getBoard()[i][n].getPos());
+					
 				}
 			}
 		}
+		
 		return positions;
 		
 	}
 	
-	public ArrayList<Position> createPath(Piece piece, Position newPosition) {
+	private ArrayList<Position> createPath(Piece piece, Position newPosition) {
 		
 		ArrayList<Position> path = new ArrayList<Position>();
 		
@@ -283,9 +297,14 @@ public class Board {
 		
 		return path;
 	}
-	// If there is a collision then return true.
-	// Else return false.
 	
+	/**
+	 * This method checks for collision for a piece with other pieces.
+	 * @param piece - the piece that is to be moved
+	 * @param x - the x coordinate of the new location
+	 * @param y - the y coordinate of the new location
+	 * @return - true if there is collision or false if there is no collision
+	 */
 	public boolean collision(Piece piece, int x, int y) {
 		Position newPosition = new Position(x, y);
 		// The last element in the ArrayList is the new position
@@ -313,7 +332,7 @@ public class Board {
 	}
 	
 	/**
-	 * This check if a move is valid. Taking collision into account
+	 * This checks if a move is valid. Taking collision into account.
 	 * @param piece - the selected piece
 	 * @param x - the x coordinate of the new position for the selected piece
 	 * @param y - the y coordinate of the new position for the selected piece
@@ -368,13 +387,6 @@ public class Board {
 	
 	public boolean checkCheck(boolean teamType) {
 		
-		/*
-		 * 1. Select the king
-		 * 2. Go through all of the other opponent pieces and see
-		 * 	  if the king lies in its path
-		 * 3. If the king does lie in its path then check
-		 */
-		
 		Position kingPosition = null;
 		
 		ArrayList<Position> enemyPositions = new ArrayList<Position>();
@@ -393,70 +405,74 @@ public class Board {
 		
 		if (kingPosition != null) {
 			
-			for (Position enemy : enemyPositions) {
+			for (Position enemyPosition : enemyPositions) {
 				
-				
+				if (checkMove(getSquare(enemyPosition), kingPosition.getX(), kingPosition.getY())) {
+					
+					return true;
+					
+				}
 				
 			}
 			
 		}
 		
-		Position kingPos = null;
-		for (int i = 0; i < getBoard().length; i++) {
-			for (int n = 0; n < getBoard().length; n++) {
-				if(getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == teamType && ( getSquare(i, n) instanceof King)) {
-					kingPos = new Position(i,n);
-				}
-			}
-		}
-		for (int i = 0; i < getBoard().length; i++) {
-			for (int n = 0; n < getBoard().length; n++) {
-				if (getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == !teamType) {
-					if(getSquare(i,n) instanceof Pawn) {
-					Pawn pawn = (Pawn) getSquare(i,n);
-					pawn.takeLeft(true);
-					pawn.takeRight(true);
-					HashMap<String, ArrayList<Position>> testing = pawn.hashMove();
-					for(String key: testing.keySet()) {
-						ArrayList<Position> pos = testing.get(key);
-						for(Position pos2:pos) {
-					
-						if(pos2.equals(kingPos)) {
-							if(collision(pawn,pos2.getX(),pos2.getY())) {
-							
-							}
-							else {
-								return true;
-							}
-							
-							
-							}
-						}
-					}
-					}
-					else {
-						HashMap<String, ArrayList<Position>> testing = getSquare(i,n).hashMove();
-						for(String key: testing.keySet()) {
-							ArrayList<Position> pos = testing.get(key);
-							for(Position pos2:pos) {
-						
-							if(pos2.equals(kingPos)) {
-								if(collision(getSquare(i,n),pos2.getX(),pos2.getY())) {
-								
-								}
-								else {
-									return true;
-								}
-								
-								
-								}
-							}
-						}
-					}
-					
-				}
-			}
-		}
+//		Position kingPos = null;
+//		for (int i = 0; i < getBoard().length; i++) {
+//			for (int n = 0; n < getBoard().length; n++) {
+//				if(getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == teamType && ( getSquare(i, n) instanceof King)) {
+//					kingPos = new Position(i,n);
+//				}
+//			}
+//		}
+//		for (int i = 0; i < getBoard().length; i++) {
+//			for (int n = 0; n < getBoard().length; n++) {
+//				if (getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == !teamType) {
+//					if(getSquare(i,n) instanceof Pawn) {
+//					Pawn pawn = (Pawn) getSquare(i,n);
+//					pawn.takeLeft(true);
+//					pawn.takeRight(true);
+//					HashMap<String, ArrayList<Position>> testing = pawn.hashMove();
+//					for(String key: testing.keySet()) {
+//						ArrayList<Position> pos = testing.get(key);
+//						for(Position pos2:pos) {
+//					
+//						if(pos2.equals(kingPos)) {
+//							if(collision(pawn,pos2.getX(),pos2.getY())) {
+//							
+//							}
+//							else {
+//								return true;
+//							}
+//							
+//							
+//							}
+//						}
+//					}
+//					}
+//					else {
+//						HashMap<String, ArrayList<Position>> testing = getSquare(i,n).hashMove();
+//						for(String key: testing.keySet()) {
+//							ArrayList<Position> pos = testing.get(key);
+//							for(Position pos2:pos) {
+//						
+//							if(pos2.equals(kingPos)) {
+//								if(collision(getSquare(i,n),pos2.getX(),pos2.getY())) {
+//								
+//								}
+//								else {
+//									return true;
+//								}
+//								
+//								
+//								}
+//							}
+//						}
+//					}
+//					
+//				}
+//			}
+//		}
 		return false;
 	}
 	
