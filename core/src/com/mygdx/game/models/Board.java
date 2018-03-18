@@ -345,16 +345,17 @@ public class Board {
 		for (int i = 0; i < getBoard().length; i++) {
 			for (int n = 0; n < getBoard().length; n++) {
 				if (getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == !teamType) {
-					HashMap<String, ArrayList<Position>> testing = getSquare(i,n).hashMove();
+					if(getSquare(i,n) instanceof Pawn) {
+					Pawn pawn = (Pawn) getSquare(i,n);
+					pawn.takeLeft(true);
+					pawn.takeRight(true);
+					HashMap<String, ArrayList<Position>> testing = pawn.hashMove();
 					for(String key: testing.keySet()) {
 						ArrayList<Position> pos = testing.get(key);
 						for(Position pos2:pos) {
 					
 						if(pos2.equals(kingPos)) {
-							// test for collision between route and target
-							// collision needs to a method taking a target and location postion that returns boolean
-							// return true
-							if(collision(getSquare(i,n),pos2.getX(),pos2.getY())) {
+							if(collision(pawn,pos2.getX(),pos2.getY())) {
 							
 							}
 							else {
@@ -365,6 +366,27 @@ public class Board {
 							}
 						}
 					}
+					}
+					else {
+						HashMap<String, ArrayList<Position>> testing = getSquare(i,n).hashMove();
+						for(String key: testing.keySet()) {
+							ArrayList<Position> pos = testing.get(key);
+							for(Position pos2:pos) {
+						
+							if(pos2.equals(kingPos)) {
+								if(collision(getSquare(i,n),pos2.getX(),pos2.getY())) {
+								
+								}
+								else {
+									return true;
+								}
+								
+								
+								}
+							}
+						}
+					}
+					
 				}
 			}
 		}
@@ -385,6 +407,12 @@ public class Board {
 					
 				}
 			}
+		}
+	}
+	
+	public boolean checkMate(boolean team) {
+		if(checkCheck(team)) {
+			//check all the squares around king using checkCheck  
 		}
 	}
 }	
