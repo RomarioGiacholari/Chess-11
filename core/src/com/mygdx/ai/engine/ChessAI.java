@@ -93,6 +93,7 @@ public class ChessAI {
 			if (newLocations.size() > 0) possibleMoves.put(location, newLocations);
 		}
 	}
+
 	
 	/**
 	 * Selects a random move from the possibleMoves Hashtable
@@ -100,9 +101,32 @@ public class ChessAI {
 	 */
 	public ArrayList<Position> selectAMove(Board currentBoard) {
 		
+		/*
+		 * 1. Go through each original position and its new positions
+		 * 2. If the new position has an enemy piece log that as a move
+		 * 3. Otherwise pick a random move
+		 */
 		possibleMoves(currentBoard);
 		
+		// Contains the original position and new position
 		ArrayList<Position> moveInfo = new ArrayList<Position>();
+		
+		for (Position originalPosition : possibleMoves.keySet()) {
+			
+			for (Position newPosition : possibleMoves.get(originalPosition)) {
+				
+				if (currentBoard.getSquare(newPosition) != null && currentBoard.getSquare(newPosition).getTeam() != this.team) {
+					
+					moveInfo.add(originalPosition);
+					
+					moveInfo.add(newPosition);
+					
+					return moveInfo;
+				
+				}
+				
+			}
+		}
 		
 		ArrayList<Position> currentPositions = new ArrayList<Position>();
 		
@@ -115,6 +139,7 @@ public class ChessAI {
 		Position newPosition = newLocations.get(random.nextInt(newLocations.size()));
 		
 		moveInfo.add(currentPosition);
+		
 		moveInfo.add(newPosition);
 		
 		return moveInfo;
@@ -133,31 +158,5 @@ public class ChessAI {
 		return possibleMoves;
 	}
 	
-	
-	// Methods below are for testing purposes only
-	public void displayBoard(Board currentBoard) {
-		
-		for (int i = 0; i < Board.DIMENSIONS; i++) {
-			
-			for(int n = 0; n < Board.DIMENSIONS; n++) {
-				System.out.print(currentBoard.getBoard()[i][n] + "\t");
-			}
-			System.out.println();
-		}
-		
-	}
-	
-	public void displayAllPositions() {
-		for (Position position : positions) System.out.println(position.getX() + ", " + position.getY());
-	}
-	
-	public void displayAllPossibleMoves(Board currentBoard) {
-		for (Position location : possibleMoves.keySet()) {
-			System.out.println("Original Location: " + location.getX() + ", " + location.getY());
-			for (Position newLocation : possibleMoves.get(location)) {
-				System.out.println(newLocation.getX() + ", " + newLocation.getY());
-			}
-		}
-	}
 	
 }

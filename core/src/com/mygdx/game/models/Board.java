@@ -8,36 +8,53 @@ import com.mygdx.game.rules.*;
 
 
 /**
- * A class to represent the board of a game of chess
- * @author Nathan Livsey
+ * This class represents the board logic for the chess board game.
+ * The game board state is setup and updated here. Collision is
+ * checked for the pieces as well as legal moves.
+ * 
  * @author Farhan Ali
+ * @author Nathan Livsey
  *
  */
+
 public class Board {
 	
+	/**
+	 * If the turn is true then it is the white players turn
+	 * If the turn is black then it is the black players turn
+	 */
 	private boolean turn = true;
+	
 	/**
 	 * A 2d array to hold all the Piece objects in their positions on the chess board
 	 */
 	private Piece[][] board;
 	
+	/**
+	 * The dimensions of the chess board. Set to static as it can then be accessed by 
+	 * other classes.
+	 */
 	public static final int DIMENSIONS = 8;
 	
-	//private ChessAI deepBlue;
-	
+	/**
+	 * An ArrayList that will hold all of the pieces on the board's positions.
+	 */
 	private ArrayList<Position> positions;
 	
 	/**
-	 * A constructor for a Board object, it initialises the board array to be 8*8, the dimensions of a normal chess board
+	 * A constructor for a Board object, it initialises the board array to be 8*8, the 
+	 * dimensions of a normal chess board.
 	 */
 	public Board() {
+		
 		board = new Piece[DIMENSIONS][DIMENSIONS];
 		positions = new ArrayList<Position>();
-		//deepBlue = new ChessAI(false);
+		
 	}
+	
 	/**
-	 * A method for setting up the pieces on the chess board
-	 * Each Piece object is set to its defualt positions on a chess board within the array
+	 * A method for setting up the pieces on the chess board. Each Piece object is set to 
+	 * its default positions on a chess board within the array.
 	 */
 	public void setUp() {
 		board [0][0] = new Rook(0,0,true);
@@ -76,27 +93,40 @@ public class Board {
 	}
 	
 	/**
-	 * a method to check if a pawn is in need of promotion, if it is it turned into a queen as is the common practice
+	 * A method that checks to see if a pawn can be promoted. If the pawn can be promoted
+	 * then the designated pawn is then changed into a Queen piece.
 	 */
-	public void  promoteCheck() {
+	public void promoteCheck() {
+		
 		for(int i = 0; i <= 7; i++) {
-			if( board[0][i] instanceof Pawn && board[0][i].getTeam() == false) {
+			
+			if (board[0][i] instanceof Pawn && board[0][i].getTeam() == false) {
+				
 				board[0][i] = null;
+				
 				board[0][i] = new Queen(0, i, false);
+			
 			}
-			if( board[7][i] instanceof Pawn && board[7][i].getTeam() == true) {
+			
+			if (board[7][i] instanceof Pawn && board[7][i].getTeam() == true) {
+				
 				board[7][i] = null;
+				
 				board[7][i] = new Queen(7,i,true);
+			
 			}
 		}
 		
 	}
+	
 	/**
-	 * Moves the underlying pieces and switches the turn counter to the other player if the move is successful
-	 * @param x the x coordinate of the target position
-	 * @param y the y coordinate of the target position
-	 * @param oldX the x coordinate of the original piece
-	 * @param oldY the y coordinate of the original piece
+	 * Moves the underlying pieces and switches the turn counter to the other player if the move is 
+	 * successful.
+	 * 
+	 * @param x - the x coordinate of the target position
+	 * @param y - the y coordinate of the target position
+	 * @param oldX - the x coordinate of the original piece
+	 * @param oldY - the y coordinate of the original piece
 	 */
 	public void getPieceAtSquare(int x, int y, int oldX, int oldY){
 		switch (x) {
@@ -273,7 +303,7 @@ public class Board {
 			return true;
 		}
 		
-		if(getSquare(newPosition)!=null && piece instanceof Pawn) {
+		if (getSquare(newPosition) != null && piece instanceof Pawn) {
 			if(y == piece.getPos().getY()) {
 				return true;
 			}
@@ -290,13 +320,16 @@ public class Board {
 	 * @return - true is the move is possible & false if the move is not possible
 	 */
 	public boolean checkMove(Piece piece, int x, int y) {
+		
 		Position newLocation = new Position(x, y);
 		
 		if (piece.getPos().equals(newLocation)) return false;
 		
 		if (piece instanceof Pawn) {
+			
 			Position left = ((Pawn) piece).getLeft();
 			Position right = ((Pawn) piece).getRight();
+			
 			try {
 				if (getSquare(left) != null && getSquare(left).getTeam() != piece.getTeam()) {
 					((Pawn) piece).takeLeft(true);
@@ -334,6 +367,31 @@ public class Board {
 	}
 	
 	public boolean checkCheck(boolean teamType) {
+		
+		/*
+		 * 1. Select the king
+		 * 2. Go through all of the other opponent pieces and see
+		 * 	  if the king lies in its path
+		 * 3. If the king does lie in its path then check
+		 */
+		
+		Position kingPosition = null;
+		
+		for (Position position : allPositions()) {
+			
+			if (getSquare(position) instanceof King && getSquare(position).getTeam() == teamType) {
+				
+				kingPosition = position;
+				
+			}
+		}
+		
+		if (kingPosition != null) {
+			
+			
+			
+		}
+		
 		Position kingPos = null;
 		for (int i = 0; i < getBoard().length; i++) {
 			for (int n = 0; n < getBoard().length; n++) {
@@ -397,6 +455,7 @@ public class Board {
 		Piece piece = getSquare(oldX, oldY);
 		
 			if(piece != null) {
+				
 				System.out.println(piece.printPieceType());
 			
 				if(piece.getTeam() == turn) {
