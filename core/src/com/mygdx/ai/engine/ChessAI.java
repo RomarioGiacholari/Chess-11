@@ -5,8 +5,6 @@ import java.util.Hashtable;
 import java.util.Random;
 
 import com.mygdx.game.models.Board;
-import com.mygdx.game.rules.Knight;
-import com.mygdx.game.rules.Pawn;
 import com.mygdx.game.rules.Piece;
 import com.mygdx.game.rules.Position;
 
