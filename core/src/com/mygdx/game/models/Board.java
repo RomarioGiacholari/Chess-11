@@ -3,7 +3,6 @@ package com.mygdx.game.models;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.mygdx.ai.engine.ChessAI;
 import com.mygdx.game.rules.*;
 
 
@@ -169,115 +168,9 @@ public class Board {
 				}
 			} 
 			
-//			else if (piece.getTeam() == false) {
-//				Position currentPosition = deepBlue.selectAMove(this).get(0);
-//				Position newPosition = deepBlue.selectAMove(this).get(1);
-//				
-//				set
-//			}
 		} else System.out.println("This square is empty.");
 	}
 	
-	/*public void AITest() {
-		if (turn) {
-			
-			Position currentPosition = deepBlue.selectAMove(this).get(0);
-			Position newPosition = deepBlue.selectAMove(this).get(1);
-			
-			getPieceAtSquare(currentPosition.getX(), currentPosition.getY(), newPosition.getX(), newPosition.getY());
-			
-		}
-	}*/
-	
-//	public boolean checkRight(Piece piece,Position end) {
-//		Position pointer = piece.getPos();
-//		while(pointer.equals(end) == false) {
-//			pointer = new Position(pointer.getX(), pointer.getY() + 1);
-//			if (getSquare(pointer) != null) {
-//				if(getSquare(pointer).getTeam() == piece.getTeam() && pointer.equals(end)) return false;
-//				
-//			}
-//		}
-//		return true;
-//	}
-//	
-//	
-//	public boolean checkLeft(Piece piece, Position end) {
-//		Position pointer = piece.getPos();
-//		while(pointer.equals(end) == false) {
-//			pointer = new Position(pointer.getX(),pointer.getY() - 1);
-//			if (getSquare(pointer) != null) {
-//				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
-//			}
-//		}
-//		return true;
-//	}
-//	
-//	public boolean checkUp(Piece piece, Position end) {
-//		Position pointer = piece.getPos();
-//		while(pointer.equals(end) == false) {
-//			pointer = new Position(pointer.getX() + 1,pointer.getY());
-//			if (getSquare(pointer) != null) {
-//				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
-//			}
-//		}
-//		return true;
-//	}
-//	
-//	public boolean checkDown(Piece piece,Position end) {
-//		Position pointer = piece.getPos();
-//		while(pointer.equals(end) == false) {
-//			pointer = new Position(pointer.getX() - 1,pointer.getY());
-//			if (getSquare(pointer) != null) {
-//				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
-//			}
-//		}
-//		return true;
-//	}
-//	
-//	public boolean checkupRight(Piece piece, Position end) {
-//		Position pointer = piece.getPos();
-//		while(pointer.equals(end) == false) {
-//			pointer = new Position(pointer.getX() + 1,pointer.getY() + 1);
-//			if(getSquare(pointer)!= null) {
-//				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
-//			}
-//		}
-//		return true;
-//	}
-//	
-//	private boolean checkUpLeft(Piece piece, Position end) {
-//		Position pointer = piece.getPos();
-//		while(pointer.equals(end) == false) {
-//			pointer = new Position(pointer.getX() + 1,pointer.getY() - 1);
-//			if(getSquare(pointer)!= null) {
-//				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
-//			}
-//		}
-//		return true;
-//	}
-//	
-//	private boolean checkDownLeft(Piece piece, Position end) {
-//		Position pointer = piece.getPos();
-//		while (pointer.equals(end) == false) {
-//			pointer = new Position(pointer.getX() - 1, pointer.getY() - 1);
-//			if (getSquare(pointer)!= null) {
-//				if (getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
-//			}
-//		}
-//		return true;
-//	}
-//	
-//	public boolean checkDownRight(Piece piece, Position end) {
-//		Position pointer = piece.getPos();
-//		while(pointer.equals(end) == false) {
-//			pointer = new Position(pointer.getX() - 1, pointer.getY() + 1);
-//			if(getSquare(pointer)!= null) {
-//				if(getSquare(pointer).getTeam() == piece.getTeam() && !(pointer.equals(end))) return false;
-//			}
-//		}
-//		return true;
-//	}
 	
 	/**
 	 * Sets the new location to the piece
@@ -291,6 +184,7 @@ public class Board {
 		board[piece.getPos().getX()][piece.getPos().getY()] = null;
 		piece.setPos(end);
 	}
+	
 	/**
 	 * A method to move a piece to a new location. It takes a piece object and a new location and, 
 	 * if the pieces move function returns true, will move the piece to its new location
@@ -301,7 +195,7 @@ public class Board {
 	public void move(Piece piece, int row, int col)  {
 		if(checkMove(piece, row, col)) setPiece(piece, new Position(row, col));
 	}
-
+	
 	/**
 	 * A method that returns the contents of a given chessboard square
 	 * @param position the chess position representing the target location
@@ -309,6 +203,7 @@ public class Board {
 	public Piece getSquare (Position position) {
 		return board[position.getX()][position.getY()];
 	}
+	
 	/**
 	 * A method to return a specific piece for a given location on the board
 	 * @param row the x coordinate of the piece to be returned
@@ -430,91 +325,6 @@ public class Board {
 		}
 		
 		return false;
-		
-//		else if(piece instanceof Pawn) {
-//			// If the new Y is the same as the original Y
-//			if (pos.getY() == origin.getY()) {
-//				// If the new X is greater than the original X 
-//				if (pos.getX() > origin.getX()) {
-//					// Call the check up method 
-//					if(checkUp(piece, pos)) return true;
-//
-//				}
-//				// If the new X is less than the original X
-//				else if (pos.getX() < piece.getPos().getX()) {
-//					// Call the check down method
-//					if (checkDown(piece,pos)) return true;
-//				}
-//			}
-//			
-//			// If the new X is greater than the old X
-//			else if (pos.getX() > origin.getX()) {
-//				// If the new Y is greater than the old Y
-//				if (pos.getY() > origin.getY()) {
-//					// If the checkUpRight is true AND original X + 1, original Y + 1 does not equal null AND
-//					// original X + 1, original Y + 1 team is not the same as the team on new position.
-//					if (checkupRight(piece, pos) && (getSquare(origin.getX() + 1, origin.getY() + 1) != null && 
-//						getSquare(origin.getX() + 1, origin.getY() + 1).getTeam() != piece.getTeam())) return true;
-//				}
-//				// If the new Y is less than the original Y
-//				else if (pos.getY() < origin.getY()) {
-//					if (checkUpLeft(piece, pos) && (getSquare(origin.getX() + 1, origin.getY() - 1) != null && 
-//						getSquare(origin.getX() + 1, origin.getY() - 1).getTeam() != piece.getTeam())) return true;
-//
-//				}
-//			
-//			}
-//			
-//			else if (pos.getX() < origin.getX()) {
-//				
-//				if (pos.getY() > origin.getY()) {
-//					if (checkDownRight(piece, pos) && ((getSquare(origin.getX() - 1, origin.getY()) != null && 
-//						getSquare(origin.getX() - 1, origin.getY() + 1).getTeam() != piece.getTeam()))) return true;
-//				}
-//				
-//				else if (pos.getY() < origin.getY()) {
-//					if(checkDownLeft(piece, pos) && ((getSquare(origin.getX() - 1, origin.getY() - 1) != null && 
-//						getSquare(origin.getX() - 1, origin.getY() - 1).getTeam() != piece.getTeam()))) return true;
-//				}
-//			}
-//		}
-//		
-//		else {
-//			
-//			if(pos.getX() == origin.getX()) return true;
-//			
-//			else if (pos.getY() == piece.getPos().getY()) {
-//				if (pos.getX() > origin.getX()) {
-//					if(checkUp(piece, pos)) return true;
-//				}
-//				
-//				else if (pos.getX() < origin.getX()) {
-//					if (checkDown(piece, pos)) return true;
-//				}
-//			}
-//			
-//			else if (pos.getX() > origin.getX()) {
-//				if (pos.getY() > origin.getY()) {
-//					if (checkupRight(piece, pos)) return true;
-//				}
-//				
-//				else if (pos.getY() < origin.getY()) {
-//					if(checkUpLeft(piece, pos)) return true;
-//				}
-//			}
-//			
-//			else if(pos.getX() < origin.getX()) {
-//				if (pos.getY() > origin.getY()) {
-//					if (checkDownRight(piece, pos))	return true;
-//				}
-//				
-//				else if (pos.getY() < origin.getY()) {
-//					if(checkDownLeft(piece, pos)) return true;
-//				}
-//			}
-//		
-//		}
-//		return false;
 		
 	}
 	
