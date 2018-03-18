@@ -377,6 +377,8 @@ public class Board {
 		
 		Position kingPosition = null;
 		
+		ArrayList<Position> enemyPositions = new ArrayList<Position>();
+		
 		for (Position position : allPositions()) {
 			
 			if (getSquare(position) instanceof King && getSquare(position).getTeam() == teamType) {
@@ -384,11 +386,18 @@ public class Board {
 				kingPosition = position;
 				
 			}
+			
+			if (getSquare(position).getTeam() != teamType) enemyPositions.add(position);
+		
 		}
 		
 		if (kingPosition != null) {
 			
-			
+			for (Position enemy : enemyPositions) {
+				
+				
+				
+			}
 			
 		}
 		
