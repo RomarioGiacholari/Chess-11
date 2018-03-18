@@ -599,5 +599,11 @@ public class Board {
 			}
 		}
 	}
+	
+	public boolean checkMate(boolean team) {
+		if(checkCheck(team)) {
+			//check all the squares around king using checkCheck  
+		}
+	}
 }	
 	
