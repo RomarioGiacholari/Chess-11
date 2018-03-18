@@ -193,14 +193,16 @@ public class Board {
 			
 			if(piece.getTeam() == turn) {
 				
-				if (checkCheck(turn)) {
-					System.out.println("CHECK");
-				}
-				
 				if (checkMove(piece, x, y)) {
 
+					
 					setPiece(piece, new Position(x, y));
 					turn = !turn;
+					
+					if (checkCheck(turn)) {
+						System.out.println("CHECK");
+					}
+					
 					
 				}
 			} 
@@ -331,12 +333,13 @@ public class Board {
 		return false;
 	}
 	
+	
 	/**
 	 * This checks if a move is valid. Taking collision into account.
 	 * @param piece - the selected piece
 	 * @param x - the x coordinate of the new position for the selected piece
 	 * @param y - the y coordinate of the new position for the selected piece
-	 * @return - true is the move is possible & false if the move is not possible
+	 * @return - true is the move is possible or false if the move is not possible
 	 */
 	public boolean checkMove(Piece piece, int x, int y) {
 		
@@ -344,12 +347,14 @@ public class Board {
 		
 		if (piece.getPos().equals(newLocation)) return false;
 		
+		
 		if (piece instanceof Pawn) {
 			
 			Position left = ((Pawn) piece).getLeft();
 			Position right = ((Pawn) piece).getRight();
 			
 			try {
+				
 				if (getSquare(left) != null && getSquare(left).getTeam() != piece.getTeam()) {
 					((Pawn) piece).takeLeft(true);
 				}
@@ -359,6 +364,7 @@ public class Board {
 					((Pawn) piece).takeRight(true);
 				}
 				else ((Pawn) piece).takeRight(false);
+				
 			} catch (ArrayIndexOutOfBoundsException e) {}
 		}
 		
@@ -381,23 +387,23 @@ public class Board {
 	}
 	
 	
-	public boolean getTurn() {
-		return turn;
-	}
+	public boolean getTurn() { return turn; }
 	
+	/**
+	 * This checks whether a king has been checked. Sets the specified king to check.
+	 * @param teamType - true for the white team or false for the black team
+	 * @return - if the specified king is in check then true otherwise return false
+	 */
 	public boolean checkCheck(boolean teamType) {
 		
 		Position kingPosition = null;
 		
+		// ArrayList of all of the enemy positions
 		ArrayList<Position> enemyPositions = new ArrayList<Position>();
 		
 		for (Position position : allPositions()) {
 			
-			if (getSquare(position) instanceof King && getSquare(position).getTeam() == teamType) {
-				
-				kingPosition = position;
-				
-			}
+			if (getSquare(position) instanceof King && getSquare(position).getTeam() == teamType) kingPosition = position;
 			
 			if (getSquare(position).getTeam() != teamType) enemyPositions.add(position);
 		
@@ -408,71 +414,13 @@ public class Board {
 			for (Position enemyPosition : enemyPositions) {
 				
 				if (checkMove(getSquare(enemyPosition), kingPosition.getX(), kingPosition.getY())) {
-					
+					((King) getSquare(kingPosition)).setCheck(true);
 					return true;
-					
 				}
-				
+					
 			}
 			
 		}
-		
-//		Position kingPos = null;
-//		for (int i = 0; i < getBoard().length; i++) {
-//			for (int n = 0; n < getBoard().length; n++) {
-//				if(getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == teamType && ( getSquare(i, n) instanceof King)) {
-//					kingPos = new Position(i,n);
-//				}
-//			}
-//		}
-//		for (int i = 0; i < getBoard().length; i++) {
-//			for (int n = 0; n < getBoard().length; n++) {
-//				if (getSquare(i, n) instanceof Piece && getSquare(i,n) .getTeam() == !teamType) {
-//					if(getSquare(i,n) instanceof Pawn) {
-//					Pawn pawn = (Pawn) getSquare(i,n);
-//					pawn.takeLeft(true);
-//					pawn.takeRight(true);
-//					HashMap<String, ArrayList<Position>> testing = pawn.hashMove();
-//					for(String key: testing.keySet()) {
-//						ArrayList<Position> pos = testing.get(key);
-//						for(Position pos2:pos) {
-//					
-//						if(pos2.equals(kingPos)) {
-//							if(collision(pawn,pos2.getX(),pos2.getY())) {
-//							
-//							}
-//							else {
-//								return true;
-//							}
-//							
-//							
-//							}
-//						}
-//					}
-//					}
-//					else {
-//						HashMap<String, ArrayList<Position>> testing = getSquare(i,n).hashMove();
-//						for(String key: testing.keySet()) {
-//							ArrayList<Position> pos = testing.get(key);
-//							for(Position pos2:pos) {
-//						
-//							if(pos2.equals(kingPos)) {
-//								if(collision(getSquare(i,n),pos2.getX(),pos2.getY())) {
-//								
-//								}
-//								else {
-//									return true;
-//								}
-//								
-//								
-//								}
-//							}
-//						}
-//					}
-//					
-//				}
-//			}
-//		}
 		return false;
 	}
 	

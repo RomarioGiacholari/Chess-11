@@ -25,6 +25,7 @@ public class Knight extends Piece {
 		}
 	}
 	
+	@Override
 	public HashMap<String, ArrayList<Position>> hashMove() {
 		HashMap<String, ArrayList<Position>> moves = new HashMap<String, ArrayList<Position>>();
 		ArrayList<Position> up1Left = new ArrayList<Position>();

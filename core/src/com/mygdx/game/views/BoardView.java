@@ -59,7 +59,7 @@ public class BoardView extends ScreenAdapter {
 		AI = new ChessAI(!singleteam);
 		indicator = new Texture (Gdx.files.internal("indicator.png"));
 		selected = new Texture (Gdx.files.internal("indicator3.png"));
-		}
+	}
 
 	@Override
 	/**
@@ -68,29 +68,33 @@ public class BoardView extends ScreenAdapter {
 	public void render(float delta) {
 		
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
+		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		timer-=delta;
-		if(timer<=0) {
+		
+		timer -= delta;
+		
+		if (timer <= 0) {
+			
 			timer=MOVE_TIME;
 		
-		if(AIEnabled) {
-			if(chess.getBoard().getTurn() == singleteam) {
-				inputs();
-			}
-			else {
-				ArrayList<Position> moveList = AI.selectAMove(chess.getBoard());
-				int moveX = moveList.get(0).getX();
-				int moveY = moveList.get(0).getY();
-				
-				int oldX = moveList.get(1).getX();
-				int oldY = moveList.get(1).getY();
-				
-				chess.getBoard().AIMove(moveX, moveY, oldX, oldY);
-			}
-			}
-		else if (!AIEnabled) {
-			inputs();
-		}
+			if(AIEnabled) {
+					if(chess.getBoard().getTurn() == singleteam) inputs();
+					
+					else {
+						
+						ArrayList<Position> moveList = AI.selectAMove(chess.getBoard());
+						int moveX = moveList.get(0).getX();
+						int moveY = moveList.get(0).getY();
+						
+						int oldX = moveList.get(1).getX();
+						int oldY = moveList.get(1).getY();
+						
+						chess.getBoard().AIMove(moveX, moveY, oldX, oldY);
+					}
+				}
+			
+			else if (!AIEnabled) inputs();
+		
 		}
 		chess.getBoard().promoteCheck();
 		switchIndicator();
@@ -102,11 +106,14 @@ public class BoardView extends ScreenAdapter {
 		showBishops();
 		showQueens();*/
 		showPiece();
+		
 		batch.begin();
+		
 		batch.draw(indicator,480,240);
-		if(isSelected) {
-			batch.draw(selected,480,300);
-		}
+		
+		if(isSelected) batch.draw(selected,480,300);
+		
+
 		batch.end();
 
 	}
