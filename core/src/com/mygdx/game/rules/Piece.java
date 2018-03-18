@@ -3,6 +3,12 @@ package com.mygdx.game.rules;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * 
+ * @author Farhan Ali
+ *
+ */
+
 public abstract class Piece implements Movable {
 	/**
 	 * A field to hold if the piece belongs to the black or white team.
