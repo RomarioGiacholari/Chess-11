@@ -16,6 +16,8 @@ public class King extends Piece{
 	
 	private boolean inCheck;
 	
+	
+	
 	/**
 	 * A constructor for King taking an initial x and y coordinate and the team it is playing for
 	 * @param row the x coordinate

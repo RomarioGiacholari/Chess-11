@@ -347,12 +347,26 @@ public class Board {
 		
 		if (piece instanceof Pawn) {
 			
+<<<<<<< HEAD
 			
 			Position left = ((Pawn) piece).getLeft();
 			Position right = ((Pawn) piece).getRight();
 			
 			try {
 				
+=======
+			Position right = null;
+			Position left = null;
+			if(!((Pawn) piece).getLeft().checkOutOfBounds()){
+				 left = ((Pawn) piece).getLeft();
+
+			}
+			if(!((Pawn) piece).getRight().checkOutOfBounds()){
+			 right = ((Pawn) piece).getRight();
+			}
+			try {
+				if(left != null) {
+>>>>>>> 060d49990c1ac27f7b22766652ffe7b90aedf73f
 				if (getSquare(left) != null && getSquare(left).getTeam() != piece.getTeam()) {
 					((Pawn) piece).takeLeft(true);
 				}
