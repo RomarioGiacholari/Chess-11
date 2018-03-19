@@ -203,8 +203,8 @@ public class Board {
 			
 		} else System.out.println("This square is empty.");
 		
-		if (checkCheck(true)) System.out.println("White King in Check");
-		if (checkCheck(false)) System.out.println("Black King in Check");
+		if (checkMate(true)) System.out.println("White King in Check");
+		if (checkMate(false)) System.out.println("Black King in Check");
 	}
 	
 	
@@ -389,11 +389,7 @@ public class Board {
 		
 		for (Position position : allPositions()) {
 			
-			if (getSquare(position) instanceof King && getSquare(position).getTeam() == side) {
-				
-				kingPosition = position;
-				
-			}
+			if (getSquare(position) instanceof King && getSquare(position).getTeam() == side) kingPosition = position;
 			
 		}
 		
@@ -454,10 +450,38 @@ public class Board {
 		}
 	}
 	
-	public boolean checkMate() {
-		if (checkCheck(true)) {
+	public boolean checkMate(boolean side) {
+		
+		if (checkCheck(side)) {
+			
+			Position kingPosition = getKingPosition(side);
+			
+			King king = (King) getSquare(kingPosition);
+			
+			ArrayList<Position> newPositions = new ArrayList<Position>();
+			
+			for (String name : king.hashMove().keySet()) {
+				try {
+					
+					newPositions.add(king.hashMove().get(name).get(0));
+					
+				} catch (IndexOutOfBoundsException e) {}
+			}
+			
+			for (Position newPosition : newPositions) {
+				
+				if (checkMove(king, newPosition.getX(), newPosition.getY())) {
+					return false;
+				}
+				
+			}
+			
+			return true;
 			
 		}
+		
+		
+		return false;
 	}
 }	
 	
