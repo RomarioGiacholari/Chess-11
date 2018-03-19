@@ -254,8 +254,12 @@ public class Board {
 	 */
 	public Piece [][] getBoard() { return board; }
 	
-	
-	public ArrayList<Position> allPositions () {
+	/**
+	 * Gets the locations of all of the pieces on the board. 
+	 * Does not discriminate between teams.
+	 * @return positions - ArrayList of all the positions on the board
+	 */
+	public ArrayList<Position> allPositions() {
 		
 		positions.clear();
 		
@@ -263,11 +267,8 @@ public class Board {
 			
 			for (int n = 0; n < DIMENSIONS; n++) {
 				
-				if (getSquare(i, n) instanceof Piece) {
+				if (getSquare(i, n) instanceof Piece) positions.add(getBoard()[i][n].getPos());
 					
-					positions.add(getBoard()[i][n].getPos());
-					
-				}
 			}
 		}
 		
@@ -275,6 +276,13 @@ public class Board {
 		
 	}
 	
+	/**
+	 * Creates a path between a piece and its new location. The path depends on
+	 * the piece that wants to be moved.
+	 * @param piece - the pieces that is to be moved
+	 * @param newPosition - the position that the piece is to be moved to.
+	 * @return path - an ArrayList containing the positions of the path.
+	 */
 	private ArrayList<Position> createPath(Piece piece, Position newPosition) {
 		
 		ArrayList<Position> path = new ArrayList<Position>();
@@ -383,6 +391,11 @@ public class Board {
 		
 	}
 	
+	/**
+	 * Keeps track of the kings on the board and their positions.
+	 * @param side - the side of the king that is to be checked
+	 * @return - the position of the king
+	 */
 	public Position getKingPosition(boolean side) {
 		
 		Position kingPosition = null;
@@ -396,6 +409,10 @@ public class Board {
 		return kingPosition;
 	}
 	
+	/**
+	 * Return the turn
+	 * @return turn - a players turn
+	 */
 	public boolean getTurn() { return turn; }
 	
 	/**
@@ -407,7 +424,6 @@ public class Board {
 		
 		Position kingPosition = getKingPosition(teamType);
 		
-		// ArrayList of all of the enemy positions
 		ArrayList<Position> enemyPositions = new ArrayList<Position>();
 		
 		for (Position position : allPositions()) {
@@ -432,6 +448,14 @@ public class Board {
 		return false;
 	}
 	
+	/**
+	 * Allows the AI to move when it is the AI's turn. This method keeps check
+	 * of the turns.
+	 * @param oldX - the original x coordinate of the piece to be moved
+	 * @param oldY - the original y coordinate of the piece to be moved
+	 * @param x - the new x coordinate 
+	 * @param y
+	 */
 	public void AIMove(int oldX, int oldY, int x, int y) {
 		Piece piece = getSquare(oldX, oldY);
 		
