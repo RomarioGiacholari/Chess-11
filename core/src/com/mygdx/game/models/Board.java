@@ -54,7 +54,8 @@ public class Board {
 	
 	private boolean Bishops = true;
 	
-	private boolean Pawns = false;
+	private boolean Pawns = true;
+	
 	public Board() {
 		
 		board = new Piece[DIMENSIONS][DIMENSIONS];
