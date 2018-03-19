@@ -12,7 +12,7 @@ import com.mygdx.game.models.Board;
  */
 public class ChessBoard extends Actor{
 
-	Texture texture = new Texture(Gdx.files.internal("board.jpg"));
+	Texture texture = new Texture(Gdx.files.internal("board.png"));
 	Board board = new Board();
 	/**
 	 * the chessboard constructor

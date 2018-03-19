@@ -108,12 +108,8 @@ public class BoardView extends ScreenAdapter {
 		showPiece();
 		
 		batch.begin();
-		
-		batch.draw(indicator,480,240);
-		
-		if(isSelected) batch.draw(selected,480,300);
-		
-
+		batch.draw(indicator,480,240);		
+	    if(isSelected) batch.draw(selected,480,300); 
 		batch.end();
 
 	}

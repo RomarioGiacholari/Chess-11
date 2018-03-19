@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		config.title = "CHESSMATE";
 		config.height = 480;
 		config.width = 560;
+		config.resizable=false;
 		new LwjglApplication(new MainClass(), config);
 	}
 }
