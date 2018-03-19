@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.Random;
 
 import com.mygdx.game.models.Board;
+import com.mygdx.game.rules.*;
 import com.mygdx.game.rules.Piece;
 import com.mygdx.game.rules.Position;
 
@@ -119,24 +120,96 @@ public class ChessAI {
 		// Contains the original position and new position
 		ArrayList<Position> moveInfo = new ArrayList<Position>();
 		
-		ArrayList<Piece> pieces = new ArrayList<Piece>();
+		ArrayList<Position> pawnPieces = new ArrayList<Position>();
+		
+		ArrayList<Position> rookPieces = new ArrayList<Position>();
+		
+		ArrayList<Position> knightPieces = new ArrayList<Position>();
+		
+		ArrayList<Position> bishopPieces = new ArrayList<Position>();
+		
+		ArrayList<Position> queenPieces = new ArrayList<Position>();
+		
+		ArrayList<Position> kingPieces = new ArrayList<Position>();
 		
 		for (Position originalPosition : possibleMoves.keySet()) {
 			
 			for (Position newPosition : possibleMoves.get(originalPosition)) {
-				
+
 				if (currentBoard.getSquare(newPosition) != null && currentBoard.getSquare(newPosition).getTeam() != this.team) {
 					
+					if (currentBoard.getSquare(originalPosition) instanceof Pawn) {
+						pawnPieces.add(originalPosition);
+						pawnPieces.add(newPosition);
+					}
 					
-					moveInfo.add(originalPosition);
+					else if (currentBoard.getSquare(originalPosition) instanceof Rook) {
+						rookPieces.add(originalPosition);
+						rookPieces.add(newPosition);
+					}
 					
-					moveInfo.add(newPosition);
+					else if (currentBoard.getSquare(originalPosition) instanceof Knight) {
+						knightPieces.add(originalPosition);
+						knightPieces.add(newPosition);
+					}
 					
-					return moveInfo;
+					else if (currentBoard.getSquare(originalPosition) instanceof Bishop) {
+						bishopPieces.add(originalPosition);
+						bishopPieces.add(newPosition);
+					}
+					
+					else if (currentBoard.getSquare(originalPosition) instanceof Queen) {
+						queenPieces.add(originalPosition);
+						queenPieces.add(newPosition);
+					}
+					
+					else if (currentBoard.getSquare(originalPosition) instanceof King) {
+						kingPieces.add(originalPosition);
+						kingPieces.add(newPosition);
+					}
 				
 				}
 				
 			}
+		}
+		
+		if (!pawnPieces.isEmpty()) {
+			
+			moveInfo.addAll(pawnPieces);
+			return moveInfo;
+			
+		}
+		
+		else if (!knightPieces.isEmpty()) {
+			
+			moveInfo.addAll(knightPieces);
+			return moveInfo;
+			
+		}
+		
+		else if (!bishopPieces.isEmpty()) {
+			
+			moveInfo.addAll(bishopPieces);
+			return moveInfo;
+			
+		}
+		else if (!rookPieces.isEmpty()) {
+			
+			moveInfo.addAll(rookPieces);
+			return moveInfo;
+			
+		}
+		else if (!queenPieces.isEmpty()) {
+			
+			moveInfo.addAll(queenPieces);
+			return moveInfo;
+			
+		}
+		else if (!kingPieces.isEmpty()) {
+			
+			moveInfo.addAll(kingPieces);
+			return moveInfo;
+			
 		}
 		
 		ArrayList<Position> currentPositions = new ArrayList<Position>();
