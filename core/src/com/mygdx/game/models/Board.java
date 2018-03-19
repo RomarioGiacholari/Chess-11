@@ -409,6 +409,10 @@ public class Board {
 					((Pawn) piece).hasMoved();
 				}
 				
+				else if (piece instanceof King) {
+					((King) piece).hasMoved();
+				}
+				
 				return true;
 			}
 		}
@@ -428,7 +432,9 @@ public class Board {
 		
 		for (Position position : allPositions()) {
 			
-			if (getSquare(position) instanceof King && getSquare(position).getTeam() == side) kingPosition = position;
+			if (getSquare(position) instanceof King && getSquare(position).getTeam() == side) {
+				kingPosition = position;
+			}
 			
 		}
 		
@@ -448,14 +454,17 @@ public class Board {
 	 */
 	public boolean checkCheck(boolean teamType) {
 		
-		Position kingPosition = getKingPosition(teamType);
+		Position kingPosition = null;
 		
 		ArrayList<Position> enemyPositions = new ArrayList<Position>();
 		
 		for (Position position : allPositions()) {
 			
+			if (getSquare(position) instanceof King && getSquare(position).getTeam() == teamType) {
+				kingPosition = position;
+			}
 			
-			if (getSquare(position).getTeam() != teamType) enemyPositions.add(position);
+			if (position.checkOutOfBounds() && getSquare(position).getTeam() != teamType) enemyPositions.add(position);
 		
 		}
 		
@@ -464,7 +473,6 @@ public class Board {
 			for (Position enemyPosition : enemyPositions) {
 				
 				if (checkMove(getSquare(enemyPosition), kingPosition.getX(), kingPosition.getY())) {
-					((King) getSquare(kingPosition)).setCheck(true);
 					return true;
 				}
 					
@@ -499,6 +507,7 @@ public class Board {
 			}
 		}
 	}
+	
 	
 	public boolean checkMate(boolean side) {
 		
