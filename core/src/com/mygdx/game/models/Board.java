@@ -356,9 +356,7 @@ public class Board {
 			if(!((Pawn) piece).getRight().checkOutOfBounds()){
 			 right = ((Pawn) piece).getRight();
 			}
-			
 			try {
-				
 				if(left != null) {
 				if (getSquare(left) != null && getSquare(left).getTeam() != piece.getTeam()) {
 					((Pawn) piece).takeLeft(true);
