@@ -22,5 +22,14 @@ public class KnightTest {
 		
 		assertTrue(knight.move(3,1));
 	}
+	
+	@Test
+	public void test_it_checks_for_invalid_moves() {
+		
+		Knight knight = new Knight(1,2,true);
+		
+		assertFalse(knight.move(12,12));
+	}
+
 
 }

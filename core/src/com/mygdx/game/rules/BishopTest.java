@@ -27,7 +27,7 @@ public class BishopTest {
 		
 		Bishop bishop = new Bishop(1,3,true);
 		
-		assertFalse(bishop.move(5,5));
+		assertFalse(bishop.move(12,12));
 	}
 
 }

@@ -38,7 +38,7 @@ public class Board {
 	}
 	/**
 	 * A method for setting up the pieces on the chess board
-	 * Each Piece object is set to its defualt positions on a chess board within the array
+	 * Each Piece object is set to its default positions on a chess board within the array
 	 */
 	public void setUp() {
 		board [0][0] = new Rook(0,0,true);

@@ -21,4 +21,12 @@ public class PawnTest {
 		
 		assertTrue(pawn.move(3,1));
 	}
+	
+	@Test
+	public void test_it_checks_for_invalid_moves() {
+		
+		Pawn pawn = new Pawn(2,1,true);
+		
+		assertFalse(pawn.move(12,12));
+	}
 }

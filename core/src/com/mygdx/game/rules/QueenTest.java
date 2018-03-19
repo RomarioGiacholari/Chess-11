@@ -21,5 +21,13 @@ public class QueenTest {
 		
 		assertTrue(queen.move(2,4));
 	}
+	
+	@Test
+	public void test_it_checks_for_invalid_moves() {
+		
+		Queen queen = new Queen(1,4,true);
+		
+		assertFalse(queen.move(12,12));
+	}
 
 }

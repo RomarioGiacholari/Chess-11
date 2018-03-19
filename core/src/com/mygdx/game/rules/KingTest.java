@@ -21,5 +21,13 @@ public class KingTest {
 		
 		assertTrue(king.move(2,5));
 	}
+	
+	@Test
+	public void test_it_checks_for_invalid_moves() {
+		
+		King king = new King(1,5,true);
+		
+		assertFalse(king.move(12,12));
+	}
 
 }

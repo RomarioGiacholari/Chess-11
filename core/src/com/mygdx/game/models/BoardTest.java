@@ -113,5 +113,5 @@ public class BoardTest {
 		assertTrue(board.collision(pawn, 6, 0));
 	
 	}
-
+	
 }

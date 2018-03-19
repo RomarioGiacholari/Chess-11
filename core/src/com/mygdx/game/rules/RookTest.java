@@ -21,4 +21,12 @@ public class RookTest {
 		
 		assertTrue(rook.move(2,1));
 	}
+	
+	@Test
+	public void test_it_checks_for_invalid_moves() {
+		
+		Rook rook = new Rook(1,1,true);
+		
+		assertFalse(rook.move(12,12));
+	}
 }
