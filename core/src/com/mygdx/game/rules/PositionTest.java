@@ -21,6 +21,14 @@ public class PositionTest {
 		
 		assertFalse(position.checkOutOfBounds());
 	}
+	
+	@Test
+	public void test_it_returns_true_if_position_is_within_bounds() {
+		
+		Position position = new Position(12,12);
+		
+		assertTrue(position.checkOutOfBounds());
+	}
 
 
 }
