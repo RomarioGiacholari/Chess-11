@@ -23,14 +23,6 @@ public class ChessAI {
 	 */
 	private boolean team;
 	
-	private final int pawnValue = 1;
-	
-	private final int knightValue = 3;
-	
-	private final int bishopValue = 3;
-	
-	private final int kingValue = 10000;
-	
 	/**
 	 * ArrayList to hold all of the positions of the 
 	 * AI's pieces.
