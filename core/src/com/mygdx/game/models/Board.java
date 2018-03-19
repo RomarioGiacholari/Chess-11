@@ -195,19 +195,16 @@ public class Board {
 				
 				if (checkMove(piece, x, y)) {
 
-					
 					setPiece(piece, new Position(x, y));
 					turn = !turn;
-					
-					if (checkCheck(turn)) {
-						System.out.println("CHECK");
-					}
-					
-					
+
 				}
 			} 
 			
 		} else System.out.println("This square is empty.");
+		
+		if (checkCheck(true)) System.out.println("White King in Check");
+		if (checkCheck(false)) System.out.println("Black King in Check");
 	}
 	
 	
@@ -386,6 +383,22 @@ public class Board {
 		
 	}
 	
+	public Position getKingPosition(boolean side) {
+		
+		Position kingPosition = null;
+		
+		for (Position position : allPositions()) {
+			
+			if (getSquare(position) instanceof King && getSquare(position).getTeam() == side) {
+				
+				kingPosition = position;
+				
+			}
+			
+		}
+		
+		return kingPosition;
+	}
 	
 	public boolean getTurn() { return turn; }
 	
@@ -396,14 +409,13 @@ public class Board {
 	 */
 	public boolean checkCheck(boolean teamType) {
 		
-		Position kingPosition = null;
+		Position kingPosition = getKingPosition(teamType);
 		
 		// ArrayList of all of the enemy positions
 		ArrayList<Position> enemyPositions = new ArrayList<Position>();
 		
 		for (Position position : allPositions()) {
 			
-			if (getSquare(position) instanceof King && getSquare(position).getTeam() == teamType) kingPosition = position;
 			
 			if (getSquare(position).getTeam() != teamType) enemyPositions.add(position);
 		
@@ -442,9 +454,9 @@ public class Board {
 		}
 	}
 	
-	public boolean checkMate(boolean team) {
-		if(checkCheck(team)) {
-			//check all the squares around king using checkCheck  
+	public boolean checkMate() {
+		if (checkCheck(true)) {
+			
 		}
 	}
 }	
