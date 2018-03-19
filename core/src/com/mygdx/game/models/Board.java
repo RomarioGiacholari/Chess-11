@@ -84,7 +84,7 @@ public class Board {
 		board [7][5] = new Bishop(7,5,false);
 		board [7][6] = new Knight(7,6,false);
 		board [7][7] = new Rook(7,7,false);
-		board [6][0] = new Pawn(6,0,true);
+		board [6][0] = new Pawn(6,0,false);
 		board [6][1] = new Pawn(6,1,false);
 		board [6][2] = new Pawn(6,2,false);
 		board [6][3] = new Pawn(6,3,false);
@@ -203,8 +203,8 @@ public class Board {
 			
 		} else System.out.println("This square is empty.");
 		
-		//if (checkMate(true)) System.out.println("White King in Check");
-		//if (checkMate(false)) System.out.println("Black King in Check");
+		if (checkMate(true)) System.out.println("White King in Check");
+		if (checkMate(false)) System.out.println("Black King in Check");
 	}
 	
 	
@@ -347,30 +347,21 @@ public class Board {
 		
 		if (piece instanceof Pawn) {
 			
-			Position right = null;
-			Position left = null;
-			if(!((Pawn) piece).getLeft().checkOutOfBounds()){
-				 left = ((Pawn) piece).getLeft();
-
-			}
-			if(!((Pawn) piece).getRight().checkOutOfBounds()){
-			 right = ((Pawn) piece).getRight();
-			}
+			
+			Position left = ((Pawn) piece).getLeft();
+			Position right = ((Pawn) piece).getRight();
 			
 			try {
 				
-				if(left != null) {
 				if (getSquare(left) != null && getSquare(left).getTeam() != piece.getTeam()) {
 					((Pawn) piece).takeLeft(true);
 				}
 				else ((Pawn) piece).takeLeft(false);
-				}
-				if(right != null) {
+				
 				if (getSquare(right) != null && getSquare(right).getTeam() != piece.getTeam()) {
 					((Pawn) piece).takeRight(true);
 				}
 				else ((Pawn) piece).takeRight(false);
-				}
 				
 			} catch (ArrayIndexOutOfBoundsException e) {}
 		}
