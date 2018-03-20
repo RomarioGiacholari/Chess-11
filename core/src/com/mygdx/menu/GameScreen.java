@@ -36,22 +36,12 @@ public class GameScreen implements Screen {
 		table.setFillParent(true);
 
 		TextButton newGameButton = new TextButton("New Game", getSkin(), "default"); 
-		TextButton loadGameButton = new TextButton("Load Game (not accessible)", getSkin(), "default"); 
 		TextButton backGameButton = new TextButton("Back to Main Menu", getSkin(), "default");
-		
-		loadGameButton.setTouchable(Touchable.disabled);
-		loadGameButton.getLabel().setFontScale(0.5f, 0.5f);
 		
 		newGameButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				main.setScreen(new PlayerScreen(main));
-				getSound().play(0.75f);
-			}
-		});
-		loadGameButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
 				getSound().play(0.75f);
 			}
 		});
@@ -64,8 +54,6 @@ public class GameScreen implements Screen {
 		});
 		
 		table.add(newGameButton).pad(10);
-		table.row();
-		table.add(loadGameButton).pad(10);
 		table.row();
 		table.add(backGameButton).pad(10);
 		stage.addActor(table);
