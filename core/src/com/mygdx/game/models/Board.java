@@ -76,7 +76,7 @@ public class Board {
 //		board [1][6] = new Pawn(1,6,true);
 //		board [1][7] = new Pawn(1,7,true);
 		
-//		board [7][0] = new Rook(7,0,false);
+		board [7][0] = new Rook(7,0,true);
 //		board [7][1] = new Knight(7,1,false);
 //		board [7][2] = new Bishop(7,2,false);
 //		board [7][3] = new Queen(7,3,false);

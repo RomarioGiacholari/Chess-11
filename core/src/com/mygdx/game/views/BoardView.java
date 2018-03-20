@@ -305,7 +305,7 @@ public class BoardView extends ScreenAdapter {
 	}
 	
 	private void checkTest(boolean team) {
-		if( chess.getBoard().checkMate(team)) {
+		if( chess.getBoard().checkCheck(team)) {
 			if(team == true) {
 			batch.begin();
 			batch.draw(whiteCheckMate,480,150);
