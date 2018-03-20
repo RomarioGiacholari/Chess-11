@@ -67,31 +67,31 @@ public class Board {
 		board [0][5] = new Bishop(0,5,true);
 		board [0][6] = new Knight(0,6,true);
 		board [0][7] = new Rook(0,7,true);
-		board [1][0] = new Pawn(1,0,true);
-		board [1][1] = new Pawn(1,1,true);
-		board [1][2] = new Pawn(1,2,true);
-		board [1][3] = new Pawn(1,3,true);
-		board [1][4] = new Pawn(1,4,true);
-		board [1][5] = new Pawn(1,5,true);
-		board [1][6] = new Pawn(1,6,true);
-		board [1][7] = new Pawn(1,7,true);
+//		board [1][0] = new Pawn(1,0,true);
+//		board [1][1] = new Pawn(1,1,true);
+//		board [1][2] = new Pawn(1,2,true);
+//		board [1][3] = new Pawn(1,3,true);
+//		board [1][4] = new Pawn(1,4,true);
+//		board [1][5] = new Pawn(1,5,true);
+//		board [1][6] = new Pawn(1,6,true);
+//		board [1][7] = new Pawn(1,7,true);
 		
-		board [7][0] = new Rook(7,0,false);
-		board [7][1] = new Knight(7,1,false);
-		board [7][2] = new Bishop(7,2,false);
-		board [7][3] = new Queen(7,3,false);
+//		board [7][0] = new Rook(7,0,false);
+//		board [7][1] = new Knight(7,1,false);
+//		board [7][2] = new Bishop(7,2,false);
+//		board [7][3] = new Queen(7,3,false);
 		board [7][4] = new King(7,4,false);
-		board [7][5] = new Bishop(7,5,false);
-		board [7][6] = new Knight(7,6,false);
-		board [7][7] = new Rook(7,7,false);
-		board [6][0] = new Pawn(6,0,true);
-		board [6][1] = new Pawn(6,1,false);
-		board [6][2] = new Pawn(6,2,false);
-		board [6][3] = new Pawn(6,3,false);
-		board [6][4] = new Pawn(6,4,false);
-		board [6][5] = new Pawn(6,5,false);
-		board [6][6] = new Pawn(6,6,false);
-		board [6][7] = new Pawn(6,7,false);
+//		board [7][5] = new Bishop(7,5,false);
+//		board [7][6] = new Knight(7,6,false);
+//		board [7][7] = new Rook(7,7,false);
+//		board [6][0] = new Pawn(6,0,false);
+//		board [6][1] = new Pawn(6,1,false);
+//		board [6][2] = new Pawn(6,2,false);
+//		board [6][3] = new Pawn(6,3,false);
+//		board [6][4] = new Pawn(6,4,false);
+//		board [6][5] = new Pawn(6,5,false);
+//		board [6][6] = new Pawn(6,6,false);
+//		board [6][7] = new Pawn(6,7,false);
 	}
 	
 	/**
@@ -199,6 +199,11 @@ public class Board {
 					turn = !turn;
 
 				}
+				else if (castling(x, y, oldX, oldY)) {
+					
+					
+					
+				}
 			} 
 			
 		} else System.out.println("This square is empty.");
@@ -305,26 +310,26 @@ public class Board {
 	 * @return - true if there is collision or false if there is no collision
 	 */
 	public boolean collision(Piece piece, int x, int y) {
+		
 		Position newPosition = new Position(x, y);
 		// The last element in the ArrayList is the new position
 		ArrayList<Position> path = createPath(piece, newPosition);
 		
 		for (int i = 0; i < path.size() - 1; i++) {
 			
-			if (getSquare(path.get(i)) != null) {
-				return true;
-			}
+			if (getSquare(path.get(i)) != null) return true;
 			
 		}
 		
 		if (getSquare(newPosition) != null && getSquare(newPosition).getTeam() == piece.getTeam()) {
+			
 			return true;
 		}
 		
 		if (getSquare(newPosition) != null && piece instanceof Pawn) {
-			if(y == piece.getPos().getY()) {
-				return true;
-			}
+			
+			if(y == piece.getPos().getY()) return true;
+			
 		}
 		
 		return false;
@@ -351,24 +356,35 @@ public class Board {
 			Position left = null;
 			
 			if(!((Pawn) piece).getLeft().checkOutOfBounds()){
-				 left = ((Pawn) piece).getLeft();
+				 
+				left = ((Pawn) piece).getLeft();
 
 			}
+			
 			if(!((Pawn) piece).getRight().checkOutOfBounds()){
-			 right = ((Pawn) piece).getRight();
+				
+				right = ((Pawn) piece).getRight();
+			
 			}
+			
 			try {
+				
 				if(left != null) {
-				if (getSquare(left) != null && getSquare(left).getTeam() != piece.getTeam()) {
-					((Pawn) piece).takeLeft(true);
+					
+					if (getSquare(left) != null && getSquare(left).getTeam() != piece.getTeam()) {
+						((Pawn) piece).takeLeft(true);
+					}
+					
+					else ((Pawn) piece).takeLeft(false);
 				}
-				else ((Pawn) piece).takeLeft(false);
-				}
+				
 				if(right != null) {
-				if (getSquare(right) != null && getSquare(right).getTeam() != piece.getTeam()) {
-					((Pawn) piece).takeRight(true);
-				}
-				else ((Pawn) piece).takeRight(false);
+					
+					if (getSquare(right) != null && getSquare(right).getTeam() != piece.getTeam()) {
+						((Pawn) piece).takeRight(true);
+					}
+					else ((Pawn) piece).takeRight(false);
+					
 				}
 				
 			} catch (ArrayIndexOutOfBoundsException e) {}
@@ -380,19 +396,73 @@ public class Board {
 			
 			else {
 				
-				if (piece instanceof Pawn) {
-					((Pawn) piece).hasMoved();
-				}
+				if (piece instanceof Pawn) ((Pawn) piece).hasMoved();
+			
+				
+				else if (piece instanceof King) ((King) piece).hasMoved();
+				
+				else if (piece instanceof Rook) ((Rook) piece).hasMoved();
 				
 				return true;
 			}
+			
 		}
 		
 		return false;
 		
 	}
 	
-	public Position getKingPosition(boolean side) {
+	/*
+	 * 1. If the king has moved
+	 * 2. If the rook has moved
+	 * 3. If they both haven't moved then castling can be done
+	 */
+	public boolean castling(int x, int y, int oldX, int oldY) {
+		
+		Position oldPosition = new Position(oldX, oldY);
+		Position newPosition = new Position(x, y);
+		
+		Piece king = null;
+		Piece rook = null;
+		
+		if (oldPosition == getKingPosition(turn)) {
+			
+			if (newPosition == getRookPosition(turn)) {
+				
+				king = getSquare(oldPosition);
+				rook = getSquare(newPosition);
+				
+			}
+		}
+		
+		else if (oldPosition == getRookPosition(turn)) {
+			
+			if (newPosition == getKingPosition(turn)) {
+			
+				rook = getSquare(oldPosition);
+				king = getSquare(newPosition);
+	
+			}
+		}
+		
+		if (king != null && rook != null && (!collision(rook, oldY, oldY))) {
+			
+			if (!(((King) king).isMoved() && ((Rook) rook).isMoved())) {
+				return true;
+			}
+			
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * When called this method will locate the position occupied by
+	 * a king.
+	 * @param side - if True then return the position of the white piece, False return the position of the black piece
+	 * @return kingPosition - the position of the specified king
+	 */
+	private Position getKingPosition(boolean side) {
 		
 		Position kingPosition = null;
 		
@@ -405,6 +475,29 @@ public class Board {
 		return kingPosition;
 	}
 	
+	/**
+	 * When called this method will locate the position occupied by
+	 * a rook.
+	 * @param side - if True then return the position of the white piece, False return the position of the black piece
+	 * @return rookPosition - the position of the specified king
+	 */
+	private Position getRookPosition(boolean side) {
+		
+		Position rookPosition = null;
+		
+		for (Position position : allPositions()) {
+			
+			if (getSquare(position) instanceof Rook && getSquare(position).getTeam() == side) rookPosition = position;
+			
+		}
+		
+		return rookPosition;
+	}
+	
+	/**
+	 * Return the turn counter. Returns true if white piece turn or false if black piece turn
+	 * @return turn - true or false
+	 */
 	public boolean getTurn() { return turn; }
 	
 	/**
@@ -416,11 +509,9 @@ public class Board {
 		
 		Position kingPosition = getKingPosition(teamType);
 		
-		// ArrayList of all of the enemy positions
 		ArrayList<Position> enemyPositions = new ArrayList<Position>();
 		
 		for (Position position : allPositions()) {
-			
 			
 			if (getSquare(position).getTeam() != teamType) enemyPositions.add(position);
 		
@@ -459,36 +550,84 @@ public class Board {
 		}
 	}
 	
+	/*
+	 * 1. Select the king for the check Mate
+	 * 2. Get an ArrayList of all the pieces that can take that king (Positions)
+	 * 3. Get an ArrayList of all the piece that can take pieces that can take the king (Position)
+	 * 4. 
+	 */
 	public boolean checkMate(boolean side) {
 		
 		if (checkCheck(side)) {
 			
+			// Get the kings position
 			Position kingPosition = getKingPosition(side);
 			
+			// Get the king
 			King king = (King) getSquare(kingPosition);
 			
-			ArrayList<Position> newPositions = new ArrayList<Position>();
+			// Take the king pieces positions
+			ArrayList<Position> enemyPositions = new ArrayList<Position>();
 			
-			for (String name : king.hashMove().keySet()) {
-				try {
-					
-					newPositions.add(king.hashMove().get(name).get(0));
-					
-				} catch (IndexOutOfBoundsException e) {}
+			ArrayList<Position> friendlyPositions = new ArrayList<Position>();
+			
+			ArrayList<Position> kingEnemyPositions = new ArrayList<Position>();
+			
+			ArrayList<Position> kingFriendlyPositions = new ArrayList<Position>();
+			
+			
+			for (Position pos : allPositions()) {
+				
+				if (getSquare(pos).getTeam() != side) enemyPositions.add(pos);
+				else friendlyPositions.add(pos);
+	
 			}
 			
-			for (Position newPosition : newPositions) {
+			for (Position pos : enemyPositions) {
 				
-				if (checkMove(king, newPosition.getX(), newPosition.getY())) {
-					return false;
+				if (checkMove(getSquare(pos), kingPosition.getX(), kingPosition.getY())) {
+					
+					kingEnemyPositions.add(pos);
+					
 				}
 				
 			}
 			
-			return true;
+			for (Position fpos : friendlyPositions) {
+				
+				for (Position epos : kingEnemyPositions) {
+					
+					if (checkMove(getSquare(fpos), epos.getX(), epos.getY())) {
+						
+						kingFriendlyPositions.add(fpos);
+						
+					}
+							
+				}
+			}
+			
+//			if (kingFriendlyPositions.size() < kingEnemyPositions.size()) return true;
+//			ArrayList<Position> newPositions = new ArrayList<Position>();
+//			
+//			for (String name : king.hashMove().keySet()) {
+//				try {
+//					
+//					newPositions.add(king.hashMove().get(name).get(0));
+//					
+//				} catch (IndexOutOfBoundsException e) {}
+//			}
+//			
+//			for (Position newPosition : newPositions) {
+//				
+//				if (checkMove(king, newPosition.getX(), newPosition.getY())) {
+//					return false;
+//				}
+//				
+//			}
+//			
+//			return true;
 			
 		}
-		
 		
 		return false;
 	}
