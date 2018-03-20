@@ -94,7 +94,7 @@ public class GameSettings implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				getSound().play(0.75f);
 				dispose();
-				main.setScreen(new BoardView(true,blackOrWhite));
+				main.setScreen(new BoardView(true,blackOrWhite,main));
 			}
 		});
 		backGameButton.addListener(new ClickListener() {

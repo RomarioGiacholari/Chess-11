@@ -51,7 +51,7 @@ public class PlayerScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				dispose();
 				getSound().play(0.75f);
-				main.setScreen(new BoardView());
+				main.setScreen(new BoardView(main));
 			}
 		});
 		

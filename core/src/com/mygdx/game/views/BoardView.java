@@ -3,6 +3,7 @@ package com.mygdx.game.views;
 
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -19,6 +20,9 @@ import com.mygdx.game.rules.Pawn;
 import com.mygdx.game.rules.Position;
 import com.mygdx.game.rules.Queen;
 import com.mygdx.game.rules.Rook;
+import com.mygdx.menu.MainClass;
+import com.mygdx.menu.MenuScreen;
+import com.mygdx.menu.OptionScreen;
 /**
  * A class to manage the sprites and input logic of the main chess game
  * @author Nathan Livsey
@@ -38,15 +42,22 @@ public class BoardView extends ScreenAdapter {
 	private boolean AIEnabled = true;
 	private boolean singleteam = true;
 	private ChessAI AI;
+	private Texture whiteCheckMate;
+	private Texture blackCheckMate;
+	private boolean checkMate = false;
+	private Texture check;
+	private MainClass main;
 
-	public BoardView(boolean ai, boolean team) {
+	public BoardView(boolean ai, boolean team,MainClass m) {
 		AIEnabled = ai;
 		singleteam = team;
+		main =m;
 	}
 	
-	public BoardView() {
+	public BoardView(MainClass m) {
 		AIEnabled = false;
 		singleteam = false;
+		main = m;
 	}
 
 	@Override
@@ -59,6 +70,9 @@ public class BoardView extends ScreenAdapter {
 		AI = new ChessAI(!singleteam);
 		indicator = new Texture (Gdx.files.internal("indicator.png"));
 		selected = new Texture (Gdx.files.internal("indicator3.png"));
+		whiteCheckMate = new Texture(Gdx.files.internal("whiteCheck.png"));
+		blackCheckMate = new Texture(Gdx.files.internal("blackCheck.png"));
+		check = new Texture(Gdx.files.internal("CheckMate.png"));
 	}
 
 	@Override
@@ -78,10 +92,14 @@ public class BoardView extends ScreenAdapter {
 			timer=MOVE_TIME;
 		
 			if(AIEnabled) {
-					if(chess.getBoard().getTurn() == singleteam) inputs();
+					if(chess.getBoard().getTurn() == singleteam && !checkMate) inputs();
 					
 					else {
-						
+						try {
+							TimeUnit.SECONDS.sleep(1);
+						} catch (InterruptedException e) {
+						}
+
 						ArrayList<Position> moveList = AI.selectAMove(chess.getBoard());
 						int moveX = moveList.get(0).getX();
 						int moveY = moveList.get(0).getY();
@@ -93,25 +111,34 @@ public class BoardView extends ScreenAdapter {
 					}
 				}
 			
-			else if (!AIEnabled) inputs();
+			else if (!AIEnabled && !checkMate) inputs();
 		
 		}
 		chess.getBoard().promoteCheck();
 		switchIndicator();
 		showBoard();
-		/*showPawns();
-		showKings();
-		showKnights();
-		showRooks();
-		showBishops();
-		showQueens();*/
 		showPiece();
 		
 		batch.begin();
 		batch.draw(indicator,480,240);		
 	    if(isSelected) batch.draw(selected,480,300); 
 		batch.end();
-
+		checkTest(true);
+		checkTest(false);
+		if(checkMate) {
+			try {
+				TimeUnit.SECONDS.sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			dispose();
+			main.setScreen(new MenuScreen(main));
+		}
+		checkMateTest(true);
+		checkMateTest(false);
+	
+		
 	}
 
 	public void select() {
@@ -242,5 +269,30 @@ public class BoardView extends ScreenAdapter {
 	public void setTeam(boolean team) {
 		singleteam = team;
 	}
+	
+	private void checkTest(boolean team) {
+		if( chess.getBoard().checkMate(team)) {
+			if(team == true) {
+			batch.begin();
+			batch.draw(whiteCheckMate,480,150);
+			batch.end();
+			}
+		else if (team != true) {
+			batch.begin();
+			batch.draw(blackCheckMate,480,150);
+			batch.end();
+		}
+	}
 
+	}
+	private void checkMateTest(boolean team) {
+		if(chess.getBoard().checkMate(team)) {
+			batch.begin();
+			batch.draw(check,0,130);
+			batch.end();
+			checkMate = true;
+		}
+		
+	}
+	
 }
