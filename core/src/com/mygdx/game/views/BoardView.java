@@ -48,6 +48,7 @@ public class BoardView extends ScreenAdapter {
 	private Texture check;
 	private MainClass main;
 	private Higlight highlight;
+	private Texture blackCheck;
 
 	public BoardView(boolean ai, boolean team,MainClass m) {
 		AIEnabled = ai;
@@ -74,6 +75,7 @@ public class BoardView extends ScreenAdapter {
 		whiteCheckMate = new Texture(Gdx.files.internal("whiteCheck.png"));
 		blackCheckMate = new Texture(Gdx.files.internal("blackCheck.png"));
 		check = new Texture(Gdx.files.internal("CheckMate.png"));
+		blackCheck = new Texture(Gdx.files.internal("blackCheckmate.png"));
 		highlight = new Higlight();
 	}
 
@@ -321,9 +323,15 @@ public class BoardView extends ScreenAdapter {
 	}
 	private void checkMateTest(boolean team) {
 		if(chess.getBoard().checkMate(team)) {
-			batch.begin();
-			batch.draw(check,0,130);
-			batch.end();
+			if  (team== true) {
+				batch.begin();
+				batch.draw(check,0,130);
+				batch.end();}
+			else {
+				batch.begin();
+				batch.draw(blackCheck,0,130);
+				batch.end();
+			}
 			checkMate = true;
 		}
 		

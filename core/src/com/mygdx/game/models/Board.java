@@ -67,31 +67,31 @@ public class Board {
 		board [0][5] = new Bishop(0,5,true);
 		board [0][6] = new Knight(0,6,true);
 		board [0][7] = new Rook(0,7,true);
-//		board [1][0] = new Pawn(1,0,true);
-//		board [1][1] = new Pawn(1,1,true);
-//		board [1][2] = new Pawn(1,2,true);
-//		board [1][3] = new Pawn(1,3,true);
-//		board [1][4] = new Pawn(1,4,true);
-//		board [1][5] = new Pawn(1,5,true);
-//		board [1][6] = new Pawn(1,6,true);
-//		board [1][7] = new Pawn(1,7,true);
+		board [1][0] = new Pawn(1,0,true);
+		board [1][1] = new Pawn(1,1,true);
+		board [1][2] = new Pawn(1,2,true);
+		board [1][3] = new Pawn(1,3,true);
+		board [1][4] = new Pawn(1,4,true);
+		board [1][5] = new Pawn(1,5,true);
+		board [1][6] = new Pawn(1,6,true);
+		board [1][7] = new Pawn(1,7,true);
 		
-		board [7][0] = new Rook(7,0,true);
-//		board [7][1] = new Knight(7,1,false);
-//		board [7][2] = new Bishop(7,2,false);
-//		board [7][3] = new Queen(7,3,false);
+		board [7][0] = new Rook(7,0,false);
+		board [7][1] = new Knight(7,1,false);
+		board [7][2] = new Bishop(7,2,false);
+		board [7][3] = new Queen(7,3,false);
 		board [7][4] = new King(7,4,false);
-//		board [7][5] = new Bishop(7,5,false);
-//		board [7][6] = new Knight(7,6,false);
-//		board [7][7] = new Rook(7,7,false);
-//		board [6][0] = new Pawn(6,0,false);
-//		board [6][1] = new Pawn(6,1,false);
-//		board [6][2] = new Pawn(6,2,false);
-//		board [6][3] = new Pawn(6,3,false);
-//		board [6][4] = new Pawn(6,4,false);
-//		board [6][5] = new Pawn(6,5,false);
-//		board [6][6] = new Pawn(6,6,false);
-//		board [6][7] = new Pawn(6,7,false);
+		board [7][5] = new Bishop(7,5,false);
+		board [7][6] = new Knight(7,6,false);
+		board [7][7] = new Rook(7,7,false);
+		board [6][0] = new Pawn(6,0,false);
+		board [6][1] = new Pawn(6,1,false);
+		board [6][2] = new Pawn(6,2,false);
+		board [6][3] = new Pawn(6,3,false);
+		board [6][4] = new Pawn(6,4,false);
+		board [6][5] = new Pawn(6,5,false);
+		board [6][6] = new Pawn(6,6,false);
+		board [6][7] = new Pawn(6,7,false);
 	}
 	
 	/**
@@ -558,76 +558,8 @@ public class Board {
 	 */
 	public boolean checkMate(boolean side) {
 		
-		if (checkCheck(side)) {
-			
-			// Get the kings position
-			Position kingPosition = getKingPosition(side);
-			
-			// Get the king
-			King king = (King) getSquare(kingPosition);
-			
-			// Take the king pieces positions
-			ArrayList<Position> enemyPositions = new ArrayList<Position>();
-			
-			ArrayList<Position> friendlyPositions = new ArrayList<Position>();
-			
-			ArrayList<Position> kingEnemyPositions = new ArrayList<Position>();
-			
-			ArrayList<Position> kingFriendlyPositions = new ArrayList<Position>();
-			
-			
-			for (Position pos : allPositions()) {
-				
-				if (getSquare(pos).getTeam() != side) enemyPositions.add(pos);
-				else friendlyPositions.add(pos);
-	
-			}
-			
-			for (Position pos : enemyPositions) {
-				
-				if (checkMove(getSquare(pos), kingPosition.getX(), kingPosition.getY())) {
-					
-					kingEnemyPositions.add(pos);
-					
-				}
-				
-			}
-			
-			for (Position fpos : friendlyPositions) {
-				
-				for (Position epos : kingEnemyPositions) {
-					
-					if (checkMove(getSquare(fpos), epos.getX(), epos.getY())) {
-						
-						kingFriendlyPositions.add(fpos);
-						
-					}
-							
-				}
-			}
-			
-			if (kingFriendlyPositions.isEmpty() && kingEnemyPositions.size() > 0) return true;
-			
-//			ArrayList<Position> newPositions = new ArrayList<Position>();
-//			
-//			for (String name : king.hashMove().keySet()) {
-//				try {
-//					
-//					newPositions.add(king.hashMove().get(name).get(0));
-//					
-//				} catch (IndexOutOfBoundsException e) {}
-//			}
-//			
-//			for (Position newPosition : newPositions) {
-//				
-//				if (checkMove(king, newPosition.getX(), newPosition.getY())) {
-//					return false;
-//				}
-//				
-//			}
-//			
-//			return true;
-			
+		if(getKingPosition(side) == null) {
+			return true;
 		}
 		
 		return false;
