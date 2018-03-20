@@ -5,26 +5,34 @@ import java.util.HashMap;
 
 public class Rook extends Piece{
 
-
+	private boolean moved = false;
+	
 	public Rook(int row, int col, boolean player) {
+		
 		super(row, col, player);
-		// TODO Auto-generated constructor stub
 	}
-	public String printPieceType(){
+	
+	public String printPieceType() {
+		
 		System.out.println("Rook");
+		
 		return "Rook";
 	}
 	
 	public String toString() {
-		if(team) {
-			return "R";
-		}
-		else {
-			return"r";
-		}
+		
+		if(team) return "R";
+		
+		else return "r";
 	}
 	
+	public boolean isMoved() { return moved; }
+	
+	public void hasMoved() { this.moved = true; }
+	
+	@Override
 	public HashMap<String, ArrayList<Position>> hashMove() {
+		
 		HashMap<String, ArrayList<Position>> moves = new HashMap<String, ArrayList<Position>>();
 		ArrayList<Position> left = new ArrayList<Position>();
 		ArrayList<Position> right = new ArrayList<Position>();
