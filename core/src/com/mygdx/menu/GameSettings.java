@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
@@ -17,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.views.BoardView;
 
 public class GameSettings implements Screen {
 	private MainClass main;
@@ -26,9 +26,10 @@ public class GameSettings implements Screen {
 	private LoadingScreen sound;
 	private LoadingScreen texture;
 	private LoadingScreen skin;
+	private LoadingScreen image;
+	private LoadingScreen music;
 	private boolean blackOrWhite = true;
-	private boolean timeBool = true;
-	private boolean anoBool = true;
+	private boolean muted = false;
 	
 	public GameSettings(MainClass parent) {
 		main = parent;
@@ -36,6 +37,8 @@ public class GameSettings implements Screen {
 		sound = new LoadingScreen(parent);
 		texture = new LoadingScreen(parent);
 		skin = new LoadingScreen(parent);
+		image = new LoadingScreen(parent);
+		music = new LoadingScreen(parent);
 	}
 	@Override
 	public void show() {
@@ -43,13 +46,28 @@ public class GameSettings implements Screen {
 		table.setFillParent(true);
 		
 		final Label labelPlayerColor = new Label("Player Color : White", getSkin());
-		final TextButton timeButton = new TextButton("Time Limit : 5 Minutes", getSkin(), "default");
 		final TextButton startGameButton = new TextButton("Start Game!", getSkin(), "default");
 		final TextButton backGameButton = new TextButton("Back", getSkin(), "default");
 		final Slider playerSlider = new Slider(0, 1, 1, false, getSkin());
 		
-		timeButton.getLabel().setFontScale(0.75f, 0.75f);
+		Image soundImage = new Image(image.getImage());
+		soundImage.setX(5);
+		soundImage.setY(435);
 		
+		soundImage.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if(music.getMusic().getVolume() == 1.0f && muted == false) {
+					music.getMusic().setVolume(0.0f);
+					sound.getSound().play(0.75f);
+					muted = true;
+				} else {
+					music.getMusic().setVolume(1.0f);
+					sound.getSound().play(0.75f);
+					muted = false;
+				}
+			}
+		});
 		playerSlider.addListener(new ChangeListener() {
 			@Override
 			public void changed (ChangeEvent event, Actor actor) { {
@@ -66,35 +84,10 @@ public class GameSettings implements Screen {
 			}
 			}
 		});
-		timeButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				getSound().play(0.75f);
-				if(timeBool == true && anoBool == true) {
-					timeButton.setText("Time Limit : 10 Minutes"); 
-					timeBool = true;
-					anoBool = false;
-				} else if (timeBool == true && anoBool == false) {
-					timeButton.setText("Time Limit : 15 Minutes"); 
-					timeBool = false;
-					anoBool = true;
-				} else if (timeBool == false && anoBool == true) {
-					timeButton.setText("Time Limit : Unlimited"); 
-					timeBool = false;
-					anoBool = false;
-				} else {
-					timeButton.setText("Time Limit : 5 Minutes");
-					timeBool = true;
-					anoBool = true;
-				}
-			}
-		});
 		startGameButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				getSound().play(0.75f);
-				dispose();
-				main.setScreen(new BoardView(true,blackOrWhite,main));
 			}
 		});
 		backGameButton.addListener(new ClickListener() {
@@ -109,12 +102,11 @@ public class GameSettings implements Screen {
 		table.row();
 		table.add(playerSlider).pad(10);
 		table.row();
-		table.add(timeButton).pad(10);
-		table.row();
 		table.add(startGameButton).pad(10);
 		table.row();
 		table.add(backGameButton).pad(10);
 		stage.addActor(table);
+		stage.addActor(soundImage);
 	}
 	
 	public Sound getSound() {
@@ -161,6 +153,8 @@ public class GameSettings implements Screen {
 		batch.dispose();
 		texture.dispose();
 		sound.dispose();
+		image.dispose();
+		music.dispose();
 	}
-
 }
+

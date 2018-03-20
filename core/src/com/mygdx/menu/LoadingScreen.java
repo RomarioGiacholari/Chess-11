@@ -11,13 +11,28 @@ public class LoadingScreen implements Screen {
 	private MainClass main;
 	private static Music music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
 	private static Sound sound = Gdx.audio.newSound(Gdx.files.internal("clickSound.mp3"));
-	private static Texture texture = new Texture(Gdx.files.internal("BackgroundImage.jpg"));
+	private static Texture backgroundTexture = new Texture(Gdx.files.internal("BackgroundImage.jpg"));
+	private static Texture soundImage = new Texture(Gdx.files.internal("soundButton.png"));
+	private static Texture titleImage = new Texture(Gdx.files.internal("title.png"));
 	private static Skin skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
-	private static boolean backgroundMusicPlaying;
+	private static Skin checkBox = new Skin(Gdx.files.internal("extra/glassy-ui.json"));
 	
 	public LoadingScreen(MainClass parent) {
 		main = parent;
-		playFX();
+		music.play();
+		music.setLooping(true);
+	}
+	
+	public Skin getCheckBoxSkin() {
+		return checkBox;
+	}
+	
+	public Texture getTitle() {
+		return titleImage;
+	}
+	
+	public Texture getImage() {
+		return soundImage;
 	}
 	
 	public Skin getSkin() {
@@ -25,7 +40,7 @@ public class LoadingScreen implements Screen {
 	}
 	
 	public Texture getTexture() {
-		return texture;
+		return backgroundTexture;
 	}
 	
 	public Music getMusic() {
@@ -36,21 +51,6 @@ public class LoadingScreen implements Screen {
 		return sound;
 	}
 	
-	public static void playFX() {
-		if(backgroundMusicPlaying != true) {
-			music.play();
-			music.setVolume(1.0f);
-			music.setLooping(true);
-			backgroundMusicPlaying = true;
-		}
-	}
-	public static void muteFX() {
-		if(backgroundMusicPlaying == true) {
-			music.stop();
-			backgroundMusicPlaying = false;
-		}
-	}
-	
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
@@ -58,7 +58,7 @@ public class LoadingScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		main.changeScreen(MainClass.MENU);
+		main.setScreen(new MenuScreen(main));
 	}
 
 	@Override
@@ -84,8 +84,12 @@ public class LoadingScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		music.dispose();
+		sound.dispose();
+		backgroundTexture.dispose();
+		skin.dispose();
+		soundImage.dispose();
+		titleImage.dispose();
 	}
 
 }
