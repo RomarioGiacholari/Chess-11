@@ -203,8 +203,8 @@ public class Board {
 			
 		} else System.out.println("This square is empty.");
 		
-		//if (checkMate(true)) System.out.println("White King in Check");
-		//if (checkMate(false)) System.out.println("Black King in Check");
+		if (checkMate(true)) System.out.println("White King in Check");
+		if (checkMate(false)) System.out.println("Black King in Check");
 	}
 	
 	
@@ -349,6 +349,7 @@ public class Board {
 			
 			Position right = null;
 			Position left = null;
+			
 			if(!((Pawn) piece).getLeft().checkOutOfBounds()){
 				 left = ((Pawn) piece).getLeft();
 
