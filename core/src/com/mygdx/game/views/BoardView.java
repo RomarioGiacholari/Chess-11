@@ -47,6 +47,7 @@ public class BoardView extends ScreenAdapter {
 	private boolean checkMate = false;
 	private Texture check;
 	private MainClass main;
+	private Higlight highlight;
 
 	public BoardView(boolean ai, boolean team,MainClass m) {
 		AIEnabled = ai;
@@ -73,6 +74,7 @@ public class BoardView extends ScreenAdapter {
 		whiteCheckMate = new Texture(Gdx.files.internal("whiteCheck.png"));
 		blackCheckMate = new Texture(Gdx.files.internal("blackCheck.png"));
 		check = new Texture(Gdx.files.internal("CheckMate.png"));
+		highlight = new Higlight();
 	}
 
 	@Override
@@ -117,6 +119,9 @@ public class BoardView extends ScreenAdapter {
 		chess.getBoard().promoteCheck();
 		switchIndicator();
 		showBoard();
+		if(highlight.pieceX != 0 && highlight.pieceY != 0) {
+		highlight.draw(batch);
+		}
 		showPiece();
 		
 		batch.begin();
@@ -248,6 +253,35 @@ public class BoardView extends ScreenAdapter {
 				oldX = mouseGridX;
 				oldY = mouseGridY;
 				isSelected = true;
+				int highY = oldY;
+				switch (highY) {
+				case 0:
+					highY = 7;
+					break;
+				case 1:
+					highY = 6;
+					break;
+				case 2:
+					highY = 5;
+					break;
+				case 3:
+					highY = 4;
+					break;
+				case 4:
+					highY = 3;
+					break;
+				case 5:
+					highY = 2;
+					break;
+				case 6:
+					highY = 1;
+					break;
+				case 7:
+					highY = 0;
+					break;
+			}
+				highlight.movePieceUp(highY);
+				highlight.movePieceRight(oldX);
 			}
 			if (mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0 && (oldX != mouseGridX || oldY != mouseGridY)) {
 				//showIfSelected(mouseGridX, mouseGridY);
@@ -257,6 +291,7 @@ public class BoardView extends ScreenAdapter {
 				oldX = -1;
 				oldY = -1;
 				isSelected = false;
+				highlight.reset();
 			}
 			else if(mouseGridX <= 7 && mouseGridX >= 0 && mouseGridY <= 7 && mouseGridY >= 0) {
 			}
