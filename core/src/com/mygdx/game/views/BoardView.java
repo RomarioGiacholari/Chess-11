@@ -121,7 +121,7 @@ public class BoardView extends ScreenAdapter {
 		chess.getBoard().promoteCheck();
 		switchIndicator();
 		showBoard();
-		if(highlight.pieceX != 0 && highlight.pieceY != 0) {
+		if(highlight.pieceX != 0 || highlight.pieceY != 0) {
 		highlight.draw(batch);
 		}
 		showPiece();
@@ -336,5 +336,4 @@ public class BoardView extends ScreenAdapter {
 		}
 		
 	}
-	
 }
