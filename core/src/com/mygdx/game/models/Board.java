@@ -606,7 +606,8 @@ public class Board {
 				}
 			}
 			
-//			if (kingFriendlyPositions.size() < kingEnemyPositions.size()) return true;
+			if (kingFriendlyPositions.isEmpty() && kingEnemyPositions.size() > 0) return true;
+			
 //			ArrayList<Position> newPositions = new ArrayList<Position>();
 //			
 //			for (String name : king.hashMove().keySet()) {
