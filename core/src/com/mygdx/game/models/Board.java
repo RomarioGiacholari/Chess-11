@@ -53,10 +53,16 @@ public class Board {
 	private boolean knights = true;
 	private boolean bishops = true;
 	private boolean rooks = true;
-	public Board() {
+	
+	public Board(boolean pawns, boolean queens, boolean knights, boolean rooks, boolean bishops) {
 		
 		board = new Piece[DIMENSIONS][DIMENSIONS];
 		positions = new ArrayList<Position>();
+		switchPawn(pawns);
+		switchQueen(queens);
+		switchKnight(knights);
+		switchRook(rooks);
+		switchBishop(bishops);
 		
 	}
 	
@@ -594,7 +600,6 @@ public class Board {
 	public void switchPawn( boolean pawn) {
 		pawns = pawn;
 	}
-	
 	public void switchQueen(boolean queen) {
 		queens = queen;
 	}

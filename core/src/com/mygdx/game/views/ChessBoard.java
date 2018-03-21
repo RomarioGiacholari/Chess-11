@@ -13,12 +13,11 @@ import com.mygdx.game.models.Board;
 public class ChessBoard extends Actor{
 
 	Texture texture = new Texture(Gdx.files.internal("board.png"));
-	Board board = new Board();
+	//Board board = new Board();
 	/**
 	 * the chessboard constructor
 	 */
 	public ChessBoard() {
-		board.setUp();
 	}
 	/**
 	 * draws the chessboard sprite at position 0,0
