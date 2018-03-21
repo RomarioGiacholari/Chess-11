@@ -144,4 +144,9 @@ public class OptionScreen implements Screen{
 		sound.dispose();
 	}
 
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> ab6b0c7eb88d41f93830e2dd7f67c1baee5ad296

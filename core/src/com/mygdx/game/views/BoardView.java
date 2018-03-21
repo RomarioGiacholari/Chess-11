@@ -50,16 +50,23 @@ public class BoardView extends ScreenAdapter {
 	private Higlight highlight;
 	private Texture blackCheck;
 
-	public BoardView(boolean ai, boolean team,MainClass m) {
+	public BoardView(boolean ai, boolean team,MainClass m,boolean pawns, boolean queens, boolean knights, boolean rooks, boolean bishops) {
 		AIEnabled = ai;
 		singleteam = team;
 		main =m;
+		chess = new chessGame( pawns,  queens,  knights,  rooks,  bishops);
+	
+
+		
+		
 	}
 	
-	public BoardView(MainClass m) {
+	public BoardView(MainClass m,boolean pawns, boolean queens, boolean knights, boolean rooks, boolean bishops) {
 		AIEnabled = false;
 		singleteam = false;
 		main = m;
+		chess = new chessGame( pawns,  queens,  knights,  rooks,  bishops);
+
 	}
 
 	@Override
@@ -67,7 +74,6 @@ public class BoardView extends ScreenAdapter {
 	 * acts as the constructor and initialises objects
 	 */
 	public void show() {
-		chess = new chessGame();
 		batch = new SpriteBatch();	
 		AI = new ChessAI(!singleteam);
 		indicator = new Texture (Gdx.files.internal("indicator.png"));
@@ -133,12 +139,11 @@ public class BoardView extends ScreenAdapter {
 		checkTest(false);
 		if(checkMate) {
 			try {
-				TimeUnit.SECONDS.sleep(5);
+				TimeUnit.SECONDS.sleep(2);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			dispose();
 			main.setScreen(new MenuScreen(main));
 		}
 		checkMateTest(true);
@@ -325,11 +330,11 @@ public class BoardView extends ScreenAdapter {
 		if(chess.getBoard().checkMate(team)) {
 			if  (team== true) {
 				batch.begin();
-				batch.draw(check,0,130);
+				batch.draw(blackCheck,0,130);
 				batch.end();}
 			else {
 				batch.begin();
-				batch.draw(blackCheck,0,130);
+				batch.draw(check,0,130);
 				batch.end();
 			}
 			checkMate = true;

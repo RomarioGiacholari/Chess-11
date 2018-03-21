@@ -1,6 +1,10 @@
 package com.mygdx.menu;
 
+<<<<<<< HEAD
 import com.badlogic.gdx.Gdx; 
+=======
+import com.badlogic.gdx.Gdx;
+>>>>>>> ab6b0c7eb88d41f93830e2dd7f67c1baee5ad296
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -27,7 +31,11 @@ public class BoardSettingsScreen implements Screen {
 	private LoadingScreen music;
 	private LoadingScreen checkbox;
 	
+<<<<<<< HEAD
 	private static Texture bg = new Texture(Gdx.files.internal("assets/tag.jpg"));
+=======
+	private static Texture bg = new Texture(Gdx.files.internal("tag.jpg"));
+>>>>>>> ab6b0c7eb88d41f93830e2dd7f67c1baee5ad296
 	
 	private boolean muted = false;
 	
@@ -77,6 +85,11 @@ public class BoardSettingsScreen implements Screen {
 		mainLabel.setPosition(135, 410);
 		backButton.setPosition(95, 20);
 		
+<<<<<<< HEAD
+=======
+		//pawnBox.isChecked()
+	
+>>>>>>> ab6b0c7eb88d41f93830e2dd7f67c1baee5ad296
 		soundImage.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -94,7 +107,11 @@ public class BoardSettingsScreen implements Screen {
 		backButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+<<<<<<< HEAD
 				main.setScreen(new PlayerScreen(main));
+=======
+				main.setScreen(new PlayerScreen(main,pawnBox.isChecked(),queenBox.isChecked(),knightBox.isChecked(),rookBox.isChecked(),bishopBox.isChecked()));
+>>>>>>> ab6b0c7eb88d41f93830e2dd7f67c1baee5ad296
 				sound.getSound().play(0.75f);
 			}
 		});
@@ -162,4 +179,8 @@ public class BoardSettingsScreen implements Screen {
 		music.dispose();
 	}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ab6b0c7eb88d41f93830e2dd7f67c1baee5ad296

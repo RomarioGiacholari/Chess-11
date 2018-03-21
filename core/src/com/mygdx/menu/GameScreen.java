@@ -62,7 +62,11 @@ public class GameScreen implements Screen {
 		newGameButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+<<<<<<< HEAD
 				main.setScreen(new PlayerScreen(main));
+=======
+				main.setScreen(new PlayerScreen(main, true, true, true, true, true));
+>>>>>>> ab6b0c7eb88d41f93830e2dd7f67c1baee5ad296
 				sound.getSound().play(0.75f);
 			}
 		});

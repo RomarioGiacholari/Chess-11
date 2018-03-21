@@ -29,9 +29,20 @@ public class GameSettings implements Screen {
 	private LoadingScreen image;
 	private LoadingScreen music;
 	private boolean blackOrWhite = true;
+<<<<<<< HEAD
 	private boolean muted = false;
+=======
+	private boolean timeBool = true;
+	private boolean anoBool = true;
+	private boolean muted = false;
+	private boolean pawns;
+	private boolean queens;
+	private boolean knights;
+	private boolean rooks;
+	private boolean bishops;
+>>>>>>> ab6b0c7eb88d41f93830e2dd7f67c1baee5ad296
 	
-	public GameSettings(MainClass parent) {
+	public GameSettings(MainClass parent,boolean pawns, boolean queens, boolean knights, boolean rooks, boolean bishops) {
 		main = parent;
 		Gdx.input.setInputProcessor(stage); 
 		sound = new LoadingScreen(parent);
@@ -39,6 +50,14 @@ public class GameSettings implements Screen {
 		skin = new LoadingScreen(parent);
 		image = new LoadingScreen(parent);
 		music = new LoadingScreen(parent);
+<<<<<<< HEAD
+=======
+		this.pawns = pawns;
+		this.queens = queens;
+		this.knights = knights;
+		this.rooks = rooks;
+		this.bishops = bishops;
+>>>>>>> ab6b0c7eb88d41f93830e2dd7f67c1baee5ad296
 	}
 	@Override
 	public void show() {
@@ -88,13 +107,18 @@ public class GameSettings implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				getSound().play(0.75f);
+<<<<<<< HEAD
+=======
+				main.setScreen(new BoardView(true,blackOrWhite,main, pawns,  queens,  knights,  rooks,  bishops));
+				dispose();
+>>>>>>> ab6b0c7eb88d41f93830e2dd7f67c1baee5ad296
 			}
 		});
 		backGameButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				getSound().play(0.75f);
-				main.setScreen(new PlayerScreen(main));
+				main.setScreen(new PlayerScreen(main,true,true,true,true,true));
 			}
 		});
 		
