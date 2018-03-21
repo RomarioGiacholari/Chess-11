@@ -34,7 +34,6 @@ public class MenuScreen implements Screen {
 		image = new LoadingScreen(parent);
 		title = new LoadingScreen(parent);
 		music = new LoadingScreen(parent);
-		//show();
 	}
 	@Override
 	public void show() {

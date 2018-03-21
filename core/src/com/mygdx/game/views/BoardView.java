@@ -139,12 +139,12 @@ public class BoardView extends ScreenAdapter {
 		checkTest(false);
 		if(checkMate) {
 			try {
-				TimeUnit.SECONDS.sleep(2);
+				TimeUnit.SECONDS.sleep(3);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			main.setScreen(new MenuScreen(main));
+			Gdx.app.exit();			
 		}
 		checkMateTest(true);
 		checkMateTest(false);
