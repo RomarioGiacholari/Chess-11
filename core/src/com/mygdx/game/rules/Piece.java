@@ -1,9 +1,19 @@
 package com.mygdx.game.rules;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+/**
+ * 
+ * @author Farhan Ali
+ *
+ */
 
 public abstract class Piece implements Movable {
 	/**
-	 * A field to hold if the piece belongs to the black or white team
+	 * A field to hold if the piece belongs to the black or white team.
+	 * Where true - white 
+	 * Where false - black
 	 */
 	protected boolean team;
 	/**
@@ -22,7 +32,7 @@ public abstract class Piece implements Movable {
 	 * A field to hold the column of the piece
 	 */
 	protected int locationCol;
-	
+	protected String name;
 	/**
 	 * A constructor that takes an x and y coordinate and a boolean representing if the piece is black or white it then initialises values.
 	 * @param row a parameter that takes an integer representing the x position.
@@ -41,6 +51,7 @@ public abstract class Piece implements Movable {
 		position = pos;
 	}
 	
+	public abstract HashMap<String, ArrayList<Position>> hashMove();
 	/**
 	 * A method for setting the {@link team} field of the piece
 	 * @param player the new value for team field
@@ -51,5 +62,9 @@ public abstract class Piece implements Movable {
 	
 	public boolean getTeam() {
 		return team;
+	}
+
+	public String printPieceType() {
+		return name;
 	}
 }
