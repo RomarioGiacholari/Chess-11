@@ -144,7 +144,7 @@ public class BoardView extends ScreenAdapter {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			Gdx.app.exit();			
+			Gdx.app.exit();
 		}
 		checkMateTest(true);
 		checkMateTest(false);
