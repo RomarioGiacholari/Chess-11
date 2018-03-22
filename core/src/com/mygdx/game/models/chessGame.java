@@ -4,9 +4,10 @@ import com.mygdx.game.rules.*;
 
 public class chessGame {
 	
-	Board board = new Board();
+	Board board;
 	
-	public chessGame () {
+	public chessGame (boolean pawns, boolean queens, boolean knights, boolean rooks, boolean bishops) {
+		board = new Board( pawns,  queens,  knights,  rooks,  bishops);
 		board.setUp();
 	}
 	
