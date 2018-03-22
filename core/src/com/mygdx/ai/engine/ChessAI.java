@@ -5,8 +5,7 @@ import java.util.Hashtable;
 import java.util.Random;
 
 import com.mygdx.game.models.Board;
-import com.mygdx.game.rules.Knight;
-import com.mygdx.game.rules.Pawn;
+import com.mygdx.game.rules.*;
 import com.mygdx.game.rules.Piece;
 import com.mygdx.game.rules.Position;
 
@@ -31,6 +30,7 @@ public class ChessAI {
 	private ArrayList<Position> positions;
 	
 	private Random random;
+	
 	
 	/**
 	 * Hashtable for all of the possible moves the AI can play
@@ -62,6 +62,7 @@ public class ChessAI {
 	}
 	
 	public void possibleMoves(Board currentBoard) {
+		positions(currentBoard);
 		possibleMoves.clear();
 		
 		/**
@@ -93,6 +94,7 @@ public class ChessAI {
 			if (newLocations.size() > 0) possibleMoves.put(location, newLocations);
 		}
 	}
+
 	
 	/**
 	 * Selects a random move from the possibleMoves Hashtable
@@ -100,9 +102,107 @@ public class ChessAI {
 	 */
 	public ArrayList<Position> selectAMove(Board currentBoard) {
 		
+		/*
+		 * 1. Go through each original position and its new positions
+		 * 2. If the new position has an enemy piece log that as a move
+		 * 3. Otherwise pick a random move
+		 */
 		possibleMoves(currentBoard);
 		
+		// Contains the original position and new position
 		ArrayList<Position> moveInfo = new ArrayList<Position>();
+		
+		ArrayList<Position> pawnPieces = new ArrayList<Position>();
+		
+		ArrayList<Position> rookPieces = new ArrayList<Position>();
+		
+		ArrayList<Position> knightPieces = new ArrayList<Position>();
+		
+		ArrayList<Position> bishopPieces = new ArrayList<Position>();
+		
+		ArrayList<Position> queenPieces = new ArrayList<Position>();
+		
+		ArrayList<Position> kingPieces = new ArrayList<Position>();
+		
+		for (Position originalPosition : possibleMoves.keySet()) {
+			
+			for (Position newPosition : possibleMoves.get(originalPosition)) {
+
+				if (currentBoard.getSquare(newPosition) != null && currentBoard.getSquare(newPosition).getTeam() != this.team) {
+					
+					if (currentBoard.getSquare(originalPosition) instanceof Pawn) {
+						pawnPieces.add(originalPosition);
+						pawnPieces.add(newPosition);
+					}
+					
+					else if (currentBoard.getSquare(originalPosition) instanceof Rook) {
+						rookPieces.add(originalPosition);
+						rookPieces.add(newPosition);
+					}
+					
+					else if (currentBoard.getSquare(originalPosition) instanceof Knight) {
+						knightPieces.add(originalPosition);
+						knightPieces.add(newPosition);
+					}
+					
+					else if (currentBoard.getSquare(originalPosition) instanceof Bishop) {
+						bishopPieces.add(originalPosition);
+						bishopPieces.add(newPosition);
+					}
+					
+					else if (currentBoard.getSquare(originalPosition) instanceof Queen) {
+						queenPieces.add(originalPosition);
+						queenPieces.add(newPosition);
+					}
+					
+					else if (currentBoard.getSquare(originalPosition) instanceof King) {
+						kingPieces.add(originalPosition);
+						kingPieces.add(newPosition);
+					}
+				
+				}
+				
+			}
+		}
+		
+		if (!pawnPieces.isEmpty()) {
+			
+			moveInfo.addAll(pawnPieces);
+			return moveInfo;
+			
+		}
+		
+		else if (!knightPieces.isEmpty()) {
+			
+			moveInfo.addAll(knightPieces);
+			return moveInfo;
+			
+		}
+		
+		else if (!bishopPieces.isEmpty()) {
+			
+			moveInfo.addAll(bishopPieces);
+			return moveInfo;
+			
+		}
+		else if (!rookPieces.isEmpty()) {
+			
+			moveInfo.addAll(rookPieces);
+			return moveInfo;
+			
+		}
+		else if (!queenPieces.isEmpty()) {
+			
+			moveInfo.addAll(queenPieces);
+			return moveInfo;
+			
+		}
+		else if (!kingPieces.isEmpty()) {
+			
+			moveInfo.addAll(kingPieces);
+			return moveInfo;
+			
+		}
 		
 		ArrayList<Position> currentPositions = new ArrayList<Position>();
 		
@@ -115,6 +215,7 @@ public class ChessAI {
 		Position newPosition = newLocations.get(random.nextInt(newLocations.size()));
 		
 		moveInfo.add(currentPosition);
+		
 		moveInfo.add(newPosition);
 		
 		return moveInfo;
@@ -133,31 +234,5 @@ public class ChessAI {
 		return possibleMoves;
 	}
 	
-	
-	// Methods below are for testing purposes only
-	public void displayBoard(Board currentBoard) {
-		
-		for (int i = 0; i < Board.DIMENSIONS; i++) {
-			
-			for(int n = 0; n < Board.DIMENSIONS; n++) {
-				System.out.print(currentBoard.getBoard()[i][n] + "\t");
-			}
-			System.out.println();
-		}
-		
-	}
-	
-	public void displayAllPositions() {
-		for (Position position : positions) System.out.println(position.getX() + ", " + position.getY());
-	}
-	
-	public void displayAllPossibleMoves(Board currentBoard) {
-		for (Position location : possibleMoves.keySet()) {
-			System.out.println("Original Location: " + location.getX() + ", " + location.getY());
-			for (Position newLocation : possibleMoves.get(location)) {
-				System.out.println(newLocation.getX() + ", " + newLocation.getY());
-			}
-		}
-	}
 	
 }

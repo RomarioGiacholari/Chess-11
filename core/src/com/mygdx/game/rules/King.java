@@ -3,11 +3,23 @@ package com.mygdx.game.rules;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * King class. This contains the attributes for the King piece.
+ * All of the moves the King can make. The king will also know 
+ * whether it is in check mate or not.
+ * 
+ * {@link com.mygdx.game.rules}
+ * 
+ * @author Farhan Ali
+ * @author Nathan Livsey
+ *
+ */
 public class King extends Piece{
-	/**
-	 * A field to hold if the King piece has moved or not
-	 */
-	private boolean moved;
+	
+	private boolean inCheck = false;
+	
+	private boolean moved = false;
+	
 	/**
 	 * A constructor for King taking an initial x and y coordinate and the team it is playing for
 	 * @param row the x coordinate
@@ -15,23 +27,28 @@ public class King extends Piece{
 	 * @param player if the player is white or black
 	 */
 	public King(int row, int col , boolean player) {
+		
 		super(row, col, player);
 		
-		// TODO Auto-generated constructor stub
-	}
-	public String printPieceType(){
-		System.out.println("King");
-		return "King";
 	}
 	
+	public void hasMoved() { this.moved = true; }
+	
+	public boolean isMoved() { return moved; }
+	
+	public String printPieceType() { return "King"; }
+	
 	public String toString() {
-		if(team) {
-			return "K";
-		}
-		else {
-			return"k";
-		}
+		
+		if(team) return "K";
+		
+		else return"k";
+		
 	}
+	
+	public void setCheck(boolean check) { this.inCheck = check; }
+	
+	public boolean isCheck() { return this.inCheck; }
 	
 	public HashMap<String, ArrayList<Position>> hashMove() {
 		
